@@ -147,6 +147,7 @@ class Staff_Area {
 	 *
 	 * @since    1.0.0
 	 * @access   private
+	 * @TODO set up a new class to register custom templates?
 	 */
 	private function define_admin_hooks() {
 
@@ -154,6 +155,18 @@ class Staff_Area {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		// Set up Staff Resource CPT
+		// -------------------------------------------------------------------------
+		$this->loader->add_action( 'init', $plugin_admin, 'staff_resource_init' );
+
+		// Messages for Staff Resource CPT
+		// -------------------------------------------------------------------------
+		$this->loader->add_action( 'post_updated_messages', $plugin_admin, 'staff_resource_updated_messages' );
+
+		$this->loader->add_filter( 'single_template', $plugin_admin, 'staff_resource_page_template' );
+
+
 
 	}
 

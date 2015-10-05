@@ -13,7 +13,7 @@
  * @package           Staff_Area
  *
  * @wordpress-plugin
- * Plugin Name:       WordPress Plugin Boilerplate
+ * Plugin Name:       Staff Area
  * Plugin URI:        http://example.com/staff-area-uri/
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
