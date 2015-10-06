@@ -18,7 +18,7 @@
  *
  * @package    Staff_Area
  * @subpackage Staff_Area/public
- * @author     Your Name <email@example.com>
+ * @author     David Egan <david@carawebs.com>
  */
 class Staff_Area_Public {
 

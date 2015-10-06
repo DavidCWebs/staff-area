@@ -25,7 +25,7 @@
  * @since      1.0.0
  * @package    Staff_Area
  * @subpackage Staff_Area/includes
- * @author     Your Name <email@example.com>
+ * @author     David Egan <david@carawebs.com>
  */
 class Staff_Area {
 
@@ -159,12 +159,15 @@ class Staff_Area {
 		// Set up Staff Resource CPT
 		// -------------------------------------------------------------------------
 		$this->loader->add_action( 'init', $plugin_admin, 'staff_resource_init' );
+		$this->loader->add_action( 'init', $plugin_admin, 'staff_resource_taxonomy' );
 
 		// Messages for Staff Resource CPT
 		// -------------------------------------------------------------------------
 		$this->loader->add_action( 'post_updated_messages', $plugin_admin, 'staff_resource_updated_messages' );
 
-		$this->loader->add_filter( 'single_template', $plugin_admin, 'staff_resource_page_template' );
+		//$this->loader->add_filter( 'single_template', $plugin_admin, 'staff_resource_page_template' );
+
+		$this->loader->add_filter( 'template_include', $plugin_admin, 'staff_resource_page_template' );
 
 
 

@@ -17,7 +17,7 @@
  * Plugin URI:        http://example.com/staff-area-uri/
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
- * Author:            Your Name or Your Company
+ * Author:            David Egan or Your Company
  * Author URI:        http://example.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -73,3 +73,17 @@ function run_staff_area() {
 
 }
 run_staff_area();
+
+/**
+ * Better debugging - auto add <pre> tags
+ *
+ * @param  [type] $var   [description]
+ * @param  [type] $title [description]
+ * @return [type]        [description]
+ */
+function caradump( $var, $title = null ) {
+	echo "<pre>";
+	echo "<h3>Dump $title</h3>";
+	var_dump( $var );
+	echo "</pre>";
+}
