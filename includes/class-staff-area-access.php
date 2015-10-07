@@ -4,7 +4,7 @@ namespace Carawebs\Staff;
  * The file that defines access
  *
  *
- * @link       http://example.com
+ * @link       http://carawebs.com/plugins/staff-area
  * @since      1.0.0
  *
  * @package    Staff_Area

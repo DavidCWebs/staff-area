@@ -4,7 +4,7 @@ namespace Carawebs\Staff;
  * The file that defines the Loops class
  *
  *
- * @link       http://example.com
+ * @link       http://carawebs.com/plugins/staff-area
  * @since      1.0.0
  *
  * @package    Staff_Area
@@ -56,21 +56,26 @@ class Loop {
   /**
    * Build a custom staff resource loop
    *
-   * @since    1.0.0
-   * @return HTML Output of a custom loop
+   * @since   1.0.0
+   * @uses    WP_Query()
+   * @return  string HTML staff resource teasers
    */
-   public function staff_resource_loop() {
+   public function staff_resource_loop( $args = null ) {
 
-     $staff_resource_query = new \WP_Query( $this->args );
+     // Allow arguments to be added to this method directly. If none passed, use defaults
+     // ------------------------------------------------------------------------
+     $args = empty ( $args ) ?  $this->args : array_merge( $args, $this->args );
+
+     $staff_resource_query = new \WP_Query( $args );
 
      if ( $staff_resource_query->have_posts() ) {
 
        while ( $staff_resource_query->have_posts() ) {
-         
+
          $staff_resource_query->the_post();
 
          // The HTML for each teaser
-         // -----------------------------------------------------------------------
+         // --------------------------------------------------------------------
          include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser.php' );
 
        }
@@ -84,5 +89,40 @@ class Loop {
      wp_reset_postdata();
 
    }
+
+   /**
+   * Loop through all terms in the given taxonomy
+   *
+   * Display staff resource teasers grouped by resource category.
+   * @uses    get_terms()
+   * @since   1.0.0
+   * @return  string HTML staff resource teasers
+   */
+   public function staff_resources_by_term() {
+
+     // Get all the term objects
+     // ------------------------------------------------------------------------
+     $terms = get_terms( 'resource_category' );
+
+     foreach( $terms as $term )  {
+
+      $name = $term->name;
+
+       $tax_query = array( 'tax_query' => array(
+         array(
+           'taxonomy' => 'resource_category',
+           'field'    => 'slug',
+           'terms'    => $term->slug,
+         ),
+       )
+     );
+
+     echo "<h2>Staff Resources: $name</h2>";
+
+     $this->staff_resource_loop( $tax_query );
+
+   }
+
+ }
 
 }

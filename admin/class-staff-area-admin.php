@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://example.com
+ * @link       http://carawebs.com/plugins/staff-area
  * @since      1.0.0
  *
  * @package    Staff_Area

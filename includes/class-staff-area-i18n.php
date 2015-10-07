@@ -6,7 +6,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://example.com
+ * @link       http://carawebs.com/plugins/staff-area
  * @since      1.0.0
  *
  * @package    Staff_Area
