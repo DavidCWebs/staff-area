@@ -59,35 +59,30 @@ class Loop {
    * @since    1.0.0
    * @return HTML Output of a custom loop
    */
-  public function staff_resource_loop(){
+   public function staff_resource_loop() {
 
-  $staff_resource_query = new \WP_Query( $this->args );
+     $staff_resource_query = new \WP_Query( $this->args );
 
-  if ( $staff_resource_query->have_posts() ) {
+     if ( $staff_resource_query->have_posts() ) {
 
-    while ( $staff_resource_query->have_posts() ) {
+       while ( $staff_resource_query->have_posts() ) {
+         
+         $staff_resource_query->the_post();
 
-      $staff_resource_query->the_post();
+         // The HTML for each teaser
+         // -----------------------------------------------------------------------
+         include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser.php' );
 
-      ?>
-      <h3><a href="<?php the_permalink(); ?>">
-        <?php the_title(); ?>
-      </a></h3>
+       }
 
-      <?php the_excerpt(); ?>
-      <a href="<?php the_permalink(); ?>">Read More &raquo;</a>
-      <?php
+     } else {
 
-    }
+       //echo "There are no posts";
 
-  } else {
+     }
 
-    //echo "There are no posts";
+     wp_reset_postdata();
 
-  }
-
-  wp_reset_postdata();
-
-  }
+   }
 
 }
