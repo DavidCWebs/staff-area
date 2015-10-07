@@ -47,6 +47,8 @@ class Access {
    */
   private $access_level;
 
+  public $first_name;
+
   /**
    * Set up the allowed roles.
    *
@@ -65,7 +67,7 @@ class Access {
       ),
       $override_allowed_roles
     );
-    $this->set_user_roles();
+    $this->set_user_data();
     $this->set_access_level();
 
   }
@@ -74,10 +76,11 @@ class Access {
    * Set the current user's roles
    *
    */
-  private function set_user_roles() {
+  private function set_user_data() {
 
-    $user_object = get_user_by( 'id', $this->user_ID );
+    $user_object              = get_user_by( 'id', $this->user_ID );
   	$this->current_user_roles = $user_object->roles;
+    $this->first_name         = $user_object->user_firstname;
 
   }
 
@@ -107,9 +110,9 @@ class Access {
 
     }
 
-    if( in_array( 'staff_management', $this->current_user_roles ) ) {
+    if( in_array( 'staff_supervisor', $this->current_user_roles ) ) {
 
-      $this->access_level = 'staff_access';
+      $this->access_level = 'supervisor_access';
 
     }
 

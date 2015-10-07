@@ -241,4 +241,20 @@ class Staff_Area_Admin {
 
 	}
 
+	public function dashboard_block() {
+
+		if ( is_admin() && //  Check if the Dashboard or the administration panel is attempting to be displayed.
+		! current_user_can( 'administrator' ) && // admin
+		! current_user_can( 'edit_pages') && // editor
+		! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) // for when admin_ajax.php is used to process ajax requests
+		{
+
+			wp_redirect( home_url() );
+
+			exit;
+
+		}
+
+	}
+
 }

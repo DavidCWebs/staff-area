@@ -35,8 +35,10 @@ if ( ! defined( 'WPINC' ) ) {
  * This action is documented in includes/class-staff-area-activator.php
  */
 function activate_staff_area() {
+
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-staff-area-activator.php';
 	Staff_Area_Activator::activate();
+
 }
 
 /**
@@ -44,8 +46,10 @@ function activate_staff_area() {
  * This action is documented in includes/class-staff-area-deactivator.php
  */
 function deactivate_staff_area() {
+
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-staff-area-deactivator.php';
 	Staff_Area_Deactivator::deactivate();
+	
 }
 
 register_activation_hook( __FILE__, 'activate_staff_area' );

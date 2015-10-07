@@ -159,14 +159,21 @@ class Staff_Area {
 		// Set up Staff Resource CPT
 		// -------------------------------------------------------------------------
 		$this->loader->add_action( 'init', $plugin_admin, 'staff_resource_init' );
+
+		// Register a custom taxonomy for staff resource
+		// -------------------------------------------------------------------------
 		$this->loader->add_action( 'init', $plugin_admin, 'staff_resource_taxonomy' );
 
 		// Messages for Staff Resource CPT
 		// -------------------------------------------------------------------------
 		$this->loader->add_action( 'post_updated_messages', $plugin_admin, 'staff_resource_updated_messages' );
 
-		//$this->loader->add_filter( 'single_template', $plugin_admin, 'staff_resource_page_template' );
+		// Block dashboard for all users except admin & editor
+		// -------------------------------------------------------------------------
+		$this->loader->add_action( 'init', $plugin_admin, 'dashboard_block' );
 
+		// Filter template loader for custom templates
+		// -------------------------------------------------------------------------
 		$this->loader->add_filter( 'template_include', $plugin_admin, 'staff_resource_page_template' );
 
 

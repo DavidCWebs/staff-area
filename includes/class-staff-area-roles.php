@@ -31,14 +31,31 @@ class Roles {
    */
   private $args;
 
-  /**
-   * Set up the default arguments for XXXX.
-   *
-   *
-   * @since    1.0.0
-   * @param array $override Array of WP_Query arguments
-   */
-  public function __construct( ) {
+  public static function staff_member_roles_and_caps() {
+
+     // start with subscriber capabilities
+    $subscriber = get_role( 'subscriber' );
+    $member_caps = $subscriber->capabilities;
+
+    // Remove the role in case of changes
+    remove_role( 'staff_member' );
+
+    // Add the Staff Member role
+    add_role( 'staff_member', 'Staff Member', $member_caps );
+
+  }
+
+  public static function staff_manager_roles_and_caps() {
+
+     // start with subscriber capabilities
+    $subscriber = get_role( 'subscriber' );
+    $supervisor_caps = $subscriber->capabilities;
+
+    // Remove the role in case of changes
+    remove_role( 'supervisor' );
+
+    // Add the Staff Unit Manager role
+    add_role( 'staff_supervisor', 'Supervisor', $supervisor_caps );
 
   }
 

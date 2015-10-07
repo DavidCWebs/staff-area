@@ -18,7 +18,8 @@ if( !is_user_logged_in() ) {
 }
 
 $access_check = new Carawebs\Staff\Access( $current_user_ID );
-$access = $access_check->get_access_level();
+$access       = $access_check->get_access_level();
+$first_name   = $access_check->first_name;
 
 if ( 'no_access' === $access ) {
 
