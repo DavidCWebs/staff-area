@@ -2,7 +2,7 @@
   <?php
   get_template_part('templates/page', 'header');
   include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/access-check.php' );
-  include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-staff-area-loops.php' );
+  include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-staff-area-loop.php' );
 
   if ( 'no_access' == $access ) {
 

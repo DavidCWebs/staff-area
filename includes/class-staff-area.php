@@ -156,24 +156,28 @@ class Staff_Area {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		// Set up Staff Resource CPT
-		// -------------------------------------------------------------------------
+		// Register 'staff_resource' Custom Post Type
 		$this->loader->add_action( 'init', $plugin_admin, 'staff_resource_init' );
 
-		// Register a custom taxonomy for staff resource
-		// -------------------------------------------------------------------------
+		// Register a custom taxonomy for staff resource & management resource CPTs
 		$this->loader->add_action( 'init', $plugin_admin, 'staff_resource_taxonomy' );
 
 		// Messages for Staff Resource CPT
-		// -------------------------------------------------------------------------
 		$this->loader->add_action( 'post_updated_messages', $plugin_admin, 'staff_resource_updated_messages' );
 
+		// Register 'management_resource' Custom Post Type
+		$this->loader->add_action( 'init', $plugin_admin, 'management_resource_init' );
+
+		// Messages for 'management_resource' Custom Post Type
+		$this->loader->add_action( 'post_updated_messages', $plugin_admin, 'management_resource_updated_messages' );
+
+		// Register a custom taxonomy for management resource CPTs
+		$this->loader->add_action( 'init', $plugin_admin, 'management_resource_taxonomy' );
+
 		// Block dashboard for all users except admin & editor
-		// -------------------------------------------------------------------------
 		$this->loader->add_action( 'init', $plugin_admin, 'dashboard_block' );
 
 		// Filter template loader for custom templates
-		// -------------------------------------------------------------------------
 		$this->loader->add_filter( 'template_include', $plugin_admin, 'staff_resource_page_template' );
 
 

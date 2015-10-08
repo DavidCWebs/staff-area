@@ -1,32 +1,133 @@
-(function( $ ) {
-	'use strict';
+( function( $ ) {
+	"use strict";
 
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note that this assume you're going to use jQuery, so it prepares
-	 * the $ function reference to be used within the scope of this
-	 * function.
-	 *
-	 * From here, you're able to define handlers for when the DOM is
-	 * ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * Or when the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and so on.
-	 *
-	 * Remember that ideally, we should not attach any more than a single DOM-ready or window-load handler
-	 * for any particular page. Though other scripts in WordPress core, other plugins, and other themes may
-	 * be doing this, we should try to minimize doing that in our own work.
-	 */
+	$( document ).ready( function() {
 
-})( jQuery );
+		// Filter by Resource
+		$( "#select-resource-category .dropdown-menu > li > a" ).click( function( event ) {
+
+			event.preventDefault();
+
+			var valThis = $( this ).parent().attr( "class" );
+
+			$( "#resources > div" ).each( function() {
+
+				var productContent = $( this ).attr( "class" );
+
+				// If search string isn't found, returns -1
+				if ( productContent.indexOf( valThis ) == -1 ) {
+
+					$( this ).hide( 400 );
+
+				} else {
+
+					$( this ).show( 400 );
+
+				}
+
+			} );
+
+		} );
+
+		// Resource Type filter
+		$( "#resource-search" ).keyup( function() {
+
+			var valThis = $( this ).val().toLowerCase();
+
+			$( "#resources > div" ).each( function() {
+
+				var productContent = $( this ).attr( "class" );
+
+				if ( productContent.indexOf( valThis ) === 0 ) {
+
+					$( this ) .show( 400 );
+
+				} else {
+
+					$( this ).hide( 400 );
+
+				}
+
+			} );
+
+		} );
+
+		// Show All Resources
+		$( "#showall" ).click( function( event ) {
+
+			event.preventDefault();
+
+			$( "#resource-search" ).val( "" );
+
+			if ( $( "#resources > div" ).is( ":hidden" ) ) {
+
+				$( "#resources > div" ).show( 400 );
+
+			}
+
+			$( "#select-resource-category option:selected" ).prop( "selected", false );
+			$( "#select-resource-category option:first" ).prop( "selected", "selected" );
+
+		} );
+
+		// Management Resource Type filter
+		$( "#management-resource-search" ).keyup( function() {
+
+			var valThis = $( this ).val().toLowerCase();
+
+			$( "#management-resources > div" ).each( function() {
+
+				var productContent = $( this ).attr( "class" );
+
+				if ( productContent.indexOf( valThis ) === 0 ) {
+
+					$( this ) .show( 400 );
+
+				} else {
+
+					$( this ).hide( 400 );
+
+				}
+
+			} );
+
+		} );
+
+		// Show All Management Resources
+		$( "#management-showall" ).click( function( event ) {
+
+			event.preventDefault();
+
+			$( "#management-resource-search" ).val( "" );
+
+			if ( $( "#management-resources > div" ).is( ":hidden" ) ) {
+
+				$( "#management-resources > div" ).show( 400 );
+
+			}
+
+			$( "#select-management-resource-category option:selected" ).prop( "selected", false );
+			$( "#select-management-resource-category option:first" ).prop( "selected", "selected" );
+
+		} );
+
+		// Filter by Management Resource
+		$( "#select-management-resource-category .dropdown-menu > li > a" ).click(
+			function( event ) {
+				event.preventDefault();
+				var valThis = $( this ).parent().attr( "class" );
+				$( "#management-resources > div" ).each( function() {
+					var productContent = $( this ).attr( "class" );
+
+					// If search string isn't found, returns -1
+					if ( productContent.indexOf( valThis ) == -1 ) {
+						$( this ).hide( 400 );
+					} else {
+						$( this ).show( 400 );
+					}
+				} );
+			} );
+
+	} );
+
+} )( jQuery );
