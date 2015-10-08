@@ -9,3 +9,7 @@ Registers custom user roles:
 
 * 'staff_member' an ordinary staff member
 * 'staff_manager' staff member with management privileges
+
+##TODO
+
+* Restrict access to archive pages and custom taxonomy pages for 'staff_resource' and 'management_resource' CPTs
