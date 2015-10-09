@@ -1,6 +1,6 @@
 <?php
-namespace Carawebs\Staff;
-include_once( plugin_dir_path( __FILE__ ) . 'class-staff-area-loop.php' );
+namespace Staff_Area\Includes;
+//include_once( plugin_dir_path( __FILE__ ) . 'class-staff-area-loop.php' );
 /**
  * The file that defines the Loops class
  *

@@ -1,5 +1,5 @@
 <?php
-namespace Carawebs\Staff;
+namespace Staff_Area\Includes;
 /**
 * The file that defines the Loops class
 *

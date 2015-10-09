@@ -31,6 +31,10 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
+ * Autoload all the NEW classes
+ */
+require_once 'autoloader.php';
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-staff-area-activator.php
  */
@@ -49,7 +53,7 @@ function deactivate_staff_area() {
 
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-staff-area-deactivator.php';
 	Staff_Area_Deactivator::deactivate();
-	
+
 }
 
 register_activation_hook( __FILE__, 'activate_staff_area' );
