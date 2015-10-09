@@ -6,8 +6,6 @@ if ( ! defined( 'WPINC' ) ) {
 
 if ( !function_exists( 'carawebs_class_autoloader' ) ) {
 
-	spl_autoload_register( 'carawebs_class_autoloader' );
-
 	function carawebs_class_autoloader( $classname ) {
 
 	    $class = str_replace( '\\', DIRECTORY_SEPARATOR, str_replace( '_', '-', strtolower( $classname ) ) );
@@ -31,5 +29,7 @@ if ( !function_exists( 'carawebs_class_autoloader' ) ) {
 	    }
 
 	}
+
+	spl_autoload_register( 'carawebs_class_autoloader' );
 
 }

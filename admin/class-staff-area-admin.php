@@ -359,6 +359,24 @@
 
 	}
 
+  /**
+	 * Set custom templates for the staff registration page(s)
+	 *
+	 * @param  [type] $page_template [description]
+	 * @return [type]                [description]
+	 */
+	public function staff_registration_page_template( $page_template ) {
+
+		if ( is_page( 'staff-registration' ) ) {
+
+			$page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/staff-registration.php';
+
+		}
+
+		return $page_template;
+
+	}
+
 	public function dashboard_block() {
 
 		if ( is_admin() &&                              // Check if the Dashboard or the administration panel is attempting to be displayed.

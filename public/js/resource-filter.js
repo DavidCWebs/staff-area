@@ -1,3 +1,7 @@
+/**
+ * jQuery Filters
+ *
+ */
 ( function( $ ) {
 	"use strict";
 

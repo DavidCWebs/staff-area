@@ -61,18 +61,6 @@ class Staff_Area_Public {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Staff_Area_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Staff_Area_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style( $this->staff_area, plugin_dir_url( __FILE__ ) . 'css/staff-area-public.css', array(), $this->version, 'all' );
 
 	}
@@ -85,18 +73,37 @@ class Staff_Area_Public {
 	public function enqueue_scripts() {
 
 		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Staff_Area_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Staff_Area_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
+		 * Enqueue the jQuery filter script on the specified pages.
+		 * @TODO: Pass in an array of pages for the filter - set in an options page with sensible defaults.
+		 * @var array of pages for the filter js function
 		 */
+		$filter_pages = ['staff'];
 
-		wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/staff-area-public.js', array( 'jquery' ), $this->version, false );
+		if (is_page ( $filter_pages ) ) {
+
+				wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/resource-filter.js', array( 'jquery' ), $this->version, false );
+
+		}
+
+		/**
+		 * Staff Registration Sctipts
+		 */
+		if (is_page('staff-registration') ) {
+
+      wp_register_script('carawebs_user_reg_script', plugin_dir_url( __FILE__ ) . 'js/registration.js', array('jquery'), null, false);
+
+      wp_enqueue_script('carawebs_user_reg_script');
+
+      $current_user = wp_get_current_user();            // gets the current user object
+      $user_id = $current_user->ID;
+
+      wp_localize_script( 'carawebs_user_reg_script', 'carawebsRegVars', array(
+        'carawebsAjaxURL' => admin_url( 'admin-ajax.php' ),
+        'carawebsCoordinatorID' => $user_id, // This passes the user ID of the originating user (with the custom role 'coordinator')
+        )
+      );
+
+    }
 
 	}
 

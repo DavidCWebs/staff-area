@@ -152,9 +152,16 @@ class Staff_Area {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Staff_Area_Admin( $this->get_staff_area(), $this->get_version() );
+		$form_processor	= new Staff_Area\Members\Register();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		// Ajax processor callback for user registration
+		$this->loader->add_action( 'wp_ajax_register_new_user', $form_processor, 'userform_process_facade');
+
+		// Filter template loader for custom templates, staff registration page
+		$this->loader->add_filter( 'template_include', $plugin_admin, 'staff_registration_page_template' );
 
 		// Register 'staff_resource' Custom Post Type
 		$this->loader->add_action( 'init', $plugin_admin, 'staff_resource_init' );
