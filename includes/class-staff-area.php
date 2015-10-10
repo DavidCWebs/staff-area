@@ -165,7 +165,7 @@ class Staff_Area {
 		// -------------------------------------------------------------------------
 		$this->loader->add_action( 'admin_menu', $plugin_options, 'add_menu_page' );
 		//$this->loader->add_action( 'admin_menu', $plugin_options, 'add_options_page' );
-		$this->loader->add_action( 'admin_init', $plugin_options, 'register_settings' );
+		$this->loader->add_action( 'admin_init', $plugin_options, 'page_init' );
 
 		// Ajax processor callback for user registration
 		$this->loader->add_action( 'wp_ajax_register_new_user', $form_processor, 'userform_process_facade');
