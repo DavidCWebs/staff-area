@@ -151,11 +151,21 @@ class Staff_Area {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Staff_Area_Admin( $this->get_staff_area(), $this->get_version() );
+		$plugin_admin		= new Staff_Area_Admin( $this->get_staff_area(), $this->get_version() );
 		$form_processor	= new Staff_Area\Members\Register();
+		$plugin_options = new Staff_Area\Admin\Options( $this->get_staff_area(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		// Plugin options
+		//$this->loader->add_action( 'admin_menu', $plugin_options, 'add_options_page' );
+
+		// Menu page
+		// -------------------------------------------------------------------------
+		$this->loader->add_action( 'admin_menu', $plugin_options, 'add_menu_page' );
+		//$this->loader->add_action( 'admin_menu', $plugin_options, 'add_options_page' );
+		$this->loader->add_action( 'admin_init', $plugin_options, 'register_settings' );
 
 		// Ajax processor callback for user registration
 		$this->loader->add_action( 'wp_ajax_register_new_user', $form_processor, 'userform_process_facade');
