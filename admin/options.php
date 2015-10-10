@@ -78,8 +78,6 @@ public function display_page_content() {
 
   $this->options = get_option( $this->option_name );
 
-  caradump($this->options);
-
   ?>
   <div class="wrap">
       <h2>My Settings</h2>
@@ -166,8 +164,10 @@ public function page_init(){
 
       	foreach ($roles as $role_value => $role_name) {
 
+          $checked = in_array( $role_value, $this->options['allowed_roles'] ) ? true : false;
+
           ?>
-          <p><input type="checkbox" name="<?php echo $this->option_name ; ?>[allowed_roles][]" value="<?php echo $role_value; ?>"><?php echo $role_name; ?></p>
+          <p><input type="checkbox" name="<?php echo $this->option_name ; ?>[allowed_roles][]"<?php echo true === $checked ? 'checked="checked"': '';?>><?php echo $role_name; ?></p>
           <?php
         	}
 
