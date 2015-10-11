@@ -41,7 +41,7 @@ class View_Form {
 
 		$roles_radio = $this->roles_radio();
 
-		$partial = include_once( dirname( __DIR__ ) . '/public/partials/user-reg-form.php' );
+		include_once( dirname( __DIR__ ) . '/public/partials/user-reg-form.php' );
 
 	}
 
@@ -52,7 +52,8 @@ class View_Form {
 	 */
 	public function roles_radio() {
 
-		$allowed_roles = $this->allowed_roles( array( 'staff_supervisor', 'staff_member' ) );
+		//$allowed_roles = $this->allowed_roles( array( 'staff_supervisor', 'staff_member' ) );
+		$allowed_roles = $this->allowed_roles();
 
 		ob_start();
 
@@ -77,6 +78,26 @@ class View_Form {
 
 	}
 
+	private function allowed_roles() {
+
+		$roles = get_option( 'carawebs_staff_area_data' )['allowed_roles'];
+		$allowed_roles = [];
+
+		global $wp_roles;
+
+		foreach ( $roles as $role ) {
+
+			$allowed_roles[] = [
+				'role'		=> $role,
+				'display'	=> $wp_roles->roles[$role]['name']
+			];
+
+		}
+
+		return $allowed_roles;
+
+	}
+
 	/**
 	 * Make an array of data for allowed roles to be used in the registration form.
 	 *
@@ -86,7 +107,7 @@ class View_Form {
 	 * @param 	array $roles an array of allowed role names
 	 * @return array  Associative array of roles and role names
 	 */
-	public function allowed_roles( $roles ) {
+	public function hardcoded_allowed_roles( $roles ) {
 
 		global $wp_roles;
 

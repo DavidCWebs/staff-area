@@ -30,26 +30,62 @@ namespace Staff_Area\Members;
 class Create_User {
 
   public $new_user_info = array();
+
   public $insert_user_error;
+
+  /**
+   * The new user's first name
+   * @var string
+   */
   public $firstname;
+
+  /**
+   * The new user's last name
+   * @var string
+   */
   public $lastname;
+
+  /**
+   * The new user's email address
+   * @var string
+   */
   public $email;
+
+  /**
+   * User Role: WP role for this user
+   * @var string role
+   */
   public $user_role;
-  public $coordinator_ID;
+
+  /**
+   * ID of the creating user
+   * @var string|int
+   */
+  public $manager_ID;
+
+  /**
+   * The new user's username
+   * @var string
+   */
   public $username;
+
+  /**
+   * The success message
+   * @var string
+   */
   public $success_message;
 
   /**
    * Construct method to set properties.
    * @param string $user_role This will be either 'student', 'supervisor'.
-   * @param int $coordinator_ID The originating coordinator's user ID
+   * @param int $manager_ID The originating manager's user ID
    * @param array $user_values
    *
    */
-  function __construct ( $user_role, $coordinator_ID, $user_values ) {
+  function __construct ( $user_role, $manager_ID, $user_values ) {
 
     $this->user_role      = $user_role;
-    $this->coordinator_ID = $coordinator_ID;
+    $this->manager_ID     = $manager_ID;
     $this->firstname      = $user_values['first_name'];
     $this->lastname       = $user_values['last_name'];
     $this->email          = $user_values['email'];
@@ -61,8 +97,11 @@ class Create_User {
    * Uses wp_insert_user to programmatically create a new user
    *
    * New user will have an auto-generated password.
-   * The user login is set to the email address. Uses add_user_meta to set the user role.
-   * @param  string $user_role User role: 'student' or 'supervisor'
+   * The user login is set to the email address.
+   *
+   * @uses    wp_generate_password()
+   * @uses    wp_insert_user()
+   * @uses    add_user_meta() to set the user role.
    * @return [type]            [description]
    *
    */
@@ -80,88 +119,71 @@ class Create_User {
       'user_nicename'   => $this->firstname,
     );
 
+    // Create the new user
     $user_id = wp_insert_user( $userdata ) ;
 
-      if ( is_wp_error( $user_id ) ) {
+    if ( is_wp_error( $user_id ) ) {
 
-        // If there is an error inserting a new user...
-        $insert_user_error = $user_id->get_error_message();
+      // If there is an error inserting a new user capture the message
+      $insert_user_error = $user_id->get_error_message();
 
-      } else {
+    } else {
 
-        // Set the user role
-        // ---------------------------------------------------------------------
-        $user = new \WP_User( $user_id );
-        $user->set_role( $this->user_role );
+      // Set the user role
+      $user = new \WP_User( $user_id );
+      $user->set_role( $this->user_role );
 
-        // Set the Student's Coordinator
-        // ---------------------------------------------------------------------
-        add_user_meta( $user_id, 'coordinator_id', $this->coordinator_ID); // $coordinator_id comes from the originating page
+      // Set the User's Manager - $this->manager_id comes from the originating page
+      add_user_meta( $user_id, 'manager_id', $this->manager_ID);
 
-        // Set the Company for the student/supervisor
-        // ---------------------------------------------------------------------
-        $company = get_user_meta( $this->coordinator_ID, 'company', true );
+      // Add new user info to the **managers** user meta data
+      $this->update_manager_meta( $user_id );
 
-        if ( !empty( $company )){
+      //$manager_info = get_userdata( $this->manager_ID );
+      //$manager_name = $manager_info->user_firstname . ' ' . $manager_info->user_lastname;
 
-          add_user_meta( $user_id, 'company', $company );
+      // Build an array that can be returned, for a success message
+      // ---------------------------------------------------------------------
+      $this->new_user_info = array(
+        'first_name'    => $user->user_firstname,
+        'last_name'     => $user->user_lastname,
+        'email'         => $user->user_email,
+        'login'         => $user->user_login,
+        'display_name'  => $user->user_nicename,
+      );
 
-        }
+      // Email new user
+      // ---------------------------------------------------------------------
+      //$this->email_new_user( $password );
+      $email = new Staff_Area\Includes\Email( $user->user_email, $user_id, $user_firstname, $user_lastname );
+      $email->email_new_user( $password );
 
-        // Add Student info to the **coordinators** user meta data
-        // ---------------------------------------------------------------------
-        if ( 'student' === $this->user_role ){
+      return true;
 
-          $coordinated_students = get_user_meta( $this->coordinator_ID, 'coordinated_students', true );
+    }
 
-          // First student, create the metadata
-          // -------------------------------------------------------------------
-          if ( empty ( $coordinated_students ) ){
+  }
 
-            $first_student = array( $user_id );
-            add_user_meta( $this->coordinator_ID, 'coordinated_students', $first_student );
+  private function update_manager_meta( $user_id ) {
 
-          }
+    $users_created = get_user_meta( $this->manager_ID, 'created_users', true );
 
-          // There are existing students, so add the user ID to existing array and update
-          // -------------------------------------------------------------------
-          if( !empty ( $coordinated_students ) ){
+    // First user, create the metadata
+    if ( empty ( $users_created ) ){
 
-            $coordinated_students[] = $user_id;
+      $first_user = array( $user_id );
+      add_user_meta( $this->manager_ID, 'created_users', $first_user );
 
-            update_user_meta( $this->coordinator_ID, 'coordinated_students', $coordinated_students );
+    }
 
-          }
+    // There are existing created users, so add the user ID to existing array and update
+    if( !empty ( $users_created ) ){
 
-        }
+      $users_created[] = $user_id;
 
-        $coordinator_info = get_userdata( $this->coordinator_ID );
-        $coordinator_name = $coordinator_info->user_firstname . ' ' . $coordinator_info->user_lastname;
+      update_user_meta( $this->manager_ID, 'created_users', $users_created );
 
-        // Build an array that can be returned, for a success message
-        // ---------------------------------------------------------------------
-        $this->new_user_info = array(
-          'first_name'    => $user->user_firstname,
-          'last_name'     => $user->user_lastname,
-          'email'         => $user->user_email,
-          'login'         => $user->user_login,
-          'display_name'  => $user->user_nicename,
-        );
-
-        // Moved the email function to CW_Assign_Workbook() for STUDENTS!
-        // Supervisors get an email and login on user creation - because we don't
-        // want to be resetting their password every time they are associated with
-        // a workbook.
-        // ---------------------------------------------------------------------
-        if ( 'supervisor' === $this->user_role ){
-
-          $this->email_new_user( $password );
-
-        }
-
-        return true;
-
-      }
+    }
 
   }
 

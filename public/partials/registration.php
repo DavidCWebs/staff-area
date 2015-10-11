@@ -1,10 +1,8 @@
 <?php
-//include_once( dirname ( dirname( __DIR__ ) ) . '/includes/class-carawebs-user-management-register.php');
-//use Member\Includes\Register;
 /**
- * Provide a public-facing view for the plugin
+ * New user registration
  *
- * This file is used to markup the public-facing aspects of the plugin.
+ * HTML markup for front-end user creation.
  *
  * @link       http://example.com
  * @since      1.0.0
@@ -22,8 +20,8 @@
   </div>
   <div class="col-md-6">
     <?php
-    $register = new Member\Includes\Register();
-    $register->userform_process_facade ( 1, $user_role = 'subscriber' );
+    $register = new Staff_Area\Members\Register( $current_user_ID );
+    $register->userform_process_facade ();
     ?>
   </div>
 </div>

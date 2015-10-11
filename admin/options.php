@@ -4,34 +4,47 @@ namespace Staff_Area\Admin;
 class Options {
 
   /**
-  * The ID of this plugin.
+  * The plugin name.
   *
-  * @since    1.0.0
-  * @access   private
-  * @var      string    $plugin_name    The ID of this plugin.
+  * @since  1.0.0
+  * @access private
+  * @var    string  $plugin_name  The plugin name.
   */
   private $plugin_name;
 
   /**
   * The version of this plugin.
   *
-  * @since    1.0.0
-  * @access   private
-  * @var      string    $version    The current version of this plugin.
+  * @since  1.0.0
+  * @access private
+  * @var    string  $version  The current version of this plugin.
   */
   private $version;
 
   /**
-  * The options name to be used in this plugin
+  * The unique options name used in this plugin
   *
-  * @since   1.0.0
-  * @access  private
-  * @var     string      $option_name    Option name of this plugin
+  * @since  1.0.0
+  * @access private
+  * @var    string  $option_name  Option name of this plugin
   */
   private $option_name;
 
+  /**
+   * Plugin settings from the options table
+   *
+   * @since  1.0.0
+   * @var    array   $options  Settings values from the options DB table
+   */
   private $options;
 
+  /**
+   * Set up properties
+   *
+   * @since 1.0.0
+   * @param string $plugin_name The plugin name
+   * @param string $version     The plugin version number
+   */
   public function __construct ( $plugin_name, $version ) {
 
     $this->plugin_name = $plugin_name;
@@ -44,7 +57,10 @@ class Options {
   /**
   * Add top-level menu page
   *
-  * The slug returned by `add_menu_page()` is the name of an action.
+  * The slug returned by `add_menu_page()` is the name of an action. This may be
+  * needed if targeting the menu page.
+  *
+  *  @since 1.0.0
   *
   */
   public function add_menu_page(){
@@ -53,7 +69,7 @@ class Options {
     __( 'Staff Area', $this->plugin_name ), // Page Title
     __( 'Staff Area', $this->plugin_name ), // Menu Title
     'manage_options',                       // Capability (admin)
-    $this->plugin_name,                     // Menu slug
+    "carawebs-".$this->plugin_name,         // Menu slug
     array( $this, 'display_page_content' ), // Callback function
     'dashicons-groups'                      // Icon
   );
@@ -76,7 +92,7 @@ public function display_page_content() {
 
   }
 
-  $this->options = get_option( $this->option_name );
+  //$this->options = get_option( $this->option_name );
 
   ?>
   <div class="wrap">
@@ -167,7 +183,7 @@ public function page_init(){
           $checked = in_array( $role_value, $this->options['allowed_roles'] ) ? true : false;
 
           ?>
-          <p><input type="checkbox" name="<?php echo $this->option_name ; ?>[allowed_roles][]"<?php echo true === $checked ? 'checked="checked"': '';?>><?php echo $role_name; ?></p>
+          <p><input type="checkbox" value="<?= $role_value; ?>" name="<?php echo $this->option_name ; ?>[allowed_roles][]"<?php echo true === $checked ? 'checked="checked"': '';?>><?php echo $role_name; ?></p>
           <?php
         	}
 

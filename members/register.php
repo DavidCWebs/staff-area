@@ -38,22 +38,23 @@ class Register {
 	*/
 	public function __construct() {
 
+		//$this->coord_ID = $coord_ID;
+
 	}
 
 	/**
-	* Facade function to control form validation, data processing and error/success reporting.
+	* Facade method to control form validation, data processing and error/success reporting.
 	*
-	* Main facade processing function for creating 'student' & 'supervisor' custom role users
-	* from front end form submissions.
+	* Main facade processing function for creating users from front end form submissions.
 	*
-	* @package StudentStudio
-	* @subpackage Users
-	* @param  string $coordinator_ID User ID for the coordinator
-	* @param  string $user_role      User role for the user being created
-	* @return mixed                  Success/error message
+	* @package Staff_Area
+	* @subpackage Members
+	* @param  string $coord_ID		User ID for the coordinator
+	* @param  string $user_role		User role for the user being created
+	* @return mixed								Success/error message
 	*
 	*/
-	function userform_process_facade ( $coordinator_ID = '', $user_role = '' ) {
+	function userform_process_facade () {
 
 		$success_message = '';
 
@@ -70,26 +71,26 @@ class Register {
 
 			// Define variables and set to empty values, then add $_POST data if set.
 			// -----------------------------------------------------------------------
-			$firstname = $email = $lastname = $user_role = '';
+			$firstname = $email = $lastname = $user_role = $coord_ID = '';
 
-			$firstname      = (isset($_POST['cwFirstname'])) ? $_POST['cwFirstname'] : $_POST['cw_firstname'];
-			$lastname       = (isset($_POST['cwLastname'])) ? $_POST['cwLastname'] : $_POST['cw_lastname'];
-			$email          = (isset($_POST['cwEmail'])) ? $_POST['cwEmail'] : $_POST['cw_email'];
-			$user_role      = (isset($_POST['cwUserRole'])) ? $_POST['cwUserRole'] : $_POST['role'];
-			$coordinator_ID = (isset($_POST['cwCoordID'])) ? $_POST['cwCoordID'] : $_POST['coordinator_ID']; // For Ajax submissions, these are set by ajax-reg.js by means of jQuery
-			$cw_ajax        = isset($_POST['cwAjax']) ? $_POST['cwAjax'] : false; // Set cw_ajax in the jQuery function - this allows a differential response for ajax submissions
+			$firstname	= isset( $_POST['cwFirstname'] )	? $_POST['cwFirstname']	: $_POST['cw_firstname'];
+			$lastname		= isset( $_POST['cwLastname'] )		? $_POST['cwLastname']	: $_POST['cw_lastname'];
+			$email			= isset( $_POST['cwEmail'] )			? $_POST['cwEmail']			: $_POST['cw_email'];
+			$user_role	= isset( $_POST['cwUserRole'] )		? $_POST['cwUserRole']	: $_POST['role'];
+			$coord_ID		= isset( $_POST['cwCoordID'] )		? $_POST['cwCoordID']		: $_POST['coordinator_ID']; // For Ajax submissions, these are set by ajax-reg.js by means of jQuery
+			$cw_ajax    = isset( $_POST['cwAjax'] )				? $_POST['cwAjax']			: false; // Set cw_ajax in the jQuery function - this allows a differential response for ajax submissions
 
 			$form = new Validator( $firstname, $lastname, $email );
-			$form->is_valid();
+			$form->is_valid(); // returns boolean true if no errors, otherwise $errors array
 			$errors = $form->get_errors(); // Get the validation errors, if they exist.
 
 			// Form data is valid
 			// -----------------------------------------------------------------------
-			if ( true === $form->is_valid() ) { // returns boolean true if no errors, otherwise $errors array
+			if ( true === $form->is_valid() ) {
 
 				// Create new user PASS SANITIZED VALUES HERE!
 				// ---------------------------------------------------------------------
-				$new_user = new Create_User( $user_role, $coordinator_ID, $form->get_sanitized_values() );
+				$new_user = new Create_User( $user_role, $coord_ID, $form->get_sanitized_values() );
 
 				// register a user, using values that have been checked for errors & sanitised
 				// If the user is created, $user_created will be set to true.
@@ -101,11 +102,11 @@ class Register {
 
 					if ( true === $cw_ajax ) {
 
-						$this->user_creation_success_message( $user_role, $new_user->new_user_info, $cw_ajax, $coordinator_ID );
+						$this->user_creation_success_message( $user_role, $new_user->new_user_info, $cw_ajax, $coord_ID );
 
 					} else {
 
-						$success_message = $this->user_creation_success_message( $user_role, $new_user->new_user_info, $cw_ajax, $coordinator_ID );
+						$success_message = $this->user_creation_success_message( $user_role, $new_user->new_user_info, $cw_ajax, $coord_ID );
 
 					}
 
@@ -143,7 +144,6 @@ class Register {
 		}
 
 		$view = new View_Form();
-
 		echo $view->render();
 
 		echo '<div class="indicator">Please wait...</div>';
@@ -205,7 +205,7 @@ class Register {
 	* @see userform_process_facade()
 	*
 	*/
-	function user_creation_success_message( $user_role, $new_user_details, $cw_ajax, $coordinator_ID ){
+	function user_creation_success_message( $user_role, $new_user_details, $cw_ajax, $coord_ID ){
 
 		// Build a success message
 		// -------------------------------------------------------------------------
@@ -219,7 +219,7 @@ class Register {
 		</ul>
 		You can create more {$user_role}s using the above form if you like.";
 
-		//$next_steps = $this->next_steps_message ( $user_role, $coordinator_ID );
+		//$next_steps = $this->next_steps_message ( $user_role, $coord_ID );
 
 		// Success Return for Ajax
 		// -------------------------------------------------------------------------
