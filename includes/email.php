@@ -62,18 +62,18 @@ class Email {
   * @return [type]           [description]
   *
   */
-  public function email_new_user( $password ){
+  public function email_new_user( $password ) {
+
+    $login_url = esc_url( home_url('/staff') );
 
     // Email the user
     if ( 'staff_member' === $this->user_role ){
 
-      $email_slug = 'staff-member-introduction';
-      $login_url = esc_url( home_url('/student') );
+      $mailmessage = apply_filters( 'the_content', get_option('carawebs_staff_area_data')['staff_email_content'] );
 
-    } elseif ( 'supervisor' === $this->user_role ){
+    } elseif ( 'staff_supervisor' === $this->user_role ){
 
-      $email_slug = 'supervisor-introduction';
-      $login_url = esc_url( home_url('/supervisor') );
+      $mailmessage = apply_filters( 'the_content', get_option('carawebs_staff_area_data')['supervisor_email_content'] );
 
     }
 
@@ -84,31 +84,13 @@ class Email {
 
     });
 
-    $headers = 'From: ' . $this->admin_email . "\r\n";
+    $headers = 'From: "School Food" ' . '<' . $this->admin_email . '>\r\n';
     $welcome = 'Welcome, ' . $this->firstname . '!';
 
-    // Target email CPT by slug.
-    $args = array(
-      'name' => $email_slug,
-      'post_type' => 'email',
-      'post_status' => 'publish',
-      'showposts' => 1,
-    );
+    $mailmessage .= "<hr><p>Your username is: $this->user_email (yes, your email address!)</p><p>Your password is: $password</p>";
+    $mailmessage .= "<p><a href='$login_url'>Login to" . get_bloginfo() . "</a></p>";
 
-    $my_posts = get_posts( $args );
-
-    if( $my_posts ) {
-
-      $post_id = $my_posts[0]->ID;
-
-    }
-
-    $post_object = get_post( $post_id );
-    $mailmessage = apply_filters( 'the_content', $post_object->post_content ); // Build a mail message from the content of a post.
-    $mailmessage .= "<hr><p>Your username is: $this->email (yes, your email address!)</p><p>Your password is: $password</p>";
-    $mailmessage .= "<p><a href='$login_url'>Login to Student Studio.</a></p>";
-
-    wp_mail( $this->email, $welcome, $mailmessage, $headers );
+    wp_mail( $this->user_email, $welcome, $mailmessage, $headers );
 
   }
 

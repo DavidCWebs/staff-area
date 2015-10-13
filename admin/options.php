@@ -243,7 +243,13 @@ class Options {
 
     foreach ($roles as $role_value => $role_name) {
 
-      $checked = in_array( $role_value, $this->options['allowed_roles'] ) ? true : false;
+      $checked = false;
+
+      if( isset( $this->options['allowed_roles'] ) ){
+
+        $checked = in_array( $role_value, $this->options['allowed_roles'] ) ? true : false;
+
+      }
 
       ?>
       <p><input type="checkbox" value="<?= $role_value; ?>" name="<?php echo $this->option_name ; ?>[allowed_roles][]"<?php echo true === $checked ? 'checked="checked"': '';?>><?php echo $role_name; ?></p>

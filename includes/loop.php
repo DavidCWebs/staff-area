@@ -38,6 +38,11 @@ class Loop {
   protected $div_class;
 
   /**
+   * Section Title
+   * @var string
+   */
+  protected $section_title;
+  /**
   * Set up the default arguments for WP_Query.
   *
   * Pass in an array to override or extend the default arguments.
@@ -58,7 +63,8 @@ class Loop {
       $override
     );
 
-    $this->div_class = "resources";
+    $this->div_class      = "resources";
+    $this->section_title  = "Staff Resources";
 
   }
 
@@ -78,6 +84,8 @@ class Loop {
     $staff_resource_query = new \WP_Query( $args );
 
     if ( $staff_resource_query->have_posts() ) {
+
+      echo"<h2>$this->section_title</h2>";
 
       // Include filter markup if filter is specified
       // -----------------------------------------------------------------------

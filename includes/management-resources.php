@@ -1,6 +1,5 @@
 <?php
 namespace Staff_Area\Includes;
-//include_once( plugin_dir_path( __FILE__ ) . 'class-staff-area-loop.php' );
 /**
  * The file that defines the Loops class
  *
@@ -45,7 +44,8 @@ class Management_Resources extends Loop {
       $override
     );
 
-    $this->div_class = "management-resources";
+    $this->div_class      = "management-resources";
+    $this->section_title  = "Management Resources";
 
   }
 

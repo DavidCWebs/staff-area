@@ -7,16 +7,17 @@
  * Each div must have the resource title slugified as the first class.
  *
  */
+
 ?>
 <form role="form" class="form-inline resource-search">
   <div class="form-group">
     <div class="custom-input-group" style="position: relative;display: inline-block;">
-      <input placeholder="Search Resources" id="<?php echo 'management_resource_category' == $filter_tax ? 'management-' : null;?>resource-search" type="text" class="input-lg form-control" />
+      <input placeholder="Search Resources" id="resource-search" type="text" class="input-lg form-control" />
     </div>
-    <a href="#" id="<?php echo 'management_resource_category' == $filter_tax ? 'management-' : null;?>showall" class="btn btn-primary btn-lg grey">All Resources</a>
+    <a href="#" id="showall" class="btn btn-primary btn-lg grey">All Resources</a>
     <?php
 
-    $terms = !empty( $filter_tax ) ? get_terms( $filter_tax ) : null;
+    $terms = get_terms( 'resource_category' );
 
     if ( ! empty( $terms ) ) {
 
@@ -28,15 +29,16 @@
 
       }
 
-      ?>
-      <div id="select-<?php echo 'management_resource_category' == $filter_tax ? 'management-' : null;?>resource-category" class="form-group dropdown">
-      <a href="#" class="btn btn-primary btn-lg grey dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Filter by Topic<!-- <span class="caret"></span>--></a>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="select-product">
-      <?php echo $sectors; ?>
-      <li class="<?php echo 'management_resource_category' == $filter_tax ? 'management-' : null;?>resource"><a href="#">Show All Resources</a></li>
-      </ul>
+      echo <<<EOF
+      <div id="select-resource-category" class="form-group dropdown">
+        <a href="#" class="btn btn-primary btn-lg grey dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Filter by Topic<!-- <span class="caret"></span>--></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="select-product">
+          $sectors
+          <li class="resource"><a href="#">Show All Resources</a></li>
+        </ul>
       </div>
-      <?php
+      <hr>
+EOF;
 
     }
 

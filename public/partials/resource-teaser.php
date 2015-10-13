@@ -12,7 +12,5 @@ $slug_name    = get_post_field( 'post_name', $resource_ID );
   </h3>
   <?php the_excerpt(); ?>
   <a href="<?php the_permalink(); ?>">Read More &raquo;</a>
-  <p>
-    <?php echo "Categories: ". get_the_term_list( $resource_ID, $taxonomy, '', ', ' ); ?>
-  </p>
+  <?php echo !empty( $term_list ) ? "<p>Categories: " . get_the_term_list( $resource_ID, $taxonomy, '', ', ' ) . "</p>" : null; ?>
 </div>

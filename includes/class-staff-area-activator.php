@@ -31,13 +31,13 @@ class Staff_Area_Activator {
 	 */
 	public static function activate() {
 
-		include_once( plugin_dir_path( __FILE__ ) . 'class-staff-area-roles.php' );
+		//include_once( plugin_dir_path( __FILE__ ) . 'class-staff-area-roles.php' );
 
 		// Staff member role
-		Carawebs\Staff\Roles::staff_member_roles_and_caps();
+		Staff_Area\Includes\Roles::staff_member_roles_and_caps();
 
 		// Unit manager role
-		Carawebs\Staff\Roles::staff_manager_roles_and_caps();
+		Staff_Area\Includes\Roles::staff_manager_roles_and_caps();
 
 	}
 

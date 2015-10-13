@@ -158,8 +158,8 @@ class Staff_Area {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		// Plugin options
-		//$this->loader->add_action( 'admin_menu', $plugin_options, 'add_options_page' );
+		// Add a custom body class to plugin pages
+		//$this->loader->add_filter( 'body_class', $plugin_admin, 'add_body_class' );
 
 		// Menu page
 		// -------------------------------------------------------------------------
