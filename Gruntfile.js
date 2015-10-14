@@ -7,9 +7,10 @@ module.exports = function(grunt) {
   // Array of jquery, Bootstrap and custom JS - to be concatenated and minified to a single file
   // ---------------------------------------------------------------------------
   var jsPublicFileList = [
-    'bower_components/jquery.fitvids/jquery.fitvids.js',
-    'bower_components/jquery/dist/jquery.js'
-    //'assets/js/custom/navbar-shrink.js',
+    //'bower_components/jquery.fitvids/jquery.fitvids.js',
+    //'public/js/fitvids-control.js'
+    'public/js/registration.js',
+    'public/js/resource-filter.js',
   ];
 
   // Project configuration.

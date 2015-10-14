@@ -54,7 +54,7 @@ class Loop {
 
       $this->args = array_merge( array (
       //'post_type'              => array( 'staff_resource' ),
-      'post_type'              => 'staff_resource',
+      'post_type'              => 'staff-resource',
       'post_status'            => array( 'publish' ),
       'posts_per_page'         => '-1',
       'order'                  => 'ASC',
@@ -167,15 +167,17 @@ class Loop {
 
     $filter_tax = '';
 
-    if ( 'staff_resource' === $post_type ) {
+    if ( 'staff-resource' === $post_type ) {
 
       $filter_tax = 'resource_category';
+      $filter_ID  = 'select-resource-category';
 
     }
 
-    if ( 'management_resource' === $post_type ) {
+    if ( 'management-resource' === $post_type ) {
 
       $filter_tax = 'management_resource_category';
+      $filter_ID  = 'select-management-resource-category';
 
     }
 

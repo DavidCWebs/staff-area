@@ -35,7 +35,7 @@ class Management_Resources extends Loop {
   public function __construct( $override = [] ) {
 
     $this->args = array_merge( array (
-      'post_type'              => 'management_resource',
+      'post_type'              => 'management-resource',
       'post_status'            => array( 'publish' ),
       'posts_per_page'         => '-1',
       'order'                  => 'ASC',

@@ -31,13 +31,32 @@ class Staff_Area_Activator {
 	 */
 	public static function activate() {
 
-		//include_once( plugin_dir_path( __FILE__ ) . 'class-staff-area-roles.php' );
-
 		// Staff member role
-		Staff_Area\Includes\Roles::staff_member_roles_and_caps();
+		Staff_Area\Admin\Roles::staff_member_roles_and_caps();
 
 		// Unit manager role
-		Staff_Area\Includes\Roles::staff_manager_roles_and_caps();
+		Staff_Area\Admin\Roles::staff_manager_roles_and_caps();
+
+		$custom_post_types = new Staff_Area\Admin\CPT();
+
+		// Register 'staff_resource' Custom Post Type
+		//$this->loader->add_action( 'init', $custom_post_types, 'staff_resource_init' );
+		$custom_post_types->staff_resource_init();
+
+		// Register a custom taxonomy for staff resource & management resource CPTs
+		//$this->loader->add_action( 'init', $custom_post_types, 'staff_resource_taxonomy' );
+		$custom_post_types->staff_resource_taxonomy();
+
+		// Register 'management_resource' Custom Post Type
+		//$this->loader->add_action( 'init', $custom_post_types, 'management_resource_init' );
+		$custom_post_types->management_resource_init();
+
+		// Register a custom taxonomy for management resource CPTs
+		//$this->loader->add_action( 'init', $custom_post_types, 'management_resource_taxonomy' );
+		$custom_post_types->management_resource_taxonomy();
+
+
+		flush_rewrite_rules();
 
 	}
 

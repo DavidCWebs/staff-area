@@ -80,6 +80,17 @@ class Register {
 			$coord_ID		= isset( $_POST['cwCoordID'] )		? $_POST['cwCoordID']		: $_POST['coordinator_ID']; // For Ajax submissions, these are set by ajax-reg.js by means of jQuery
 			$cw_ajax    = isset( $_POST['cwAjax'] )				? $_POST['cwAjax']			: false; // Set cw_ajax in the jQuery function - this allows a differential response for ajax submissions
 
+			// Only allow PHP form submission from the specified page
+			if ( false === $cw_ajax ) {
+
+				if ( ! is_page( 'staff-registration' ) ) {
+
+					exit ( "You can't submit the form from this page." );
+
+				}
+
+			}
+
 			$form = new Validator( $firstname, $lastname, $email );
 			$form->is_valid(); // returns boolean true if no errors, otherwise $errors array
 			$errors = $form->get_errors(); // Get the validation errors, if they exist.
@@ -189,7 +200,7 @@ class Register {
 	* Build a relevant message on user-creation success.
 	*
 	* 	$new_user_info = array(
-	*   	'first_name'    => $user->user_firstname,
+	*    'first_name'    => $user->user_firstname,
 	*    'last_name'     => $user->user_lastname,
 	*    'email'         => $user->user_email,
 	*    'login'         => $user->user_login,

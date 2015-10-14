@@ -12,12 +12,12 @@
 <form role="form" class="form-inline resource-search">
   <div class="form-group">
     <div class="custom-input-group" style="position: relative;display: inline-block;">
-      <input placeholder="Search Resources" id="resource-search" type="text" class="input-lg form-control" />
+      <input placeholder="Search Resources" id="<?php echo 'management_resource_category' == $filter_tax ? 'management-' : ''; ?>resource-search" type="text" class="input-lg form-control" />
     </div>
-    <a href="#" id="showall" class="btn btn-primary btn-lg grey">All Resources</a>
+    <a href="#" id="<?php echo 'management_resource_category' == $filter_tax ? 'management-' : ''; ?>showall" class="btn btn-primary btn-lg grey">All Resources</a>
     <?php
 
-    $terms = get_terms( 'resource_category' );
+    $terms = get_terms( $filter_tax );
 
     if ( ! empty( $terms ) ) {
 
@@ -30,7 +30,7 @@
       }
 
       echo <<<EOF
-      <div id="select-resource-category" class="form-group dropdown">
+      <div id="$filter_ID" class="form-group dropdown">
         <a href="#" class="btn btn-primary btn-lg grey dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Filter by Topic<!-- <span class="caret"></span>--></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="select-product">
           $sectors

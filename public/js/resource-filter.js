@@ -12,6 +12,8 @@
 
 			event.preventDefault();
 
+			//alert('clicked');
+
 			var valThis = $( this ).parent().attr( "class" );
 
 			$( "#resources > div" ).each( function() {

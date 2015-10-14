@@ -71,7 +71,6 @@ class Staff_Area_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
 		/**
 		 * Enqueue the jQuery filter script on the specified pages.
 		 * @TODO: Pass in an array of pages for the filter - set in an options page with sensible defaults.
@@ -79,16 +78,15 @@ class Staff_Area_Public {
 		 */
 		$filter_pages = ['staff'];
 
-		if (is_page ( $filter_pages ) ) {
+		if ( is_page ( $filter_pages ) ) {
 
 				wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/resource-filter.js', array( 'jquery' ), $this->version, false );
 
 		}
-
 		/**
 		 * Staff Registration Sctipts
 		 */
-		if (is_page('staff-registration') ) {
+		if ( is_page('staff-registration' ) ) {
 
       wp_register_script('carawebs_user_reg_script', plugin_dir_url( __FILE__ ) . 'js/registration.js', array('jquery'), null, false);
 
@@ -179,25 +177,6 @@ function block_dashboard() {
 	    wp_redirect( home_url() );
 
 	    exit;
-
-	  }
-
-	}
-
-	/**
-	 * Control access to the WordPress toolbar
-	 *
-	 * @return [type] [description]
-	 */
-	function control_admin_toolbar() {
-
-	  if ( current_user_can( 'administrator' ) ||  current_user_can( 'edit_pages' ) ) {
-
-	    show_admin_bar( true );
-
-	  } else {
-
-	    show_admin_bar( false );
 
 	  }
 

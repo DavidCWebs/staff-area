@@ -151,9 +151,10 @@ class Staff_Area {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin		= new Staff_Area_Admin( $this->get_staff_area(), $this->get_version() );
-		$form_processor	= new Staff_Area\Members\Register();
-		$plugin_options = new Staff_Area\Admin\Options( $this->get_staff_area(), $this->get_version() );
+		$plugin_admin				= new Staff_Area_Admin( $this->get_staff_area(), $this->get_version() );
+		$form_processor			= new Staff_Area\Members\Register();
+		$plugin_options			= new Staff_Area\Admin\Options( $this->get_staff_area(), $this->get_version() );
+		$custom_post_types	= new Staff_Area\Admin\CPT();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -177,30 +178,28 @@ class Staff_Area {
 		$this->loader->add_filter( 'template_include', $plugin_admin, 'staff_registration_page_template' );
 
 		// Register 'staff_resource' Custom Post Type
-		$this->loader->add_action( 'init', $plugin_admin, 'staff_resource_init' );
+		$this->loader->add_action( 'init', $custom_post_types, 'staff_resource_init' );
 
 		// Register a custom taxonomy for staff resource & management resource CPTs
-		$this->loader->add_action( 'init', $plugin_admin, 'staff_resource_taxonomy' );
-
-		// Messages for Staff Resource CPT
-		$this->loader->add_action( 'post_updated_messages', $plugin_admin, 'staff_resource_updated_messages' );
+		$this->loader->add_action( 'init', $custom_post_types, 'staff_resource_taxonomy' );
 
 		// Register 'management_resource' Custom Post Type
-		$this->loader->add_action( 'init', $plugin_admin, 'management_resource_init' );
-
-		// Messages for 'management_resource' Custom Post Type
-		$this->loader->add_action( 'post_updated_messages', $plugin_admin, 'management_resource_updated_messages' );
+		$this->loader->add_action( 'init', $custom_post_types, 'management_resource_init' );
 
 		// Register a custom taxonomy for management resource CPTs
-		$this->loader->add_action( 'init', $plugin_admin, 'management_resource_taxonomy' );
+		$this->loader->add_action( 'init', $custom_post_types, 'management_resource_taxonomy' );
+
+		// Messages for Staff Resource CPT
+		$this->loader->add_action( 'post_updated_messages', $custom_post_types, 'staff_resource_updated_messages' );
+
+		// Messages for 'management_resource' Custom Post Type
+		$this->loader->add_action( 'post_updated_messages', $custom_post_types, 'management_resource_updated_messages' );
 
 		// Block dashboard for all users except admin & editor
 		$this->loader->add_action( 'init', $plugin_admin, 'dashboard_block' );
 
 		// Filter template loader for custom templates
 		$this->loader->add_filter( 'template_include', $plugin_admin, 'staff_resource_page_template' );
-
-
 
 	}
 
@@ -213,7 +212,8 @@ class Staff_Area {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Staff_Area_Public( $this->get_staff_area(), $this->get_version() );
+		$plugin_public	= new Staff_Area_Public( $this->get_staff_area(), $this->get_version() );
+		$toolbar				= new Staff_Area\Members\Toolbar();
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -224,8 +224,11 @@ class Staff_Area {
 		// Block dashboard
 		$this->loader->add_action( 'init', $plugin_public, 'block_dashboard' );
 
-		// Control Toolbar
-		//$this->loader->add_action('wp', $plugin_public, 'control_admin_toolbar');
+		// Amend Toolbar
+		//$this->loader->add_action( 'admin_bar_menu', $toolbar, 'edit_toolbar', 999 );
+		//
+		// Block toolbar for staff
+		//$this->loader->add_action('wp', $toolbar, 'control_admin_toolbar');
 
 	}
 

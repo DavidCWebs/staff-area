@@ -1,5 +1,5 @@
 <?php
-namespace Staff_Area\Includes;
+namespace Staff_Area\Admin;
 /**
  * The file that defines the Loops class
  *
