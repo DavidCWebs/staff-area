@@ -107,4 +107,100 @@ class Staff_Area_Public {
 
 	}
 
+	/**
+	 * Redirect user after successful login
+	 *
+	 * @param string $redirect_to URL to redirect to.
+	 * @param string $request URL the user is coming from.
+	 * @param object $user Logged user's data.
+	 * @return string
+	 */
+	public function login_redirect( $redirect_to, $request, $user ) {
+
+		//is there a user to check?
+	  global $user;
+
+	  if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+
+	    //check for admins
+	    if ( in_array( 'administrator', $user->roles ) ) {
+
+				//$redirect_to = home_url('/about/');
+				return $redirect_to; // the default url
+
+	    } elseif ( in_array( 'editor', $user->roles ) ) {
+
+	      return $redirect_to; // the default url
+
+	    } elseif( in_array( 'staff_supervisor', $user->roles ) ) {
+
+	      $redirect_to = home_url('/staff/');
+	      return $redirect_to;
+
+	    } elseif( in_array( 'staff_member', $user->roles ) ) {
+
+	      $redirect_to = home_url('/staff/');
+	      return $redirect_to;
+
+	    }
+
+	  } else {
+
+			$redirect_to = home_url('/staff/');
+
+	    return $redirect_to;
+
+	  }
+
+	}
+
+/**
+ * Prevent all users except administrators & editors from accessing the WP Dashboard
+ *
+ * Don't want student, supervisor or coordinator users accessing the WP Dashboard.
+ *
+ * @package StudentStudio
+ * @subpackage Users
+ * @see http://premium.wpmudev.org/blog/limit-access-to-your-wordpress-dashboard/
+ * @see https://yoast.com/separate-frontend-admin-code/ &
+ * @see http://wordpress.stackexchange.com/questions/70676/how-to-check-if-i-am-in-admin-ajax
+ *
+ * @return void
+ */
+function block_dashboard() {
+
+	//  Check if the Dashboard or the administration panel is attempting to be displayed.
+	if ( is_admin() &&
+    ! current_user_can( 'administrator' ) &&			// admin user
+    ! current_user_can( 'edit_pages') &&					// editor user
+    ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) // for when admin_ajax.php is used to process ajax requests
+    {
+
+	    wp_redirect( home_url() );
+
+	    exit;
+
+	  }
+
+	}
+
+	/**
+	 * Control access to the WordPress toolbar
+	 *
+	 * @return [type] [description]
+	 */
+	function control_admin_toolbar() {
+
+	  if ( current_user_can( 'administrator' ) ||  current_user_can( 'edit_pages' ) ) {
+
+	    show_admin_bar( true );
+
+	  } else {
+
+	    show_admin_bar( false );
+
+	  }
+
+	}
+
 }

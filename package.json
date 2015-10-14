@@ -1,0 +1,27 @@
+{
+  "name": "staff-area",
+  "version": "1.0.0",
+  "description": "WordPress Plugin for Staff Management",
+  "main": "staff-area.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidCWebs/staff-area.git"
+  },
+  "author": "David Egan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DavidCWebs/staff-area/issues"
+  },
+  "homepage": "https://github.com/DavidCWebs/staff-area#readme",
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-sass": "~0.4.0",
+    "grunt-contrib-uglify": "^0.9.1",
+    "matchdep": "~0.1.2"
+  }
+}

@@ -167,6 +167,9 @@ class Staff_Area {
 		//$this->loader->add_action( 'admin_menu', $plugin_options, 'add_options_page' );
 		$this->loader->add_action( 'admin_init', $plugin_options, 'page_init' );
 
+		// Email "from" field
+		//$this->loader->add_filter( 'wp_mail_from', $plugin_admin, 'email_from' );
+
 		// Ajax processor callback for user registration
 		$this->loader->add_action( 'wp_ajax_register_new_user', $form_processor, 'userform_process_facade');
 
@@ -214,6 +217,15 @@ class Staff_Area {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		// Redirects
+		$this->loader->add_filter( 'login_redirect', $plugin_public, 'login_redirect', 10, 3 );
+
+		// Block dashboard
+		$this->loader->add_action( 'init', $plugin_public, 'block_dashboard' );
+
+		// Control Toolbar
+		//$this->loader->add_action('wp', $plugin_public, 'control_admin_toolbar');
 
 	}
 
