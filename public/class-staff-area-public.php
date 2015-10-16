@@ -152,6 +152,21 @@ class Staff_Area_Public {
 
 	}
 
+	/**
+   * this needs to be output in <head>
+   *
+   * @return void
+   */
+  public function process_read_status() {
+
+    if ( is_singular( array( 'staff-resource', 'management-resource' ) ) ) {
+
+      Staff_Area\User_Input\Confirm::form_processor();
+
+    }
+
+  }
+
 /**
  * Prevent all users except administrators & editors from accessing the WP Dashboard
  *

@@ -215,7 +215,10 @@ class Staff_Area {
 		$plugin_public	= new Staff_Area_Public( $this->get_staff_area(), $this->get_version() );
 		$toolbar				= new Staff_Area\Members\Toolbar();
 
+		// Enqueue styles
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+
+		// Enqueue scripts
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		// Redirects
@@ -226,10 +229,13 @@ class Staff_Area {
 
 		// Amend Toolbar
 		$this->loader->add_action( 'admin_bar_menu', $toolbar, 'edit_toolbar', 999 );
-
 		$this->loader->add_action( 'wp_before_admin_bar_render', $toolbar, 'custom_toolbar', 999 );
+
 		// Block toolbar for staff
 		$this->loader->add_action('wp', $toolbar, 'control_admin_toolbar');
+
+		// Confirmation form processor
+		$this->loader->add_action( 'wp', $plugin_public, 'process_read_status' );
 
 	}
 

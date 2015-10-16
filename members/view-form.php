@@ -77,6 +77,16 @@ class View_Form {
 
 	}
 
+	/**
+	 * Make an array of data for allowed roles to be used in the registration form.
+	 *
+	 * Returns an associative array of allowed roles and role (display) names. Roles are
+	 * selected by admin users in the plugin options page.
+	 *
+	 * @see Options()
+	 * @uses get_option()
+	 * @return array  Associative array of roles and role names
+	 */
 	private function allowed_roles() {
 
 		$roles = get_option( 'carawebs_staff_area_data' )['allowed_roles'];
@@ -98,11 +108,11 @@ class View_Form {
 	}
 
 	/**
-	 * Make an array of data for allowed roles to be used in the registration form.
+	 * Make a hardcoded array of data for allowed roles to be used in the registration form.
 	 *
 	 * Returns an associative array of allowed roles and role (display) names.
 	 *
-	 * @TODO		Allowed roles should be passed in from an options page.
+	 * @deprecated
 	 * @param 	array $roles an array of allowed role names
 	 * @return array  Associative array of roles and role names
 	 */
