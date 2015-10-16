@@ -35,7 +35,9 @@ class Confirm {
   }
 
   /**
-   * this needs to be output in <head>
+   * Form processor for the "mark as read" form.
+   *
+   * This needs to be output in <head> - it is for PHP form submission.
    *
    * @return void
    */
@@ -73,31 +75,36 @@ class Confirm {
   /**
    * Output a simple checkbox with a message
    *
-   * @return HTML form
+   * User is prompted to check the box - indicating that they have read the resource.
+   *
+   * @return string HTML form
    */
-  public function form() {
+  public function form( $current_user_ID ) {
 
     $checked = false !== $this->is_marked_read() ? 'checked' : '';
 
     ob_start();
 
     ?>
-    <p>Please tick the box and click the button to show that you have read this article:</p>
-    <form class="form-horizontal" method="post" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?> ">
+    <form id="mark-as-read" class="form-horizontal" method="post" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?> ">
+      <p>Please tick the box and click the button to show that you have read this article:</p>
       <fieldset>
         <div class="form-group">
           <div class="col-md-1">
             <div class="checkbox">
               <label for="checkboxes-0">
-                <input type="checkbox" name="read_confirmation" id="checkboxes-0" value="1" style="transform: scale(1.5);-webkit-transform: scale(1.5);"<?php echo $checked; ?>>
+                <input type="checkbox" name="read_confirmation" id="confirmation-checkbox" value="1" style="transform: scale(1.5);-webkit-transform: scale(1.5);"<?php echo $checked; ?>>
               </label>
           	</div>
           </div>
           <?php wp_nonce_field( 'staff_area_action_read_confirm','staff_area_cw_read_confirm', true, true ); // action, name (for $_POST) ?>
-            <input type="submit" name="cw_confirm" class="btn btn-primary btn-lg" id="submit-confirmation" value="Yes! I've read this" />
+          <input type="hidden" name="post_id" id="cwPostID" value="<?php echo get_the_ID(); ?>">
+          <input type="hidden" name="user_id" id="cwUserID" value="<?php echo $current_user_ID; ?>">
+          <input type="submit" name="cw_confirm" class="btn btn-primary btn-lg" id="submit-confirmation" value="Yes! I've read this" />
         </div>
       </fieldset>
     </form>
+    <div id="result-message"></div>
     <?php
 
     if ( isset( $_POST['cw_confirm']) && !isset( $_POST['read_confirmation'] ) ) {
@@ -111,10 +118,22 @@ class Confirm {
   }
 
   /**
-   * [update_user_records description]
-   * @param  [type] $user_ID [description]
-   * @param  [type] $post_ID [description]
-   * @return [type]          [description]
+   * Keep a record of resources marked as read in the user's postmeta
+   *
+   * An array called 'resources_completed' is added to the user's postmeta table.
+   * The resource post ID is held along with a timestamp that is created when the user
+   * submits the "I have read this article" form.
+   *
+   * This must be accessible by the form processing function which is hooked to 'wp',
+   * so the method is static.
+   *
+   * @uses get_user_meta()
+   * @uses time()
+   * @uses add_user_meta()
+   * @uses update_user_meta()
+   * @param  string|int $user_ID The user ID
+   * @param  string|int $post_ID The post ID for the resource
+   * @return void
    */
   public static function update_user_records( $user_ID, $post_ID ) {
 
@@ -133,6 +152,8 @@ class Confirm {
 
       add_user_meta( $user_ID, 'resources_completed', $completion_record );
 
+      return;
+
     }
 
     // There are existing records, so add and update
@@ -147,10 +168,21 @@ class Confirm {
 
       update_user_meta( $user_ID, 'resources_completed', $resources_completed );
 
+      return;
+
     }
 
   }
 
+  /**
+   * Determine if a resource CPT has been marked as "read" by the user
+   *
+   * If it has, return an array of the post_ID and the timestamp. If it has NOT,
+   * return boolean false.
+   *
+   * @uses get_user_meta()
+   * @return array|boolean array of post ID and timestamp or false
+   */
   public function is_marked_read() {
 
     $key = 'resource_' . $this->post_ID;
@@ -168,5 +200,65 @@ class Confirm {
     }
 
   }
+
+  /**
+   * Ajax processor for the "marke as read" form
+   *
+   * @TODO double check validation as I'm tired!
+   * @TODO add success/error report from the update user records method
+   * @return [type] [description]
+   */
+  public static function ajax_form_processor() {
+
+    // Not too performant - better to pass hidden values in form
+    //$url     = wp_get_referer();
+    //$post_id = url_to_postid( $url );
+
+    if ( !empty( $_POST ) ) {
+
+			// check to see if the submitted nonce matches the generated nonce: $_POST['name'], action
+			if ( ! wp_verify_nonce( $_POST['cwMarkNonce'], 'staff_area_action_read_confirm' ) ) {
+
+				die ( 'Sorry, but the security check has failed and we can\'t process this form');
+
+			}
+
+      // do something if the box not checked
+      // -----------------------------------------------------------------------
+      //isset( $_POST['cwMarkRead'] )
+
+      if ( isset( $_POST['cwSubmitted'] ) && "1" === $_POST['cwMarkRead']) {
+
+        $post_ID = (int) $_POST['cwPostID'];
+        $user_ID = (int) $_POST['cwUserID'];
+
+        Confirm::update_user_records( $user_ID, $post_ID );
+        Confirm::success_message();
+
+      }
+
+    }
+
+  }
+
+  public static function success_message(  ){
+
+		// Build a success message
+		// -------------------------------------------------------------------------
+		$success = "You've just told us that you have read this staff-resource. Thanks!";
+
+		// Success Return for Ajax
+		// -------------------------------------------------------------------------
+		//if ( true == $ajax ) {
+
+			$response               = array(); // this will be a JSON array
+			$response['status']     = 'success';
+			$response['message']    = $success;
+
+			return wp_send_json( $response ); // sends $response as a JSON object
+
+		//}
+
+	}
 
 }

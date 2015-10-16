@@ -27,7 +27,7 @@ if( "1" === get_post_meta( get_the_ID(), 'include_status', 'text', TRUE ) ) {
 
   if ( false === $marked ){
 
-    echo $confirm_status->form();
+    echo $confirm_status->form( $current_user_ID );
 
   }
 

@@ -237,6 +237,9 @@ class Staff_Area {
 		// Confirmation form processor
 		$this->loader->add_action( 'wp', $plugin_public, 'process_read_status' );
 
+		// Confirmation form AJAX processor
+		$this->loader->add_action( 'wp_ajax_mark_as_read', $plugin_public, 'ajax_process_read_status' );
+
 	}
 
 	/**

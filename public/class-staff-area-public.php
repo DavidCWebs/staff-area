@@ -80,7 +80,20 @@ class Staff_Area_Public {
 
 		if ( is_page ( $filter_pages ) ) {
 
-				wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/resource-filter.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/resource-filter.js', array( 'jquery' ), $this->version, false );
+
+		}
+
+		if ( is_singular( array( 'staff-resource', 'management-resource' ) ) ) {
+
+			wp_register_script( 'carawebs_resource_script', plugin_dir_url( __FILE__ ) . 'js/confirm-as-read.js', array( 'jquery' ), $this->version, false );
+
+			wp_enqueue_script( 'carawebs_resource_script' );
+
+		  wp_localize_script( 'carawebs_resource_script', 'carawebsRegVars', array(
+        'carawebsAjaxURL' => admin_url( 'admin-ajax.php' ),
+        )
+      );
 
 		}
 		/**
@@ -165,6 +178,17 @@ class Staff_Area_Public {
 
     }
 
+  }
+
+	/**
+   * this needs to be output in <head>
+   *
+   * @return void
+   */
+  public function ajax_process_read_status() {
+
+    Staff_Area\User_Input\Confirm::ajax_form_processor();
+		
   }
 
 /**
