@@ -1,6 +1,7 @@
 <?php
 /**
- * The page template for 'staff_supervisor' and 'admin' user roles
+ * The page template for 'staff_supervisor' and 'admin' user roles viewing
+ * the 'staff' page.
  */
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

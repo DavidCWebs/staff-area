@@ -147,7 +147,7 @@
 	 */
 	public function staff_resource_page_template( $page_template ) {
 
-		if ( is_singular( [ 'staff_resource', 'management_resource' ] ) ) {
+		if ( is_singular( [ 'staff-resource', 'management-resource' ] ) ) {
 
       $page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/staff-resource-template.php';
 

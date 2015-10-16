@@ -52,7 +52,6 @@ class View_Form {
 	 */
 	public function roles_radio() {
 
-		//$allowed_roles = $this->allowed_roles( array( 'staff_supervisor', 'staff_member' ) );
 		$allowed_roles = $this->allowed_roles();
 
 		ob_start();
@@ -63,9 +62,8 @@ class View_Form {
 
 			?>
 			<div class="radio">
-				<label for="radios-<?= $i; ?>">
-					<input type="radio" name="role" id="cw_user_role" tabindex="<?= $i + 2; ?>" value="<?= $role['role']; ?>">
-					<!--<input type="radio" name="role" id="cw_user_role" value="<?= $role['role']; ?>">-->
+				<label for="radio-role-<?= $i; ?>">
+					<input type="radio" name="role" id="radio-role-<?= $i; ?>" class="cw_user_role" tabindex="<?= $i + 2; ?>" value="<?= $role['role']; ?>">
 					<?= $role['display']; ?>
 				</label>
 			</div>

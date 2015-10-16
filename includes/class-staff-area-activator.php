@@ -34,7 +34,10 @@ class Staff_Area_Activator {
 		// Staff member role
 		Staff_Area\Admin\Roles::staff_member_roles_and_caps();
 
-		// Unit manager role
+		// Staff Supervisor role
+		Staff_Area\Admin\Roles::staff_supervisor_roles_and_caps();
+
+		// Staff Supervisor role
 		Staff_Area\Admin\Roles::staff_manager_roles_and_caps();
 
 		$custom_post_types = new Staff_Area\Admin\CPT();

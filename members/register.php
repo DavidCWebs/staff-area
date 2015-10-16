@@ -218,17 +218,19 @@ class Register {
 	*/
 	function user_creation_success_message( $user_role, $new_user_details, $cw_ajax, $coord_ID ){
 
+		$user_role_name = $this->get_role_name( $user_role );
+
 		// Build a success message
 		// -------------------------------------------------------------------------
 		$user_created =
-		"You've just created a new $user_role. Their details are:
+		"You've just created a new $user_role_name. Their details are:
 		<ul class='user-list'>
 		<li>Name: {$new_user_details['first_name']} {$new_user_details['last_name']}</li>
 		<li>Email: {$new_user_details['email']}</li>
 		<li>Login Username: {$new_user_details['login']}</li>
 		<li>Display name: {$new_user_details['display_name']}</li>
 		</ul>
-		You can create more {$user_role}s using the above form if you like.";
+		You can create more staff members using the above form if you like.";
 
 		//$next_steps = $this->next_steps_message ( $user_role, $coord_ID );
 
@@ -250,6 +252,13 @@ class Register {
 			return $user_created;
 
 		}
+
+	}
+
+	private function get_role_name( $user_role ) {
+
+		global $wp_roles;
+    return $wp_roles->roles[$user_role]['name'];
 
 	}
 

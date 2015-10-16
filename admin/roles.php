@@ -1,7 +1,7 @@
 <?php
 namespace Staff_Area\Admin;
 /**
- * The file that defines the Loops class
+ * The file that defines the Roles class
  *
  *
  * @link       http://carawebs.com/plugins/staff-area
@@ -12,7 +12,7 @@ namespace Staff_Area\Admin;
  */
 
 /**
- * The loops class - used to define custom loops.
+ * The class that registers custom site roles
  *
  * Passing an array of arguments when instantiating the class object allows the
  * default $args to be overridden.
@@ -25,12 +25,10 @@ namespace Staff_Area\Admin;
 class Roles {
 
   /**
-   * Arguments to be passed to WP_Query()
-   * @since    1.0.0
-   * @var array
+   * Register a role for an ordinary staff member
+   *
+   * @return void
    */
-  private $args;
-
   public static function staff_member_roles_and_caps() {
 
      // start with subscriber capabilities
@@ -45,17 +43,43 @@ class Roles {
 
   }
 
-  public static function staff_manager_roles_and_caps() {
+  /**
+   * Register a role for a supervisor staff member
+   *
+   * @return void
+   */
+  public static function staff_supervisor_roles_and_caps() {
 
      // start with subscriber capabilities
     $subscriber = get_role( 'subscriber' );
     $supervisor_caps = $subscriber->capabilities;
 
     // Remove the role in case of changes
-    remove_role( 'supervisor' );
+    remove_role( 'staff_supervisor' );
 
     // Add the Staff Unit Manager role
     add_role( 'staff_supervisor', 'Supervisor', $supervisor_caps );
+
+  }
+
+  /**
+   * Register a role for a manager staff member
+   *
+   * @TODO Should this role have the ability to edit staff resources?
+   *
+   * @return void
+   */
+  public static function staff_manager_roles_and_caps() {
+
+     // start with subscriber capabilities
+    $subscriber = get_role( 'subscriber' );
+    $manager_caps = $subscriber->capabilities;
+
+    // Remove the role in case of changes
+    remove_role( 'staff_manager' );
+
+    // Add the Staff Unit Manager role
+    add_role( 'staff_manager', 'Staff Manager', $manager_caps );
 
   }
 

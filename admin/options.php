@@ -140,6 +140,14 @@ class Options {
     );
 
     add_settings_field(
+      'display_toolbar',
+      'Hide Toolbar',
+      array( $this, 'toolbar_callback' ),
+      $this->plugin_name,
+      $this->plugin_name . '_main'  // Section - must correspond to ID of `add_settings_section()` XX
+    );
+
+    add_settings_field(
       'email_address',
       'Return Email Address',
       array( $this, 'email_address_callback' ),
@@ -225,9 +233,37 @@ class Options {
   /**
   * Print the Section text
   */
-  public function print_section_info()
-  {
+  public function print_section_info() {
+
     print 'Enter your settings below:';
+
+  }
+
+  /**
+  * Checkbox for toolbar display boolean
+  *
+  * Remember: form elements cannot submit boolean values, so we have to use a string.
+  *
+  */
+  public function toolbar_callback() {
+
+    $checked = "true" === $this->options['hide_toolbar'] ? true : false;
+
+    ?>
+    <p>
+      <label for="radio-toolbar-true">
+        <input type="radio" id="radio-toolbar-true" name="<?php echo $this->option_name ; ?>[hide_toolbar]" value="true" <?php echo true === $checked ? 'checked' : '';?>>
+        Hide the default WordPress toolbar for staff members.
+      </label>
+    </p>
+    <p>
+      <label for="radio-toolbar-false">
+        <input type="radio" id="radio-toolbar-false" name="<?php echo $this->option_name ; ?>[hide_toolbar]" value="false" <?php echo false === $checked ? 'checked' : '';?>>
+        Show the default WordPress toolbar for staff members.
+      </label>
+    </p>
+    <?php
+
   }
 
   /**

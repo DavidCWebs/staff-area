@@ -225,10 +225,11 @@ class Staff_Area {
 		$this->loader->add_action( 'init', $plugin_public, 'block_dashboard' );
 
 		// Amend Toolbar
-		//$this->loader->add_action( 'admin_bar_menu', $toolbar, 'edit_toolbar', 999 );
-		//
+		$this->loader->add_action( 'admin_bar_menu', $toolbar, 'edit_toolbar', 999 );
+
+		$this->loader->add_action( 'wp_before_admin_bar_render', $toolbar, 'custom_toolbar', 999 );
 		// Block toolbar for staff
-		//$this->loader->add_action('wp', $toolbar, 'control_admin_toolbar');
+		$this->loader->add_action('wp', $toolbar, 'control_admin_toolbar');
 
 	}
 
