@@ -81,7 +81,7 @@ class Confirm {
    */
   public function form( $current_user_ID ) {
 
-    $checked = false !== $this->is_marked_read() ? 'checked' : '';
+    $checked = false !== $this->is_marked_read($current_user_ID, get_the_ID() ) ? 'checked' : '';
 
     ob_start();
 
@@ -139,7 +139,8 @@ class Confirm {
 
     $resources_completed = get_user_meta( $user_ID, 'resources_completed', true );
 
-    $time = time();
+    $time = current_time( 'timestamp' );
+    //$time = time();
 
     // First article confirmed - so create the metadata field
     if ( empty ( $resources_completed ) ) {
@@ -183,15 +184,22 @@ class Confirm {
    * @uses get_user_meta()
    * @return array|boolean array of post ID and timestamp or false
    */
-  public function is_marked_read() {
+  public static function is_marked_read( $user_ID, $post_ID ) {
 
-    $key = 'resource_' . $this->post_ID;
+    $key = 'resource_' . $post_ID;
 
-    $marked_resources = get_user_meta( $this->user_ID, 'resources_completed', true );
+    $marked_resources = get_user_meta( $user_ID, 'resources_completed', true );
+
+    if ( empty ( $marked_resources ) ) {
+
+      return false;
+
+    }
 
     if ( array_key_exists( $key, $marked_resources ) ) {
 
-      return $marked_resources[$key];
+      //return $marked_resources[$key];
+      return $marked_resources;
 
     } else {
 
