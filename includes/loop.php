@@ -85,7 +85,7 @@ class Loop {
 
     if ( $staff_resource_query->have_posts() ) {
 
-      echo"<h2>$this->section_title</h2>";
+      echo"<h3>$this->section_title</h3>";
 
       // Include filter markup if filter is specified
       // -----------------------------------------------------------------------
@@ -146,7 +146,7 @@ class Loop {
         )
       );
 
-      echo "<h2>Staff Resources: $name</h2>";
+      echo "<h3>Staff Resources: $name</h3>";
 
       $this->resource_loop( $tax_query, false );
 
@@ -169,14 +169,14 @@ class Loop {
 
     if ( 'staff-resource' === $post_type ) {
 
-      $filter_tax = 'resource_category';
+      $filter_tax = 'resource-category';
       $filter_ID  = 'select-resource-category';
 
     }
 
     if ( 'management-resource' === $post_type ) {
 
-      $filter_tax = 'management_resource_category';
+      $filter_tax = 'management-resource-category';
       $filter_ID  = 'select-management-resource-category';
 
     }

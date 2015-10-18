@@ -6,7 +6,7 @@ class Navigation {
   public static function breadcrumbs( $post_ID ) {
 
     $post_type  = get_post_type( $post_ID );
-    $taxonomy   = 'staff-resource' === $post_type ? 'resource_category' : 'management_resource_category';
+    $taxonomy   = 'staff-resource' === $post_type ? 'resource-category' : 'management-resource-category';
 
     ob_start();
 
@@ -31,11 +31,15 @@ class Navigation {
 
     $terms = wp_get_post_terms( $post_ID, $taxonomy );
 
-    foreach( $terms as $term ) {
+    if ( !empty( $terms ) ) {
 
-      $link = '/' . $taxonomy . '/' . $term->slug;
+      foreach( $terms as $term ) {
 
-      echo "<li><a href=" . esc_url( home_url( $link ) ) . ">" . $term->name . "</a></li>";
+        $link = '/' . $taxonomy . '/' . $term->slug;
+
+        echo "<li><a href=" . esc_url( home_url( $link ) ) . ">" . $term->name . "</a></li>";
+
+      }
 
     }
 

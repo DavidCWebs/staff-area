@@ -135,7 +135,7 @@ class CPT {
       'rewrite'                    => $rewrite,
     );
 
-    register_taxonomy( 'resource_category', array( 'staff-resource' ), $args );
+    register_taxonomy( 'resource-category', array( 'staff-resource' ), $args );
 
   }
 
@@ -261,7 +261,7 @@ class CPT {
       'rewrite'                    => $rewrite,
 
     );
-    register_taxonomy( 'management_resource_category', 'management-resource', $args );
+    register_taxonomy( 'management-resource-category', 'management-resource', $args );
 
   }
 

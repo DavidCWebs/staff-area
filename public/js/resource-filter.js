@@ -35,7 +35,7 @@
 
 				}
 
-				alert( "Index: " + productContent.indexOf( valThis ));
+				//alert( "Index: " + productContent.indexOf( valThis ));
 
 			} );
 

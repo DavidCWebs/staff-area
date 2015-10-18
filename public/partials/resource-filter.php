@@ -12,9 +12,9 @@
 <form role="form" class="form-inline resource-search">
   <div class="form-group">
     <div class="custom-input-group" style="position: relative;display: inline-block;">
-      <input placeholder="Search Resources" id="<?php echo 'management_resource_category' == $filter_tax ? 'management-' : ''; ?>resource-search" type="text" class="input-lg form-control" />
+      <input placeholder="Search Resources" id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>resource-search" type="text" class="input-lg form-control" />
     </div>
-    <a href="#" id="<?php echo 'management_resource_category' == $filter_tax ? 'management-' : ''; ?>showall" class="btn btn-primary btn-lg grey">All Resources</a>
+    <a href="#" id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>showall" class="btn btn-primary btn-lg grey">All Resources</a>
     <?php
 
     $terms = get_terms( $filter_tax );
@@ -37,7 +37,6 @@
           <li class="resource"><a href="#">Show All Resources</a></li>
         </ul>
       </div>
-      <hr>
 EOF;
 
     }
@@ -45,4 +44,5 @@ EOF;
     ?>
   </div>
 </form>
+<hr>
 <?php
