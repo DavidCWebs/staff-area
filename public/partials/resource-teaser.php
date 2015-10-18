@@ -1,6 +1,6 @@
 <?php
 $resource_ID  = get_the_ID();
-$taxonomy     = 'staff_resource' === $args['post_type'] ? 'resource_category' : 'management_resource_category' ;
+$taxonomy     = 'staff-resource' === $args['post_type'] ? 'resource_category' : 'management_resource_category' ;
 $term_list    = implode( ' ', wp_get_post_terms( $resource_ID, $taxonomy, array( "fields" => "slugs" ) ) );
 $slug_name    = get_post_field( 'post_name', $resource_ID );
 ?>

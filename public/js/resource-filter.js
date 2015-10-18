@@ -7,13 +7,17 @@
 
 	$( document ).ready( function() {
 
-		// Filter by Resource
+		/**
+		 * Filter by resource, triggered by clicking a drop down menu
+		 *
+		 * The dropdown menu is populated with the custom taxonomy for the relevant resource type.
+		 *
+		 */
 		$( "#select-resource-category .dropdown-menu > li > a" ).click( function( event ) {
 
 			event.preventDefault();
 
-			//alert('clicked');
-
+			// Get the value of the containing elements class
 			var valThis = $( this ).parent().attr( "class" );
 
 			$( "#resources > div" ).each( function() {
@@ -30,6 +34,8 @@
 					$( this ).show( 400 );
 
 				}
+
+				alert( "Index: " + productContent.indexOf( valThis ));
 
 			} );
 
