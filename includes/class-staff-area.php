@@ -214,6 +214,7 @@ class Staff_Area {
 
 		$plugin_public	= new Staff_Area_Public( $this->get_staff_area(), $this->get_version() );
 		$toolbar				= new Staff_Area\Members\Toolbar();
+		//$menus					= new Staff_Area\Helpers\Menu();
 
 		// Enqueue styles
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
@@ -239,6 +240,12 @@ class Staff_Area {
 
 		// Confirmation form AJAX processor
 		$this->loader->add_action( 'wp_ajax_mark_as_read', $plugin_public, 'ajax_process_read_status' );
+
+		// Add menu
+		//$this->loader->add_action( 'init', $menus, 'register_navigation' );
+
+		// Create menu
+		//$this->loader->add_action( 'after_setup_theme', $menus, 'create_menus' );
 
 	}
 
