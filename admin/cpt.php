@@ -117,6 +117,13 @@ class CPT {
       'search_items'               => __( 'Search Resource Categories', 'staff-area' ),
       'not_found'                  => __( 'Not Found', 'staff-area' ),
     );
+
+    $rewrite = array(
+  		'slug'                       => 'resource-category',
+  		'with_front'                 => true,
+  		'hierarchical'               => false,
+  	);
+
     $args = array(
       'labels'                     => $labels,
       'hierarchical'               => true,
@@ -124,7 +131,8 @@ class CPT {
       'show_ui'                    => true,
       'show_admin_column'          => true,
       'show_in_nav_menus'          => true,
-      'show_tagcloud'              => true,
+      'show_tagcloud'              => false,
+      'rewrite'                    => $rewrite,
     );
 
     register_taxonomy( 'resource_category', array( 'staff-resource' ), $args );
@@ -235,6 +243,13 @@ class CPT {
       'search_items'               => __( 'Search Management Categories', 'staff-area' ),
       'not_found'                  => __( 'Not Found', 'staff-area' ),
     );
+
+    $rewrite = array(
+  		'slug'                       => 'management-resource-category',
+  		'with_front'                 => true,
+  		'hierarchical'               => false,
+  	);
+
     $args = array(
       'labels'                     => $labels,
       'hierarchical'               => true,
@@ -242,7 +257,9 @@ class CPT {
       'show_ui'                    => true,
       'show_admin_column'          => true,
       'show_in_nav_menus'          => true,
-      'show_tagcloud'              => true,
+      'show_tagcloud'              => false,
+      'rewrite'                    => $rewrite,
+
     );
     register_taxonomy( 'management_resource_category', 'management-resource', $args );
 
