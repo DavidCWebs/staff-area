@@ -101,45 +101,6 @@
 	 }
 
    /**
-    * Add page slug to `body_class()` classes if it doesn't exist & add user role to body class
-    *
-    * Hooked into the `body_class` filter.
-    *
-    * @since    1.0.0
-    *
-    */
-   /*
-   public function add_body_class( $classes ) {
-
-    // Add post/page slug
-    // -------------------------------------------------------------------------
-    if ( is_page( 'staff', 'staff-registration' ) ) {
-
-      if ( !in_array( 'staff-area', $classes) ) {
-
-        $classes[] = 'staff-area';
-
-      }
-
-      // Check to see if the user is logged in, and if they are, add their role to the body class.
-      // -----------------------------------------------------------------------
-      if( is_user_logged_in() && !is_front_page() ){
-
-        $current_user       = wp_get_current_user();  // Current user object
-        $current_user_id    = $current_user->ID;      // Current user ID
-        $user_role          = carawebs_get_user_role( $current_user_id );
-        $user_role          .= '-role'; // append modifier to avoid confusion with pages having same name
-        $classes[]          = $user_role;
-
-      }
-
-    }
-
-    return $classes;
-
-  }*/
-
-	 /**
 	 * Set custom templates for this plugin's content
 	 *
 	 * @param  [type] $page_template [description]
@@ -149,14 +110,19 @@
 
 		if ( is_singular( [ 'staff-resource', 'management-resource' ] ) ) {
 
-      $page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/staff-resource-template.php';
-
+      $page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/single-staff-resource.php';
 
     }
 
 		if ( is_page( 'staff' ) ) {
 
-			$page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/staff-template.php';
+			$page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/page-staff.php';
+
+		}
+
+    if ( is_page( 'staff-management' ) ) {
+
+			$page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/page-staff-management.php';
 
 		}
 

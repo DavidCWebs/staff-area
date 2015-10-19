@@ -30,6 +30,11 @@ add_action( 'wp_loaded', 'staff_area_sidebar_registration' );
 
 `wp_loaded` should guarantee that sidebar is registered after theme sidebars. Latest hook you can (reliably use to register sidebar)[http://wordpress.stackexchange.com/questions/2553/how-to-register-sidebar-without-messing-up-the-order].
 
+###Body Class
+The class "staff-area" is added to the body class - by hooking into the WP `body_class` filter.
+
+TODO: Add a CSS class determined by user role.
+
 ###Postmeta
 On the test site, postmeta are added to CPTs by means of the ACF plugin. Custom meta boxes should be defined within the plugin, so that it isn't dependent on ACF.
 
