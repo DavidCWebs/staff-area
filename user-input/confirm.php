@@ -104,7 +104,7 @@ class Confirm {
         </div>
       </fieldset>
     </form>
-    <div id="result-message"></div>
+    <div id="cw-result-message">Test</div>
     <?php
 
     if ( isset( $_POST['cw_confirm']) && !isset( $_POST['read_confirmation'] ) ) {
@@ -128,7 +128,7 @@ class Confirm {
    * so the method is static.
    *
    * @uses get_user_meta()
-   * @uses time()
+   * @uses current_time()
    * @uses add_user_meta()
    * @uses update_user_meta()
    * @param  string|int $user_ID The user ID
@@ -140,7 +140,6 @@ class Confirm {
     $resources_completed = get_user_meta( $user_ID, 'resources_completed', true );
 
     $time = current_time( 'timestamp' );
-    //$time = time();
 
     // First article confirmed - so create the metadata field
     if ( empty ( $resources_completed ) ) {
@@ -198,7 +197,6 @@ class Confirm {
 
     if ( array_key_exists( $key, $marked_resources ) ) {
 
-      //return $marked_resources[$key];
       return $marked_resources;
 
     } else {
@@ -210,7 +208,7 @@ class Confirm {
   }
 
   /**
-   * Ajax processor for the "marke as read" form
+   * Ajax processor for the "mark as read" form
    *
    * @TODO double check validation as I'm tired!
    * @TODO add success/error report from the update user records method

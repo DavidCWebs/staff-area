@@ -22,7 +22,7 @@
 
       // Show "Please wait" loader to user
       $( ".indicator" ).animate( { opacity: 1 }, 200 );
-      $( "#result-message" ).hide();
+      $( "#cw-result-message" ).hide();
 
       // Collect data from inputs, and slot into variables
       var regNonce  = $( "#staff_area_cw_read_confirm" ).val();
@@ -64,31 +64,36 @@
           if ( "error" === response.status ) {
 
             // Clear old user list/error messages
-            $( "#result-message" ).empty();
+            $( "#cw-result-message" ).empty();
 
             // Clear old user list/error messages
-            $( "#result-message-show" ).remove();
+            $( "#cw-result-message-show" ).remove();
 
             // Message built in PHP and received as a string
             var output = response.message;
-            $( "#result-message" ).html( output );
-            $( "#result-message" ).fadeIn( 400 );
+            $( "#cw-result-message" ).html( output );
+            $( "#cw-result-message" ).fadeIn( 400 );
 
           } else {
-
-            $( "#mark-as-read" ).hide();
-
-            // Clear old user list/error messages
-            $( "#result-message" ).empty();
 
             // Build a success message
             var staffReturn =
             "<p>" + response.message + "</p>";
 
-            $( "#result-message" ).html( staffReturn );
+            // Clear old user list/error messages
+            $( "#cw-result-message" ).empty();
 
+            //$( "#mark-as-read" ).hide();
+            $( "#mark-as-read" ).fadeOut( 200, function() {
+              $( "#cw-result-message" ).html( staffReturn );
+              // Show results div
+              $( "#cw-result-message" ).fadeIn( 200 );
+            });
+
+
+            //$( "#cw-result-message" ).html( staffReturn );
             // Show results div
-            $( "#result-message" ).fadeIn( 400 );
+            //$( "#cw-result-message" ).fadeIn( 400 );
 
           }
 

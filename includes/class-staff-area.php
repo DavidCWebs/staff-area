@@ -196,7 +196,7 @@ class Staff_Area {
 		$this->loader->add_action( 'init', $plugin_admin, 'dashboard_block' );
 
 		// Filter template loader for custom templates
-		$this->loader->add_filter( 'template_include', $plugin_admin, 'staff_resource_page_template' );
+		$this->loader->add_filter( 'template_include', $plugin_admin, 'staff_area_page_template_routes' );
 
 	}
 

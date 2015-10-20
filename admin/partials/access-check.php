@@ -5,13 +5,7 @@ $current_user_ID  = $current_user->ID;
 
 if( !is_user_logged_in() ) {
 
-  ?>
-  <h1>Sorry...This Area is Off-Limits</h1>
-  <p>You need to be a logged-in staff-member to view this content.</p>
-	<p>For more info on <?php echo get_bloginfo(); ?>, why not visit our <a href="<?php echo esc_url(home_url('/') ) ; ?>">Home Page?</a></p>
-  <p><a class="topspace btn btn-primary btn-lg" href="<?php echo wp_login_url(); ?>" title="Login">Login to the Site</a></p>
-  <?php
-
+  include_once( plugin_dir_path( dirname( __DIR__ ) ) . 'templates/partials/not-logged-in.php' );
   $access = 'no_access';
   return;
 
@@ -23,10 +17,6 @@ $first_name   = $access_check->first_name;
 
 if ( 'no_access' === $access ) {
 
-  ?>
-  <h1>Sorry...This Area is Off-Limits</h1>
-  <p>You need to be a staff-member to view this content.</p>
-	<p>For more info on <?php echo get_bloginfo(); ?>, why not visit our <a href="<?php echo esc_url(home_url('/') ) ; ?>">Home Page?</a></p>
-  <?php
+  include_once( plugin_dir_path( dirname( __DIR__ ) ) . 'templates/partials/logged-in-no-access.php' );
 
 }

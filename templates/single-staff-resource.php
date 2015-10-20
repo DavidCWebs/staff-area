@@ -6,7 +6,7 @@
 while (have_posts()) : the_post();
 
 $post_ID = get_the_ID();
-
+$access_list = ['staff_manager', 'staff_member', 'staff_supervisor'];
 include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/access-check.php' );
 
 if ( 'no_access' == $access ) {
@@ -15,38 +15,17 @@ if ( 'no_access' == $access ) {
 
 }
 
-$marked = Staff_Area\User_Input\Confirm::is_marked_read( $current_user_ID, $post_ID );
-
 include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/header.php' );
 
-the_content();
+?>
+<div class="row">
+  <div class="col-md-8">
+    <?php the_content(); ?>
+    <hr>
+    <?php Staff_Area\Display\Single_Resource::display_checkbox( $post_ID, $current_user_ID, $marked ); ?>
+    <hr>
+    <?php Staff_Area\Display\Single_Resource::display_marked_resources( $current_user_ID ); ?>
+  </div>
+</div>
 
-if( "1" === get_post_meta( get_the_ID(), 'include_status', 'text', TRUE ) ) {
-
-  if ( false === $marked ){
-
-    $confirm_status = new Staff_Area\User_Input\Confirm( $post_ID, $current_user_ID );
-
-    echo $confirm_status->form( $current_user_ID );
-
-  }
-
-}
-
-$marked_resources = get_user_meta( $current_user_ID, 'resources_completed', true );
-
-if ( !empty( $marked_resources ) ) {
-
-  echo "<ul>";
-  foreach ( $marked_resources as $marked_resource_ID => $data ) {
-
-    $title  = get_the_title( $data['post_ID'] );
-    $time   = date('l jS \of F Y h:i:s A', $data['time'] );
-    echo "<li>Resource: $title Marked complete on $time</li>";
-
-  }
-  echo "</ul>";
-
-}
-
-endwhile; ?>
+<?php endwhile; ?>

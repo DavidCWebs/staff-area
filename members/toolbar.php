@@ -55,6 +55,7 @@ class Toolbar {
     $wp_toolbar->remove_node('comments');
     $wp_toolbar->remove_node('customize');
     $wp_toolbar->remove_node('search');
+    $wp_toolbar->remove_node('top-secondary');
 
     if( ! current_user_can( 'edit_pages' ) ) {
 
@@ -123,6 +124,17 @@ class Toolbar {
         'href'   => $this->staff_management_page
     	);
     	$wp_admin_bar->add_menu( $args );
+
+    }
+
+    if ( 'staff_access' == $access || 'full_access' == $access || 'manager_access' ) {
+
+      $args = array(
+    		'id'     => 'staff-logout',
+    		'title'  => __( 'Log Out', 'staff-area' ),
+        'href'   => wp_logout_url( get_permalink() )
+    	);
+    	$wp_admin_bar->add_node( $args );
 
     }
 

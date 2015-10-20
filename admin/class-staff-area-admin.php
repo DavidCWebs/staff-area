@@ -106,7 +106,7 @@
 	 * @param  [type] $page_template [description]
 	 * @return [type]                [description]
 	 */
-	public function staff_resource_page_template( $page_template ) {
+	public function staff_area_page_template_routes( $page_template ) {
 
 		if ( is_singular( [ 'staff-resource', 'management-resource' ] ) ) {
 
@@ -125,6 +125,12 @@
 			$page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/page-staff-management.php';
 
 		}
+
+    if ( is_post_type_archive( ['staff-resource', 'management-resource'] ) || is_tax( 'resource-category' ) || is_tax( 'management-resource-category') ) {
+
+      $page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/archive-staff-area.php';
+
+    }
 
 		return $page_template;
 

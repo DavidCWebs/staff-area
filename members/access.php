@@ -97,31 +97,31 @@ class Access {
 
     }
 
-    if( in_array( 'administrator', $this->current_user_roles ) ) {
+    if ( in_array( 'administrator', $this->current_user_roles ) ) {
 
       $this->access_level = 'full_access';
 
     }
 
-    if( in_array( 'editor', $this->current_user_roles ) ) {
+    if ( in_array( 'editor', $this->current_user_roles ) ) {
 
       $this->access_level = 'full_access';
 
     }
 
-    if( in_array( 'staff_member', $this->current_user_roles ) ) {
+    if ( in_array( 'staff_member', $this->current_user_roles ) ) {
 
       $this->access_level = 'staff_access';
 
     }
 
-    if( in_array( 'staff_supervisor', $this->current_user_roles ) ) {
+    if ( in_array( 'staff_supervisor', $this->current_user_roles ) ) {
 
       $this->access_level = 'supervisor_access';
 
     }
 
-    if( in_array( 'staff_manager', $this->current_user_roles ) ) {
+    if ( in_array( 'staff_manager', $this->current_user_roles ) ) {
 
       $this->access_level = 'manager_access';
 
