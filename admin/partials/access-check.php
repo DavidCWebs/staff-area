@@ -17,7 +17,7 @@ if( !is_user_logged_in() ) {
 
 }
 
-$access_check = new Staff_Area\Includes\Access( $current_user_ID );
+$access_check = new Staff_Area\Members\Access( $current_user_ID, $access_list );
 $access       = $access_check->get_access_level();
 $first_name   = $access_check->first_name;
 
@@ -30,4 +30,3 @@ if ( 'no_access' === $access ) {
   <?php
 
 }
-//caradump( $access_check );

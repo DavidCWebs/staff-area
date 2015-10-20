@@ -92,6 +92,11 @@ class Toolbar {
 
   public function custom_toolbar() {
 
+    $current_user     = wp_get_current_user();
+    $current_user_ID  = $current_user->ID;
+    $access_check     = new Access( $current_user_ID, ['staff_manager'] );
+    $access           = $access_check->get_access_level();
+
   	global $wp_admin_bar;
 
   	$args = array(
@@ -102,7 +107,8 @@ class Toolbar {
 
   	$wp_admin_bar->add_menu( $args );
 
-    if ( current_user_can( 'edit_pages') ) {
+    //if ( current_user_can( 'edit_pages') ) {
+    if ( 'manager_access' == $access || 'full_access' == $access ) {
 
       $args = array(
     		'id'     => 'staff-reg-link',

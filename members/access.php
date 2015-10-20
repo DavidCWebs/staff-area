@@ -1,5 +1,5 @@
 <?php
-namespace Staff_Area\Includes;
+namespace Staff_Area\Members;
 /**
  * The file that defines access
  *
@@ -84,11 +84,16 @@ class Access {
 
   }
 
+  /**
+   * [set_access_level description]
+   */
   private function set_access_level() {
 
-    if ( count( array_intersect($this->current_user_roles, $this->allowed_roles) ) === 0 ) {
+    // If one of the current user's roles is not in the $this->allowed_roles array, no access
+    if ( count( array_intersect( $this->current_user_roles, $this->allowed_roles ) ) === 0 ) {
 
       $this->access_level = 'no_access';
+      return;
 
     }
 
@@ -113,6 +118,12 @@ class Access {
     if( in_array( 'staff_supervisor', $this->current_user_roles ) ) {
 
       $this->access_level = 'supervisor_access';
+
+    }
+
+    if( in_array( 'staff_manager', $this->current_user_roles ) ) {
+
+      $this->access_level = 'manager_access';
 
     }
 
