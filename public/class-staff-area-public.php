@@ -80,7 +80,8 @@ class Staff_Area_Public {
 
 		if ( is_page ( $filter_pages ) ) {
 
-			wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/resource-filter.js', array( 'jquery' ), $this->version, false );
+			//wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/resource-filter.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/table-filter.js', array( 'jquery' ), $this->version, false );
 
 		}
 

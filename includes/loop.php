@@ -95,7 +95,8 @@ class Loop {
 
       }
 
-      echo "<div id='{$this->div_class}'>";
+      //echo "<div id='{$this->div_class}'>";
+      echo "<table id='{$this->div_class}-table' style='width:100%; table-layout: fixed;' class='table'>";
 
       while ( $staff_resource_query->have_posts() ) {
 
@@ -103,11 +104,13 @@ class Loop {
 
         // The HTML for each teaser
         // ---------------------------------------------------------------------
-        include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser.php' );
+        //include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser.php' );
+        include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser-row.php' );
 
       }
 
-      echo "</div>";
+      //echo "</div>";
+      echo "</table>";
 
     } else {
 

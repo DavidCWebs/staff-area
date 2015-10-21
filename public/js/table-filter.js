@@ -20,13 +20,19 @@
 			// Get the value of the containing elements class
 			var valThis = $( this ).parent().attr( "class" );
 
+			// fix widths of tds
+			$( "#resources-table td" ).each( function(){
+
+				var colWidth = $( this ).width();
+				$( this ).css( "width", colWidth );
+
+			});
+
 			//alert( valThis );
 
-			$( "#resources > div" ).each( function() {
+			$( "#resources-table tr" ).each( function() {
 
 				var productContent = $( this ).attr( "class" );
-
-				//alert( productContent );
 
 				// If search string isn't found, returns -1
 				if ( productContent.indexOf( valThis ) == -1 ) {
@@ -35,11 +41,9 @@
 
 				} else {
 
-					$( this ).show( 200 );
+					$( this ).show( 400 );
 
 				}
-
-				//alert( "Index: " + productContent.indexOf( valThis ));
 
 			} );
 
@@ -50,7 +54,7 @@
 
 			var valThis = $( this ).val().toLowerCase();
 
-			$( "#resources > div" ).each( function() {
+			$( "#resources-table tr" ).each( function() {
 
 				var productContent = $( this ).attr( "class" );
 
@@ -60,7 +64,7 @@
 
 				} else {
 
-					$( this ).hide( 400 );
+					$( this ).hide( 200 );
 
 				}
 
@@ -75,9 +79,9 @@
 
 			$( "#resource-search" ).val( "" );
 
-			if ( $( "#resources > div" ).is( ":hidden" ) ) {
+			if ( $( "#resources-table tr" ).is( ":hidden" ) ) {
 
-				$( "#resources > div" ).show( 400 );
+				$( "#resources-table tr" ).show( 400 );
 
 			}
 
@@ -91,7 +95,7 @@
 
 			var valThis = $( this ).val().toLowerCase();
 
-			$( "#management-resources > div" ).each( function() {
+			$( "#management-resources-table tr" ).each( function() {
 
 				var productContent = $( this ).attr( "class" );
 
@@ -101,7 +105,7 @@
 
 				} else {
 
-					$( this ).hide( 400 );
+					$( this ).hide( 200 );
 
 				}
 
@@ -116,9 +120,9 @@
 
 			$( "#management-resource-search" ).val( "" );
 
-			if ( $( "#management-resources > div" ).is( ":hidden" ) ) {
+			if ( $( "#management-resources-table tr" ).is( ":hidden" ) ) {
 
-				$( "#management-resources > div" ).show( 400 );
+				$( "#management-resources-table tr" ).show( 1 );
 
 			}
 
@@ -132,12 +136,12 @@
 			function( event ) {
 				event.preventDefault();
 				var valThis = $( this ).parent().attr( "class" );
-				$( "#management-resources > div" ).each( function() {
+				$( "#management-resources-table tr" ).each( function() {
 					var productContent = $( this ).attr( "class" );
 
 					// If search string isn't found, returns -1
 					if ( productContent.indexOf( valThis ) == -1 ) {
-						$( this ).hide( 400 );
+						$( this ).hide( 600 );
 					} else {
 						$( this ).show( 400 );
 					}
