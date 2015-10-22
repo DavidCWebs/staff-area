@@ -38,6 +38,7 @@ class Staff_Dashboard {
       $completed = $this->completed_workbooks( $allmeta );
 
       $this->staff[] = [
+        'user_ID'             => $staff_member->ID,
         'first_name'          => $allmeta['first_name'][0],
         'last_name'           => $allmeta['last_name'][0],
         'email'               => $staff_member->user_email,
@@ -147,11 +148,12 @@ class Staff_Dashboard {
         // Add a new table row for each staff member
         foreach( $this->staff as $staff_member ) {
 
-          $completed_resources = $this->completed_resources_string( $staff_member );
+          $completed_resources  = $this->completed_resources_string( $staff_member );
+          $name                 = $staff_member['first_name'] . ' ' . $staff_member['last_name'];
 
           ?>
           <tr>
-          <td><?php echo $staff_member['first_name'] . ' ' . $staff_member['last_name']; ?></td>
+          <td><a href="<?php echo esc_url( home_url('/staff-member') ) . '?staff_member=' . (int) $staff_member['user_ID']; ?>"><?php echo $name; ?></a></td>
           <td><a href="mailto:<?php echo $staff_member['email'] ; ?>"><?php echo $staff_member['email'] ; ?></a></td>
           <td> - </td>
           <td><?php echo $completed_resources; ?></td>

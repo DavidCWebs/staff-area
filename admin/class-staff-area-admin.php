@@ -126,6 +126,12 @@
 
 		}
 
+    if ( is_page( 'staff-member' ) ) {
+
+			$page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/page-staff-member.php';
+
+		}
+
     if ( is_post_type_archive( ['staff-resource', 'management-resource'] ) || is_tax( 'resource-category' ) || is_tax( 'management-resource-category') ) {
 
       $page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/archive-staff-area.php';

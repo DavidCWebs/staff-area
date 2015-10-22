@@ -16,7 +16,7 @@
   // ---------------------------------------------------------------------------
   if ( 'full_access' == $access || 'supervisor_access' == $access || 'manager_access' == $access ) {
 
-    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/staff-management.php' );
+    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/staff-management-resources.php' );
 
   }
 
@@ -24,7 +24,7 @@
   // ---------------------------------------------------------------------------
   if ( 'staff_access' == $access ) {
 
-    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/staff-member.php' );
+    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/staff-resources.php' );
 
   }
 
