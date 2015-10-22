@@ -37,6 +37,8 @@ class Loop {
   */
   protected $div_class;
 
+  protected $current_user_ID;
+
   /**
    * Section Title
    * @var string
@@ -50,21 +52,23 @@ class Loop {
   * @since    1.0.0
   * @param array $override Array of WP_Query arguments
   */
-  public function __construct( $override = [] ) {
+  public function __construct( $override = [], $current_user_ID ) {
 
-      $this->args = array_merge( array (
-      //'post_type'              => array( 'staff_resource' ),
-      'post_type'              => 'staff-resource',
-      'post_status'            => array( 'publish' ),
-      'posts_per_page'         => '-1',
-      'order'                  => 'ASC',
-      'orderby'                => 'menu_order',
-      ),
-      $override
-    );
+    $this->current_user_ID = $current_user_ID;
 
-    $this->div_class      = "resources";
-    $this->section_title  = "Staff Resources";
+    $this->args = array_merge( array (
+    //'post_type'              => array( 'staff_resource' ),
+    'post_type'              => 'staff-resource',
+    'post_status'            => array( 'publish' ),
+    'posts_per_page'         => '-1',
+    'order'                  => 'ASC',
+    'orderby'                => 'menu_order',
+    ),
+    $override
+  );
+
+  $this->div_class      = "resources";
+  $this->section_title  = "Staff Resources";
 
   }
 
@@ -97,10 +101,20 @@ class Loop {
 
       //echo "<div id='{$this->div_class}'>";
       echo "<table id='{$this->div_class}-table' style='width:100%; table-layout: fixed;' class='table'>";
+      echo "<thead><tr><th>Title</th><th>Description</th><th>Compulsory?</th><th>Status</th><th>Categories</th></thead><tbody>";
 
       while ( $staff_resource_query->have_posts() ) {
 
         $staff_resource_query->the_post();
+
+        $resource_ID  = get_the_ID();
+        $taxonomy     = 'staff-resource' === $args['post_type'] ? 'resource-category' : 'management-resource-category' ;
+        $term_list    = implode( ' ', wp_get_post_terms( $resource_ID, $taxonomy, array( "fields" => "slugs" ) ) );
+        $slug_name    = get_post_field( 'post_name', $resource_ID );
+        $required     = ! empty( get_post_meta( $resource_ID, 'compulsory_status', true ) ) ? true: false ;
+        $marked_status= \Staff_Area\User_Input\Confirm::is_marked_read( $this->current_user_ID, $resource_ID );
+        $marked       = false == $marked_status ? "Not Read" : "Read";
+        //$marked = "-";
 
         // The HTML for each teaser
         // ---------------------------------------------------------------------
@@ -110,7 +124,7 @@ class Loop {
       }
 
       //echo "</div>";
-      echo "</table>";
+      echo "</tbody></table>";
 
     } else {
 

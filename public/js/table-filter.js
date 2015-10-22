@@ -7,6 +7,12 @@
 
 	$( document ).ready( function() {
 
+		// Get starting table height and fix table height to prevent distracting page jumps
+		var resourceHeight = $( "#resources-table" ).height();
+		var managementResourceHeight = $( "#management-resources-table" ).height();
+		$( "#resources-table" ).css( "height", resourceHeight );
+		$( "#management-resources-table" ).css( "height", managementResourceHeight );
+
 		/**
 		 * Filter by resource, triggered by clicking a drop down menu
 		 *
@@ -20,17 +26,7 @@
 			// Get the value of the containing elements class
 			var valThis = $( this ).parent().attr( "class" );
 
-			// fix widths of tds
-			$( "#resources-table td" ).each( function(){
-
-				var colWidth = $( this ).width();
-				$( this ).css( "width", colWidth );
-
-			});
-
-			//alert( valThis );
-
-			$( "#resources-table tr" ).each( function() {
+			$( "#resources-table tbody tr" ).each( function() {
 
 				var productContent = $( this ).attr( "class" );
 
@@ -41,7 +37,7 @@
 
 				} else {
 
-					$( this ).show( 400 );
+					$( this ).show( 100 );
 
 				}
 
@@ -54,13 +50,13 @@
 
 			var valThis = $( this ).val().toLowerCase();
 
-			$( "#resources-table tr" ).each( function() {
+			$( "#resources-table tbody tr" ).each( function() {
 
 				var productContent = $( this ).attr( "class" );
 
 				if ( productContent.indexOf( valThis ) === 0 ) {
 
-					$( this ) .show( 400 );
+					$( this ) .show( 100 );
 
 				} else {
 
@@ -79,9 +75,9 @@
 
 			$( "#resource-search" ).val( "" );
 
-			if ( $( "#resources-table tr" ).is( ":hidden" ) ) {
+			if ( $( "#resources-table tbody tr" ).is( ":hidden" ) ) {
 
-				$( "#resources-table tr" ).show( 400 );
+				$( "#resources-table tbody tr" ).show( 100 );
 
 			}
 
@@ -95,13 +91,13 @@
 
 			var valThis = $( this ).val().toLowerCase();
 
-			$( "#management-resources-table tr" ).each( function() {
+			$( "#management-resources-table tbody tr" ).each( function() {
 
 				var productContent = $( this ).attr( "class" );
 
 				if ( productContent.indexOf( valThis ) === 0 ) {
 
-					$( this ) .show( 400 );
+					$( this ) .show( 100 );
 
 				} else {
 
@@ -120,9 +116,9 @@
 
 			$( "#management-resource-search" ).val( "" );
 
-			if ( $( "#management-resources-table tr" ).is( ":hidden" ) ) {
+			if ( $( "#management-resources-table tbody tr" ).is( ":hidden" ) ) {
 
-				$( "#management-resources-table tr" ).show( 1 );
+				$( "#management-resources-table tbody tr" ).show( 100 );
 
 			}
 
@@ -136,14 +132,14 @@
 			function( event ) {
 				event.preventDefault();
 				var valThis = $( this ).parent().attr( "class" );
-				$( "#management-resources-table tr" ).each( function() {
+				$( "#management-resources-table tbody tr" ).each( function() {
 					var productContent = $( this ).attr( "class" );
 
 					// If search string isn't found, returns -1
 					if ( productContent.indexOf( valThis ) == -1 ) {
-						$( this ).hide( 600 );
+						$( this ).hide( 200 );
 					} else {
-						$( this ).show( 400 );
+						$( this ).show( 100 );
 					}
 				} );
 			} );

@@ -24,6 +24,8 @@ namespace Staff_Area\Includes;
  */
 class Management_Resources extends Loop {
 
+  protected $current_user_ID;
+
   /**
    * Set up the default arguments for WP_Query.
    *
@@ -32,7 +34,9 @@ class Management_Resources extends Loop {
    * @since    1.0.0
    * @param array $override Array of WP_Query arguments
    */
-  public function __construct( $override = [] ) {
+  public function __construct( $override = [], $current_user_ID ) {
+
+    $this->current_user_ID = $current_user_ID;
 
     $this->args = array_merge( array (
       'post_type'              => 'management-resource',
