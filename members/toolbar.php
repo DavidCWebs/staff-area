@@ -18,6 +18,7 @@ class Toolbar {
     $this->set_staff_reg_page();
     $this->set_staff_management_page();
     $this->set_display_toolbar();
+    $this->set_management_resources_page();
 
   }
 
@@ -38,6 +39,12 @@ class Toolbar {
   public function set_staff_page() {
 
     $this->staff_page = esc_url( home_url( '/staff' ) );
+
+  }
+
+  public function set_management_resources_page() {
+
+    $this->management_resources_page = esc_url( home_url( '/management-resources' ) );
 
   }
 
@@ -122,6 +129,20 @@ class Toolbar {
     		'id'     => 'staff-management-link',
     		'title'  => __( 'Staff Management', 'staff-area' ),
         'href'   => $this->staff_management_page
+    	);
+    	$wp_admin_bar->add_menu( $args );
+
+    }
+
+    // Management Resources Link
+    // -------------------------------------------------------------------------
+    if ( 'manager_access' == $access || 'supervisor_access' == $access || 'full_access' == $access ) {
+
+      $args = array(
+    		'id'     => 'management-resources-link',
+        //'title' => __('<img src="'.get_bloginfo('wpurl').'/icon.png" style="vertical-align:middle;margin-right:5px" alt="Visit Site" title="Visit Site" />Visit Site' ),
+    		'title'  => __( 'Management Resources', 'staff-area' ),
+        'href'   => $this->management_resources_page
     	);
     	$wp_admin_bar->add_menu( $args );
 

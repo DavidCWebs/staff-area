@@ -10,8 +10,8 @@
 		// Get starting table height and fix table height to prevent distracting page jumps
 		var resourceHeight = $( "#resources-table" ).height();
 		var managementResourceHeight = $( "#management-resources-table" ).height();
-		$( "#resources-table" ).css( "height", resourceHeight );
-		$( "#management-resources-table" ).css( "height", managementResourceHeight );
+		$( "#resources-table-container" ).css( "height", resourceHeight );
+		$( "#management-resources-table-container" ).css( "height", managementResourceHeight );
 
 		/**
 		 * Filter by resource, triggered by clicking a drop down menu
@@ -25,6 +25,8 @@
 
 			// Get the value of the containing elements class
 			var valThis = $( this ).parent().attr( "class" );
+
+			//alert( valThis );
 
 			$( "#resources-table tbody tr" ).each( function() {
 

@@ -251,6 +251,10 @@ class Confirm {
 
   }
 
+  /**
+   * [success_message description]
+   * @return [type] [description]
+   */
   public static function success_message(){
 
 		// Build a success message

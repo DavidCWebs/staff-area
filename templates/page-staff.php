@@ -16,7 +16,8 @@
   // ---------------------------------------------------------------------------
   if ( 'full_access' == $access || 'supervisor_access' == $access || 'manager_access' == $access ) {
 
-    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/staff-management-resources.php' );
+    //include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/staff-management-resources.php' );
+    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/management-only.php' );
 
   }
 
@@ -24,8 +25,12 @@
   // ---------------------------------------------------------------------------
   if ( 'staff_access' == $access ) {
 
-    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/staff-resources.php' );
+    //include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/staff-resources.php' );
+    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/staff-only.php' );
 
   }
+
+  $all_resources = new Staff_Area\Includes\Loop( ['orderby' => 'date', 'order' => 'ASC'], $current_user_ID );
+  $all_resources->resource_loop( null, true );
 
 endwhile; ?>

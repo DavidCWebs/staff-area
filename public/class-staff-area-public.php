@@ -76,7 +76,7 @@ class Staff_Area_Public {
 		 * @TODO: Pass in an array of pages for the filter - set in an options page with sensible defaults.
 		 * @var array of pages for the filter js function
 		 */
-		$filter_pages = ['staff'];
+		$filter_pages = [ 'staff', 'management-resources' ];
 
 		if ( is_page ( $filter_pages ) ) {
 

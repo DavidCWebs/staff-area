@@ -126,6 +126,12 @@
 
 		}
 
+    if ( is_page( 'management-resources' ) ) {
+
+			$page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/page-management-resources.php';
+
+		}
+
     if ( is_page( 'staff-member' ) ) {
 
 			$page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/page-staff-member.php';

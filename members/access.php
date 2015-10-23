@@ -135,4 +135,49 @@ class Access {
 
   }
 
+  public function get_readable_user_role() {
+
+    $level = "No role";
+
+    if ( in_array ( 'staff_manager', $this->current_user_roles ) ) { $level = "Manager"; }
+    if ( in_array ( 'staff_supervisor', $this->current_user_roles ) ) { $level = "Supervisor"; }
+    if ( in_array ( 'staff_member', $this->current_user_roles ) ) { $level = "Staff Member"; }
+    if ( in_array ( 'administrator', $this->current_user_roles ) ) { $level = "Administrator"; }
+    if ( in_array ( 'editor', $this->current_user_roles ) ) { $level = "Editor"; }
+
+    return $level;
+
+  }
+
+  /**
+   * Return a string of allowed user roles
+   *
+   * User roles are made human readable. Admin and editor roles are removed from
+   * the array - these users have default access and it is assumed that they
+   * know this.
+   *
+   * @return string A string of allowed user roles
+   */
+  public function get_access_string() {
+
+    // Remove 'administrator' and 'editor' from the allowed roles array
+    $allowed = array_diff( $this->allowed_roles, ['administrator', 'editor'] );
+
+    // Output readable values
+    $allowed = array_map(
+
+      function($a) {
+
+        if ('staff_manager' === $a) { $a = "Manager"; }
+        if ('staff_supervisor' === $a) { $a = "Supervisor"; }
+        return $a;
+
+      }, $allowed
+
+    );
+
+    return implode( " or ", $allowed );
+
+  }
+
 }

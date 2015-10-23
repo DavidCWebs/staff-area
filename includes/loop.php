@@ -99,6 +99,7 @@ class Loop {
 
       }
 
+      echo "<div id='{$this->div_class}-table-container'>";
       //echo "<div id='{$this->div_class}'>";
       echo "<table id='{$this->div_class}-table' style='width:100%; table-layout: fixed;' class='table'>";
       echo "<thead><tr><th>Title</th><th>Description</th><th>Compulsory?</th><th>Status</th><th>Categories</th></thead><tbody>";
@@ -124,7 +125,7 @@ class Loop {
       }
 
       //echo "</div>";
-      echo "</tbody></table>";
+      echo "</tbody></table></div>";
 
     } else {
 
