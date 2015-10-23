@@ -26,7 +26,7 @@
 
       // Collect data from inputs, and slot into variables
       var regNonce  = $( "#staff_area_cw_read_confirm" ).val();
-      var regMarked = $( "#confirmation-checkbox:checked" ).val();
+      var regMarked = "1" == $( "#confirmation-checkbox:checked" ).val() ? "1" : "0";
       var regSubmit = $( "#submit-confirmation").val();
       var regUserID = $( "#cwUserID").val();
       var regPostID = $( "#cwPostID").val();
@@ -83,12 +83,22 @@
             // Clear old user list/error messages
             $( "#cw-result-message" ).empty();
 
-            //$( "#mark-as-read" ).hide();
-            $( "#mark-as-read" ).fadeOut( 200, function() {
+            if ( "not_ticked" !== response.status ) {
+
+              //$( "#mark-as-read" ).hide();
+              $( "#mark-as-read" ).fadeOut( 200, function() {
+                $( "#cw-result-message" ).html( staffReturn );
+                // Show results div
+                $( "#cw-result-message" ).fadeIn( 200 );
+              });
+
+            } else {
+
               $( "#cw-result-message" ).html( staffReturn );
               // Show results div
               $( "#cw-result-message" ).fadeIn( 200 );
-            });
+
+            }
 
 
             //$( "#cw-result-message" ).html( staffReturn );

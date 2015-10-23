@@ -241,13 +241,17 @@ class Confirm {
         Confirm::update_user_records( $user_ID, $post_ID );
         Confirm::success_message();
 
+      } elseif ( isset( $_POST['cwSubmitted'] ) && "0" === $_POST['cwMarkRead']) {
+
+        Confirm::prompt_tick_message();
+
       }
 
     }
 
   }
 
-  public static function success_message(  ){
+  public static function success_message(){
 
 		// Build a success message
 		// -------------------------------------------------------------------------
@@ -266,5 +270,23 @@ class Confirm {
 		//}
 
 	}
+
+  public static function prompt_tick_message() {
+
+    // Build a success message
+		// -------------------------------------------------------------------------
+		$success = "Don't forget to tick the box. Thanks!";
+
+		// Success Return for Ajax
+		// -------------------------------------------------------------------------
+		//if ( true == $ajax ) {
+
+			$response               = array(); // this will be a JSON array
+			$response['status']     = 'not_ticked';
+			$response['message']    = $success;
+
+			return wp_send_json( $response ); // sends $response as a JSON object
+
+  }
 
 }
