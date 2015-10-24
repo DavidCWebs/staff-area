@@ -14,6 +14,6 @@ $user_resources = new Staff_Area\Display\Member_Resource_Status( $staff_member_I
 
 
 <h3>Staff Resources</h3>
-<?php $user_resources->resources_table( 'completed' ); ?>
+<?php $user_resources->completed_resources_table(); ?>
 
-<?php //$user->resources_table( 'not_complete' ); ?>
+<?php $user_resources->not_completed_resources_table(); ?>

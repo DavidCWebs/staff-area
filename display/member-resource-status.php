@@ -44,9 +44,9 @@ class Member_Resource_Status {
    * @param  string $compulsory        [description]
    * @return [type]                    [description]
    */
-  public function resources_table ( $completion_status = 'not_complete', $compulsory = '' ) {
+  public function completed_resources_table () {
 
-    $resource_array = 'completed' === $completion_status ? $this->resource_data['completed_workbooks'] : self::not_completed_resources( $this->user_ID, 'fields');//$this->userdata['not_completed'];
+    $resource_array = $this->resource_data['completed_workbooks'] ;
 
     if ( is_array( $resource_array ) ){
 
@@ -70,8 +70,56 @@ class Member_Resource_Status {
             $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
 
             echo "<tr>";
-            echo "<td><a href='{$resource['permalink']}'>{$resource['title']}</a></td>";
+            echo "<td><a href='{$resource['permalink']}'>{$resource['title']}: {$resource['post_ID']}</a></td>";
             echo "<td>{$resource['completion_date']}</td>";
+            echo "<td>$compulsory</td>";
+            echo "</tr>";
+
+          }
+
+          ?>
+        </tbody>
+      </table>
+      <?php
+
+    } else {
+
+    ?>
+    <p>
+      <?php echo $this->userdata['first_name']; ?> has not marked any staff resources as complete.
+    </p>
+    <?php
+
+    }
+
+  }
+
+  public function not_completed_resources_table () {
+
+    $resource_array = $this->resource_data['not_completed_workbooks'];
+
+    if ( is_array( $resource_array ) ){
+
+      ?>
+      <p>
+        <?php echo $this->personal_details['first_name']; ?> has not completed the following staff resources:
+      </p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Compulsory?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+
+          foreach ( $resource_array as $resource ) {
+
+            $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
+
+            echo "<tr>";
+            echo "<td><a href='{$resource['permalink']}'>{$resource['title']} :{$resource['post_ID']}</a></td>";
             echo "<td>$compulsory</td>";
             echo "</tr>";
 
