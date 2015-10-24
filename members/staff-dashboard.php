@@ -3,6 +3,10 @@ namespace Staff_Area\Members;
 
 class Staff_Dashboard {
 
+  /**
+   * A multi-dimensional array of staff members, 
+   * @var array
+   */
   public $staff;
 
   public function __construct() {

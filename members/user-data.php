@@ -36,7 +36,8 @@ class User_Data {
       'full_name'     => $user_object->first_name . ' ' . $user_object->last_name,
       'email'         => $user_object->user_email,
       'registered'    => $user_object->user_registered,
-      'completed'     => $this->completed_workbooks()
+      'completed'     => self::completed_resources( $this->user_ID, 'fields' ),
+      'not_completed' => self::not_completed_resources( $this->user_ID )
     ];
 
   }
@@ -52,9 +53,9 @@ class User_Data {
    * @param  [type] $allmeta [description]
    * @return [type]          [description]
    */
-  private function completed_workbooks() {
+  public static function completed_resources( $user_ID, $return = 'fields' ) {
 
-    $resources_meta = get_user_meta( $this->user_ID, 'resources_completed', true );
+    $resources_meta = get_user_meta( $user_ID, 'resources_completed', true );
 
     if ( empty ( $resources_meta ) ) {
 
@@ -70,14 +71,21 @@ class User_Data {
       $completed = [];
       foreach ( $resources_meta as $resource ) {
 
-        $date = date('j-m-Y, G:i', $resource['time'] );
+        if( 'fields' === $return ) {
 
-        $completed[] = [
-          'post_ID'         => (int) $resource['post_ID'],
-          'completion_date' => esc_html( $date ),
-          'title'           => sanitize_text_field( get_the_title( $resource['post_ID'] ) ),
-          'permalink'       => esc_url( get_the_permalink( $resource['post_ID'] ) )
-        ];
+          $date = date('j-m-Y, G:i', $resource['time'] );
+          $completed[] = [
+            'post_ID'         => (int) $resource['post_ID'],
+            'completion_date' => esc_html( $date ),
+            'title'           => sanitize_text_field( get_the_title( $resource['post_ID'] ) ),
+            'permalink'       => esc_url( get_the_permalink( $resource['post_ID'] ) )
+          ];
+
+        } elseif( 'IDs' === $return ) {
+
+          $completed[] = (int) $resource['post_ID'];
+
+        }
 
       }
 
@@ -87,19 +95,37 @@ class User_Data {
 
   }
 
-  public function get_completed_resources( $return_format = 'rows' ) {
+  /**
+   * Return an array of post IDs for staff resources that have not been completed
+   *
+   * Refers to staff resources that have not been completed by this user.
+   *
+   * @param  int|string $user_ID  The user ID
+   * @return array                Post IDs of not-complete staff resources for this user
+   */
+  public static function not_completed_resources( $user_ID, $return_format = 'IDs' ) {
 
-    $resources_array = $this->completed_workbooks();
+    $all_resources = \Staff_Area\Includes\Loop::get_post_IDs( 'staff-resource', false );
 
-    $rows = '';
+    $completed_resources = self::completed_resources( $user_ID, 'IDs' );
 
-    foreach( $resources_array as $resource ) {
+    if ( 'IDs' === $return_format ) {
 
-      $rows .= "<tr><td>{$resource['title']}</td><td>{$resource['completion_date']}</td></tr>";
+      return array_diff( $all_resources, $completed_resources );
 
     }
 
-    return $rows;
+  }
+
+  /**
+   * [get_completed_resources description]
+   * @return [type] [description]
+   */
+  public function get_completed_resources( /*$return_format = 'rows'*/ ) {
+
+    $resources_array = self::completed_resources( $this->user_ID, 'IDs' );
+
+    return self::completed_resources( $this->user_ID, 'fields' );//$resources_array;
 
   }
 

@@ -137,6 +137,43 @@ class Loop {
 
   }
 
+  public static function get_post_IDs( $type = 'staff-resource', $compulsory = false ) {
+
+    if ( true == $compulsory ) {
+      $args = array(
+        'post_type'       => $type,
+        'post_status'     => 'publish',
+        'fields'          => 'ids',
+        'posts_per_page'  =>  -1,
+        'meta_query'      => array(
+          array(
+            'key'        => 'compulsory_status',
+            'value'      => '1',
+            'compare'    => '=',
+            'type'       => 'CHAR',
+          ),
+        ),
+      );
+    } else {
+
+      $args = array(
+        'post_type'       => $type,
+        'post_status'     => 'publish',
+        'fields'          => 'ids',
+        'posts_per_page'  =>  -1
+      );
+
+    }
+
+
+  $result_query = new \WP_Query( $args );
+  $ID_array = $result_query->posts;
+  wp_reset_postdata();
+
+  return $ID_array;
+
+  }
+
   /**
   * Loop through all terms in the given taxonomy
   *
