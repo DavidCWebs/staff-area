@@ -129,4 +129,52 @@ class User_Data {
 
   }
 
+  public function resources_table ( $completion_status = 'not_complete') {
+
+    if ( is_array( $this->userdata['completed'] ) ){
+
+      ?>
+      <p>
+        <?php echo $this->userdata['first_name']; ?> has marked the following staff resources as complete:
+      </p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Date Completed</th>
+            <th>Compulsory?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+
+          foreach ($this->get_completed_resources() as $resource ) {
+
+            $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
+
+            echo "<tr>";
+            echo "<td><a href='{$resource['permalink']}'>{$resource['title']}</a></td>";
+            echo "<td>{$resource['completion_date']}</td>";
+            echo "<td>$compulsory</td>";
+            echo "</tr>";
+
+          }
+
+          ?>
+        </tbody>
+      </table>
+      <?php
+
+    } else {
+
+    ?>
+    <p>
+      <?php echo $userdata['first_name']; ?> has not marked any staff resources as complete.
+    </p>
+    <?php
+
+    }
+
+  }
+
 }
