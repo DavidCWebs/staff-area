@@ -14,7 +14,7 @@
 
   $staff = new Staff_Area\Members\Staff_Dashboard();
 
-  caradump( $staff, 'Staff_Dashboard()' );
+  echo $staff->naughty_users_table();
 
   echo $staff->render_table();
 

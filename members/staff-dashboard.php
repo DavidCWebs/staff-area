@@ -93,13 +93,40 @@ class Staff_Dashboard {
       if ( !empty ( $outstanding ) ) {
 
         $this->naughty_users[] = [
+          'first_name'              => $value['first_name'],
+          'last_name'               => $value['last_name'],
+          'email'                   => $value['email'],
           'user_ID'                 => $value['user_ID'],
-          'outstanding_compulsory'  => $outstanding
+          'outstanding_compulsory'  => $this->not_completed_resource_return_data( $outstanding )
         ];
 
       }
 
     }
+
+  }
+
+  /**
+   * Build an array of not completed resource data for display purposes
+   *
+   * @param  array  $resources_IDs  An array of not completed resource post IDs
+   * @return array                  An array of data to be displayed
+   */
+  public function not_completed_resource_return_data ( array $resources_IDs ) {
+
+    $resources_data_array = [];
+
+    foreach( $resources_IDs as $resource_ID ) {
+
+      $resources_data_array[] = [
+        'post_ID'         => (int) $resource_ID,
+        'title'           => sanitize_text_field( get_the_title( $resource_ID ) ),
+        'permalink'       => esc_url( get_the_permalink( $resource_ID ) )
+      ];
+
+    }
+
+    return $resources_data_array;
 
   }
 
@@ -222,6 +249,31 @@ class Staff_Dashboard {
 
   }
 
+  private function outstanding_resources_string ( $staff_member ) {
+
+    $outstanding_resources = '';
+
+    if ( !empty ( $staff_member['outstanding_compulsory'] ) ) {
+
+      // Loop through the outstanding compulsory resources array
+      foreach( $staff_member['outstanding_compulsory'] as $outstanding_resource ) {
+
+        // Build a string of completed resource info
+        $outstanding_resources .= "<a href='{$outstanding_resource['permalink']}'>{$outstanding_resource['title']}</a>";
+        $outstanding_resources .= "<br>";
+
+      }
+
+    } elseif ( false === $staff_member['outstanding_compulsory'] ) {
+
+      $outstanding_resources = "-";
+
+    }
+
+    return $outstanding_resources;
+
+  }
+
   /**
    * Output a table with staff information
    *
@@ -229,7 +281,7 @@ class Staff_Dashboard {
    */
   public function render_table(){
 
-    $return_html = '';
+    $return_html = '<h3>All Staff</h3>';
 
     $i = 1;
 
@@ -272,5 +324,55 @@ class Staff_Dashboard {
     return $return_html;
 
   }
+
+  /**
+   * Output a table with staff information
+   *
+   * @return string HTML table markup
+   */
+  public function naughty_users_table(){
+
+    $return_html = '<h3>Staff with Outstanding Compulsory Resources</h3>';
+
+    $i = 1;
+
+    ob_start();
+
+      ?>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Email Address</th>
+          <th>Compulsory Resources Outstanding</th>
+        </tr>
+        <?php
+
+        // Add a new table row for each staff member
+        foreach( $this->naughty_users as $staff_member ) {
+
+          $completed_resources  = $this->outstanding_resources_string( $staff_member );
+          $name                 = $staff_member['first_name'] . ' ' . $staff_member['last_name'];
+
+          ?>
+          <tr>
+          <td><a href="<?php echo esc_url( home_url('/staff-member') ) . '?staff_member=' . (int) $staff_member['user_ID']; ?>"><?php echo $name; ?></a></td>
+          <td><a href="mailto:<?php echo $staff_member['email'] ; ?>"><?php echo $staff_member['email'] ; ?></a></td>
+          <td><?php echo $completed_resources; ?></td>
+          </tr>
+          <?php
+
+        }
+        ?>
+      </table>
+      <?php
+
+      $return_html .= ob_get_clean();
+
+      $i ++;
+
+    return $return_html;
+
+  }
+
 
 }
