@@ -14,4 +14,16 @@ class Data {
 
   }
 
+  public static function get_compulsory_resources () {
+
+    return \Staff_Area\Includes\Loop::get_post_IDs( 'staff-resource', true );;
+
+  }
+
+  public static function get_all_resources() {
+
+    return \Staff_Area\Includes\Loop::get_post_IDs( 'staff-resource', false );
+
+  }
+
 }

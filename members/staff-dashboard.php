@@ -4,14 +4,16 @@ namespace Staff_Area\Members;
 class Staff_Dashboard {
 
   /**
-   * A multi-dimensional array of staff members, 
+   * A multi-dimensional array of staff members,
    * @var array
    */
-  public $staff;
+  public $staff_data_arrays;
 
   public function __construct() {
 
-    $this->set_staff();
+    $this->set_staff_member_objects();
+    $this->set_staff_data_arrays();
+    $this->set_naughty_users();
 
   }
 
@@ -19,7 +21,7 @@ class Staff_Dashboard {
    * Set an array of user data for users with the role 'staff_member'
    *
    */
-  public function set_staff() {
+  public function set_staff_data_arrays() {
 
     $args = [
       'role' => 'staff_member',
@@ -33,7 +35,7 @@ class Staff_Dashboard {
     // -------------------------------------------------------------------------
     $staff_members = get_users( $args );
 
-    $this->staff = [];
+    $this->staff_data_arrays = [];
 
     // Loop through the array of stdClass objects, build useful array of data
     foreach ( $staff_members as $key => $staff_member ) {
@@ -41,7 +43,101 @@ class Staff_Dashboard {
       $allmeta = get_user_meta( $staff_member->ID );
       $completed = $this->completed_workbooks( $allmeta );
 
-      $this->staff[] = [
+      $this->staff_data_arrays[] = [
+        'user_ID'             => $staff_member->ID,
+        'first_name'          => $allmeta['first_name'][0],
+        'last_name'           => $allmeta['last_name'][0],
+        'email'               => $staff_member->user_email,
+        'completed_resources' => $completed
+      ];
+
+    }
+
+  }
+
+  /**
+   * Set an array of users who have outstanding compulsory resources
+   *
+   * Set an object property array that contains the user ID and an array of resource IDs
+   * for any outstanding resources.
+   *
+   */
+  private function set_naughty_users() {
+
+    $compulsory_resources = \Staff_Area\Resources\Data::get_compulsory_resources ();
+
+    $this->naughty_users = [];
+
+    // Loop through all 'staff_member' users
+    foreach( $this->staff_data_arrays as $key => $value ) {
+
+      // This will stay empty if the user has not marked any resources as complete
+      $completed_IDs = [];
+
+      // This user has completed some resources - check for completion of compulsory resources
+      if( !empty ( $value['completed_resources'] ) ) {
+
+        // Build an array of completed IDs of completed resources
+        foreach ( $value['completed_resources'] as $completed ) {
+
+          $completed_IDs[] = $completed['post_ID'];
+
+        }
+
+      }
+
+      // Check compulsory completion for this user
+      $outstanding = array_diff( $compulsory_resources, $completed_IDs );
+
+      // There ARE outstanding compulsory resources, so add this user to the $this->naughty_users array
+      if ( !empty ( $outstanding ) ) {
+
+        $this->naughty_users[] = [
+          'user_ID'                 => $value['user_ID'],
+          'outstanding_compulsory'  => $outstanding
+        ];
+
+      }
+
+    }
+
+  }
+
+  public function get_naughty_users() {
+
+    return $this->naughty_users;
+
+  }
+
+  /**
+   * A method to set staff member objects
+   *
+   * @TODO This should be broken out into a standalone class
+   *
+   */
+  public function set_staff_member_objects() {
+
+    $args = [
+      'role' => 'staff_member',
+      'fields' => [
+        'ID',
+        'user_email'
+        ]
+    ];
+
+    // User IDs, emails for role 'staff_member', returned as an array of stdClass objects
+    // -------------------------------------------------------------------------
+    $staff_members = get_users( $args );
+
+    $this->staff_objects = [];
+
+    // Loop through the array of stdClass objects, build useful array of data
+    foreach ( $staff_members as $key => $staff_member ) {
+
+      $allmeta = get_user_meta( $staff_member->ID );
+      $completed = $this->completed_workbooks( $allmeta );
+
+      $this->staff_objects[] = (object)[
         'user_ID'             => $staff_member->ID,
         'first_name'          => $allmeta['first_name'][0],
         'last_name'           => $allmeta['last_name'][0],
@@ -150,7 +246,7 @@ class Staff_Dashboard {
         <?php
 
         // Add a new table row for each staff member
-        foreach( $this->staff as $staff_member ) {
+        foreach( $this->staff_data_arrays as $staff_member ) {
 
           $completed_resources  = $this->completed_resources_string( $staff_member );
           $name                 = $staff_member['first_name'] . ' ' . $staff_member['last_name'];

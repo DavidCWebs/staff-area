@@ -79,8 +79,17 @@ class User_Data {
 
     $all_resources                    = \Staff_Area\Includes\Loop::get_post_IDs( 'staff-resource', false );
     $completed_resources              = $this->completed_resource_IDs;
-    $this->not_completed_resource_IDs = array_diff( $all_resources, $completed_resources );
 
+    if ( !empty ( $completed ) ) {
+
+      $this->not_completed_resource_IDs = array_diff( $all_resources, $completed_resources );
+
+    } else {
+
+      $this->not_completed_resource_IDs = $all_resources;
+
+    }
+    
   }
 
   /**

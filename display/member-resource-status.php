@@ -86,7 +86,7 @@ class Member_Resource_Status {
 
     ?>
     <p>
-      <?php echo $this->userdata['first_name']; ?> has not marked any staff resources as complete.
+      <?php echo $this->personal_details['first_name']; ?> has not marked any staff resources as complete.
     </p>
     <?php
 
