@@ -42,7 +42,15 @@ EOF;
     }
 
     ?>
+    <a href="#" id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>not-completed" class="btn btn-primary btn-lg grey">
+      <?php
+        _e( "Resources I Haven't Completed", 'staff-area ');
+      ?>
+    </a>
   </div>
 </form>
+<div id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>filter-feedback" class="alert alert-info">
+  Showing: <?php echo $this->section_title; ?>
+</div>
 <hr>
 <?php

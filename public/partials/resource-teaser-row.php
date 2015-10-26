@@ -4,7 +4,7 @@
  * @var [type]
  */
 ?>
-<tr style="width:100%" class="<?php echo $slug_name . ' ' . $term_list; ?> <?php echo 'management-resource' === $args['post_type'] ? "management-" : ''; ?>resource">
+<tr style="width:100%" class="<?php echo $slug_name . ' ' . $term_list . ' ' . $marked_class; ?> <?php echo 'management-resource' === $args['post_type'] ? "management-" : ''; ?>resource">
   <td>
     <a href="<?php the_permalink(); ?>">
       <?php the_title(); ?>

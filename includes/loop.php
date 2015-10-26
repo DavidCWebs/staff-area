@@ -52,23 +52,47 @@ class Loop {
   * @since    1.0.0
   * @param array $override Array of WP_Query arguments
   */
-  public function __construct( $override = [], $current_user_ID ) {
+  public function __construct( $override = [], $current_user_ID, $meta_query = '' ) {
 
-    $this->current_user_ID = $current_user_ID;
+    $this->current_user_ID  = $current_user_ID;
+    $this->div_class        = "resources";
+    $this->section_title    = "Staff Resources";
+    $this->set_query_arguments( $override, $meta_query );
 
-    $this->args = array_merge( array (
-    //'post_type'              => array( 'staff_resource' ),
-    'post_type'              => 'staff-resource',
-    'post_status'            => array( 'publish' ),
-    'posts_per_page'         => '-1',
-    'order'                  => 'ASC',
-    'orderby'                => 'menu_order',
-    ),
-    $override
-  );
+  }
 
-  $this->div_class      = "resources";
-  $this->section_title  = "Staff Resources";
+  private function set_query_arguments ( $override, $meta_query ) {
+
+    $meta = [];
+
+    $args = array_merge( array (
+      'post_type'              => 'staff-resource',
+      'post_status'            => array( 'publish' ),
+      'posts_per_page'         => '-1',
+      'order'                  => 'ASC',
+      'orderby'                => 'menu_order',
+      ),
+      $override
+    );
+
+    if ( 'compulsory' === $meta_query ) {
+
+      $this->section_title = "Compulsory Staff Resources";
+
+      $meta = array(
+        'meta_query' => array(
+          array(
+            'key'        => 'compulsory_status',
+            'value'      => '1',
+            'compare'    => '=',
+            'type'       => 'CHAR',
+          ),
+        ),
+      );
+
+    }
+
+    $this->args = array_merge( $args, $meta );
 
   }
 
@@ -115,7 +139,7 @@ class Loop {
         $required     = ! empty( get_post_meta( $resource_ID, 'compulsory_status', true ) ) ? true: false ;
         $marked_status= \Staff_Area\User_Input\Confirm::is_marked_read( $this->current_user_ID, $resource_ID );
         $marked       = false == $marked_status ? "Not Read" : "Read";
-        //$marked = "-";
+        $marked_class = false == $marked_status ? "not-read" : "read";
 
         // The HTML for each teaser
         // ---------------------------------------------------------------------

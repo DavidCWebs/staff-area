@@ -1,10 +1,11 @@
 <?php
 namespace Staff_Area\Display;
+use Staff_Area\Members;
 
 /**
  *
  */
-class Member_Resource_Status {
+class Resources_Status {
 
   private $staff_member_ID;
 
@@ -12,26 +13,49 @@ class Member_Resource_Status {
 
   private $resource_data;
 
-  function __construct( $staff_member_ID ) {
+  private $user_data;
+
+  private $personal_data;
+
+  /**
+   * Set up properties
+   *
+   * Use dependency injection and type hinting to ensure that 2nd parameter is an object
+   * of the class Staff_Area\Members\User_Data()
+   *
+   * @param string|int  $staff_member_ID User ID of the staff member
+   * @param object      $user_data       User_Data object
+   */
+  function __construct( $staff_member_ID, Members\User_Data $user_data ) {
 
     $this->staff_member_ID = $staff_member_ID;
-    $this->set_user_data();
+    $this->user_data = $user_data;
+    $this->set_resource_data();
+    $this->set_personal_data();
 
   }
 
-  private function set_user_data() {
+  private function set_personal_data() {
 
-    $userdata = new \Staff_Area\Members\User_Data( $this->staff_member_ID );
+    $this->personal_data = $this->user_data->get_userdata();
 
-    $this->personal_details = $userdata->get_userdata();
+  }
+
+  public function get_personal_data() {
+
+    return $this->personal_data;
+
+  }
+
+  private function set_resource_data() {
 
     $resource_data = [];
 
     // Completed Workbooks
-    $resource_data['completed_workbooks'] = $userdata->get_completed_resource_data();
+    $resource_data['completed_workbooks'] = $this->user_data->get_completed_resource_data();
 
     // Not Completed Workbooks
-    $resource_data['not_completed_workbooks'] = $userdata->get_not_completed_resource_data();
+    $resource_data['not_completed_workbooks'] = $this->user_data->get_not_completed_resource_data();
 
     $this->resource_data = $resource_data;
 
@@ -52,7 +76,7 @@ class Member_Resource_Status {
 
       ?>
       <p>
-        <?php echo $this->personal_details['first_name']; ?> has marked the following staff resources as complete:
+        <?php echo $this->personal_data['first_name']; ?> has marked the following staff resources as complete:
       </p>
       <table class="table">
         <thead>
@@ -102,7 +126,7 @@ class Member_Resource_Status {
 
       ?>
       <p>
-        <?php echo $this->personal_details['first_name']; ?> has not completed the following staff resources:
+        <?php echo $this->personal_data['first_name']; ?> has not completed the following staff resources:
       </p>
       <table class="table">
         <thead>

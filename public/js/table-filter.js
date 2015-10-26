@@ -88,6 +88,37 @@
 
 		} );
 
+		// Show NOT COMPLETED Resources
+		$( "#not-completed" ).click( function( event ) {
+
+			event.preventDefault();
+
+			// Search for this string in the row class
+			var notComplete = "not-read";
+
+			// Clear the search input
+			$( "#resource-search" ).val( "" );
+
+			$( "#resources-table tbody tr" ).each( function() {
+
+				var readStatus = $( this ).attr( "class" );
+
+				// If search string isn't found, returns -1
+				if ( readStatus.indexOf( notComplete ) == -1 ) {
+
+					$( this ).hide( 200 );
+
+				} else {
+
+					$( this ).show( 100 );
+
+				}
+
+			} );
+
+		} );
+
+
 		// Management Resource Type filter
 		$( "#management-resource-search" ).keyup( function() {
 
