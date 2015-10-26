@@ -25,8 +25,7 @@
 
 			// Get the value of the containing elements class
 			var valThis = $( this ).parent().attr( "class" );
-
-			//alert( valThis );
+			var catName = $( this ).text();
 
 			$( "#resources-table tbody tr" ).each( function() {
 
@@ -44,6 +43,8 @@
 				}
 
 			} );
+
+			$( '#filter-message' ).html( " in the category: " + catName  );
 
 		} );
 
@@ -85,6 +86,7 @@
 
 			$( "#select-resource-category option:selected" ).prop( "selected", false );
 			$( "#select-resource-category option:first" ).prop( "selected", "selected" );
+			$( '#filter-message' ).html( "" );
 
 		} );
 
@@ -115,6 +117,8 @@
 				}
 
 			} );
+
+			$( '#filter-message' ).html( ": Not Completed" );
 
 		} );
 

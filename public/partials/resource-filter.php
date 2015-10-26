@@ -49,8 +49,8 @@ EOF;
     </a>
   </div>
 </form>
-<div id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>filter-feedback" class="alert alert-info">
-  Showing: <?php echo $this->section_title; ?>
+<div id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>filter-feedback" class="topspace alert alert-info">
+  Showing All <?php echo $this->section_title; ?><span id="filter-message"></span>
 </div>
 <hr>
 <?php

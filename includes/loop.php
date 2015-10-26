@@ -50,9 +50,10 @@ class Loop {
   * Pass in an array to override or extend the default arguments.
   *
   * @since    1.0.0
-  * @param array $override Array of WP_Query arguments
+  * @param array $override Array of WP_Query arguments - overrides defaults
+  * @param string $meta_query 'compulsory' | 'not-compulsory'
   */
-  public function __construct( $override = [], $current_user_ID, $meta_query = '' ) {
+  public function __construct( $override, $current_user_ID, $meta_query = '' ) {
 
     $this->current_user_ID  = $current_user_ID;
     $this->div_class        = "resources";
@@ -61,35 +62,79 @@ class Loop {
 
   }
 
+  /**
+   * Set the query arguments for WP_Query
+   *
+   * An array of default arguments is set in this method.
+   * These can be overridden by passing in an override array when instantiating the object:
+   *
+   * For example, to return posts ordered by date in descending order:
+   * - `$resources = new Staff_Area\Includes\Loop( ['orderby' => 'date', 'order' => 'ASC'], $current_user_ID );`
+   *
+   * The query can be further customised by passing either 'compulsory' or 'not-compulsory'
+   * as arguments. This will return either staff resources that have
+   * "1" == compulsory_status as a postmeta field (compulsory resources), or those
+   * that haven't (non-compulsory resources).
+   *
+   * For example, this will return compulsory staff resources:
+   * - `$compulsory_resources = new Staff_Area\Includes\Loop( '', $current_user_ID, 'compulsory' );`
+   *
+   * @param array|null $override  An array of WP_Query arguments to override/extend defaults
+   * @param string $meta_query    'compulsory', 'not-compulsory' null
+   */
   private function set_query_arguments ( $override, $meta_query ) {
 
-    $meta = [];
+    // If no $override array has been passed in, set it to an empty array
+    $override = empty( $override ) ? [] : $override;
 
+    // The default arguments, merged with the $override array
     $args = array_merge( array (
-      'post_type'              => 'staff-resource',
-      'post_status'            => array( 'publish' ),
-      'posts_per_page'         => '-1',
-      'order'                  => 'ASC',
-      'orderby'                => 'menu_order',
+      'post_type'       => 'staff-resource',
+      'post_status'     => array( 'publish' ),
+      'posts_per_page'  => '-1',
+      'order'           => 'ASC',
+      'orderby'         => 'menu_order',
       ),
       $override
     );
 
-    if ( 'compulsory' === $meta_query ) {
+    switch ( $meta_query ) {
 
-      $this->section_title = "Compulsory Staff Resources";
+      // Return only compulsory staff resources
+      case 'compulsory':
 
-      $meta = array(
-        'meta_query' => array(
-          array(
-            'key'        => 'compulsory_status',
-            'value'      => '1',
-            'compare'    => '=',
-            'type'       => 'CHAR',
+        $this->section_title = "Compulsory Staff Resources";
+
+        $meta = array(
+          'meta_query' => array(
+            array(
+              'key'        => 'compulsory_status',
+              'value'      => '1',
+              'compare'    => '=',
+              'type'       => 'CHAR',
+            ),
           ),
-        ),
-      );
+        );
+        break;
 
+      // Return only staff resources that are NOT marked compulsory
+      case 'not-compulsory':
+
+        $this->section_title = "Not Compulsory Staff Resources";
+        $meta = array(
+          'meta_query' => array(
+            array(
+              'key'        => 'compulsory_status',
+              //'value'      => '1',
+              'compare'    => 'NOT EXISTS',
+            ),
+          ),
+        );
+        break;
+
+      default:
+        $meta = [];
+        break;
     }
 
     $this->args = array_merge( $args, $meta );

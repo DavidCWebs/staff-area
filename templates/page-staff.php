@@ -28,12 +28,12 @@
 
   }
 
-  $compulsory_resources = new Staff_Area\Includes\Loop( ['orderby' => 'date', 'order' => 'ASC'], $current_user_ID, 'compulsory' );
+  $compulsory_resources = new Staff_Area\Includes\Loop( '', $current_user_ID, 'compulsory' );
   $compulsory_resources->resource_loop( null, true );
 
   echo "<hr>";
 
-  $all_resources = new Staff_Area\Includes\Loop( ['orderby' => 'date', 'order' => 'ASC'], $current_user_ID );
+  $all_resources = new Staff_Area\Includes\Loop( ['orderby' => 'date', 'order' => 'ASC'], $current_user_ID, 'not-compulsory' );
   $all_resources->resource_loop( null, true );
 
 endwhile; ?>
