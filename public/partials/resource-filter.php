@@ -17,13 +17,13 @@
     <a href="#" id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>showall" class="btn btn-primary btn-lg grey">All Resources</a>
     <?php
 
-    $terms = get_terms( $filter_tax );
+    //$terms = get_terms( $filter_tax );
 
-    if ( ! empty( $terms ) ) {
+    if ( ! empty( $terms_array ) ) {
 
       $sectors = '';
 
-      foreach ( $terms as $term ) {
+      foreach ( $terms_array as $term ) {
 
         $sectors .= '<li class="' . $term->slug . '"><a href="#">' . $term->name . '</a></li>';
 

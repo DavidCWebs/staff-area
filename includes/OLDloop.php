@@ -160,69 +160,67 @@ class Loop {
 
       echo"<h3>$this->section_title</h3>";
 
-      ob_start();
-        echo "<div id='{$this->div_class}-table-container'>";
-        //echo "<div id='{$this->div_class}'>";
-        echo "<table id='{$this->div_class}-table' style='width:100%; table-layout: fixed;' class='table'>";
-        echo "<thead><tr><th>Title</th><th>Description</th><th>Compulsory?</th><th>Status</th><th>Categories</th></thead><tbody>";
+      // Include filter markup if filter is specified
+      // -----------------------------------------------------------------------
+      if ( true === $filter ) {
 
-        $terms_array = [];
-
-        while ( $staff_resource_query->have_posts() ) {
-
-          $staff_resource_query->the_post();
-
-          $resource_ID    = get_the_ID();
-          $taxonomy       = 'staff-resource' === $args['post_type'] ? 'resource-category' : 'management-resource-category' ;
-          $terms          = wp_get_post_terms( $resource_ID, $taxonomy );
-          $term_list      = implode( ' ', wp_get_post_terms( $resource_ID, $taxonomy, array( "fields" => "slugs" ) ) );
-          $slug_name      = get_post_field( 'post_name', $resource_ID );
-          $required       = ! empty( get_post_meta( $resource_ID, 'compulsory_status', true ) ) ? true: false ;
-          $marked_status  = \Staff_Area\User_Input\Confirm::is_marked_read( $this->current_user_ID, $resource_ID );
-          $marked         = false == $marked_status ? "Not Read" : "Read";
-          $marked_class   = false == $marked_status ? "not-read" : "read";
-
-          // Make an array of all terms in this loop - in order to build the dropdown menu in the filter
-          foreach( $terms as $term ) {
-
-            // If we don't already have it, add it!
-            if( ! in_array( $term, $terms_array ) ) {
-
-              $terms_array [] = $term;
-
-            }
-
-          }
-
-          // The HTML for each teaser
-          // -------------------------------------------------------------------
-          //include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser.php' );
-          include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser-row.php' );
-
-        }
-
-        //echo "</div>";
-        echo "</tbody></table></div>";
-
-      } else {
-
-        //echo "There are no posts";
+        $this->filter( $args['post_type'], $terms_array );
 
       }
 
-      wp_reset_postdata();
+      echo "<div id='{$this->div_class}-table-container'>";
+      //echo "<div id='{$this->div_class}'>";
+      echo "<table id='{$this->div_class}-table' style='width:100%; table-layout: fixed;' class='table'>";
+      echo "<thead><tr><th>Title</th><th>Description</th><th>Compulsory?</th><th>Status</th><th>Categories</th></thead><tbody>";
 
-    $table = ob_get_clean();
+      $terms_array = [];
 
-    // Include filter markup if filter is specified
-    // -------------------------------------------------------------------------
-    if ( true === $filter ) {
+      while ( $staff_resource_query->have_posts() ) {
 
-      $this->filter( $args['post_type'], $terms_array );
+        $staff_resource_query->the_post();
+
+        $resource_ID    = get_the_ID();
+        $taxonomy       = 'staff-resource' === $args['post_type'] ? 'resource-category' : 'management-resource-category' ;
+        $terms          = wp_get_post_terms( $resource_ID, $taxonomy, array( "fields" => "slugs" ) );
+        $term_list      = implode( ' ', $terms );
+        $slug_name      = get_post_field( 'post_name', $resource_ID );
+        $required       = ! empty( get_post_meta( $resource_ID, 'compulsory_status', true ) ) ? true: false ;
+        $marked_status  = \Staff_Area\User_Input\Confirm::is_marked_read( $this->current_user_ID, $resource_ID );
+        $marked         = false == $marked_status ? "Not Read" : "Read";
+        $marked_class   = false == $marked_status ? "not-read" : "read";
+
+        foreach( $terms as $term ) {
+
+          // If we don't already have it, add it!
+          if( ! in_array( $term, $terms_array ) ) {
+
+            $terms_array [] = $term;
+
+          }
+
+        }
+
+        // The HTML for each teaser
+        // ---------------------------------------------------------------------
+        //include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser.php' );
+        include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser-row.php' );
+
+      }
+
+      //echo "</div>";
+      echo "</tbody></table></div>";
+
+    } else {
+
+      //echo "There are no posts";
 
     }
 
-    echo $table;
+    wp_reset_postdata();
+
+    //$terms_array = array_unique( $terms_array );
+
+    caradump( $terms_array);
 
   }
 
@@ -307,7 +305,7 @@ class Loop {
   * @param  string $post_type [description]
   * @return string            [description]
   */
-  public function filter( $post_type, $terms_array ) {
+  public function filter( $post_type ) {
 
     $filter_tax = '';
 
@@ -325,7 +323,7 @@ class Loop {
 
     }
 
-    //$categories_list = '';
+    $categories_list = '';
 
     include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-filter.php' );
 
