@@ -73,12 +73,13 @@ class Register {
 			// -----------------------------------------------------------------------
 			$firstname = $email = $lastname = $user_role = $coord_ID = '';
 
-			$firstname	= isset( $_POST['cwFirstname'] )	? $_POST['cwFirstname']	: $_POST['cw_firstname'];
-			$lastname		= isset( $_POST['cwLastname'] )		? $_POST['cwLastname']	: $_POST['cw_lastname'];
-			$email			= isset( $_POST['cwEmail'] )			? $_POST['cwEmail']			: $_POST['cw_email'];
-			$user_role	= isset( $_POST['cwUserRole'] )		? $_POST['cwUserRole']	: $_POST['role'];
-			$coord_ID		= isset( $_POST['cwCoordID'] )		? $_POST['cwCoordID']		: $_POST['coordinator_ID']; // For Ajax submissions, these are set by ajax-reg.js by means of jQuery
-			$cw_ajax    = isset( $_POST['cwAjax'] )				? $_POST['cwAjax']			: false; // Set cw_ajax in the jQuery function - this allows a differential response for ajax submissions
+			$firstname			= isset( $_POST['cwFirstname'] )	? $_POST['cwFirstname']	: $_POST['cw_firstname'];
+			$lastname				= isset( $_POST['cwLastname'] )		? $_POST['cwLastname']	: $_POST['cw_lastname'];
+			$email					= isset( $_POST['cwEmail'] )			? $_POST['cwEmail']			: $_POST['cw_email'];
+			$user_role			= isset( $_POST['cwUserRole'] )		? $_POST['cwUserRole']	: $_POST['role'];
+			$coord_ID				= isset( $_POST['cwCoordID'] )		? $_POST['cwCoordID']		: $_POST['coordinator_ID']; // For Ajax submissions, these are set by ajax-reg.js by means of jQuery
+			$business_unit	= isset( $_POST['cwUnit'] )				? $_POST['cwUnit']			: $_POST['business_unit'];
+			$cw_ajax    		= isset( $_POST['cwAjax'] )				? $_POST['cwAjax']			: false; // Set cw_ajax in the jQuery function - this allows a differential response for ajax submissions
 
 			// Only allow PHP form submission from the specified page
 			if ( false === $cw_ajax ) {
@@ -91,7 +92,7 @@ class Register {
 
 			}
 
-			$form = new Validator( $firstname, $lastname, $email );
+			$form = new Validator( $firstname, $lastname, $email, $business_unit );
 			$form->is_valid(); // returns boolean true if no errors, otherwise $errors array
 			$errors = $form->get_errors(); // Get the validation errors, if they exist.
 

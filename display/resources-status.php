@@ -7,6 +7,8 @@ use Staff_Area\Members;
  */
 class Resources_Status {
 
+  private $personal_data;
+
   private $staff_member_ID;
 
   private $personal_details;
@@ -14,8 +16,6 @@ class Resources_Status {
   private $resource_data;
 
   private $user_data;
-
-  private $personal_data;
 
   /**
    * Set up properties
@@ -93,8 +93,8 @@ class Resources_Status {
 
             $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
 
-            echo "<tr>";
-            echo "<td><a href='{$resource['permalink']}'>{$resource['title']}: {$resource['post_ID']}</a></td>";
+            echo "<tr class='post-ID-{$resource['post_ID']}'>";
+            echo "<td><a href='{$resource['permalink']}'>{$resource['title']}</a></td>";
             echo "<td>{$resource['completion_date']}</td>";
             echo "<td>$compulsory</td>";
             echo "</tr>";
@@ -110,7 +110,7 @@ class Resources_Status {
 
     ?>
     <p>
-      <?php echo $this->personal_details['first_name']; ?> has not marked any staff resources as complete.
+      <?php echo $this->personal_data['first_name']; ?> has not marked any staff resources as complete.
     </p>
     <?php
 
@@ -142,8 +142,8 @@ class Resources_Status {
 
             $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
 
-            echo "<tr>";
-            echo "<td><a href='{$resource['permalink']}'>{$resource['title']} :{$resource['post_ID']}</a></td>";
+            echo "<tr class='post-ID-{$resource['post_ID']}'>";
+            echo "<td><a href='{$resource['permalink']}'>{$resource['title']}</a></td>";
             echo "<td>$compulsory</td>";
             echo "</tr>";
 

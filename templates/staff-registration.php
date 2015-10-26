@@ -11,7 +11,7 @@
 
   }
 
-  include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/registration.php' );
+  include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/registration.php' );
 
   get_template_part('templates/page', 'footer');
 

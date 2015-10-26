@@ -39,9 +39,10 @@ class View_Form {
 	*/
 	public function render( $success_message = '' ) {
 
-		$roles_radio = $this->roles_radio();
+		$roles_radio	= $this->roles_radio();
+		$unit_options	= $this->business_unit_options();
 
-		include_once( dirname( __DIR__ ) . '/public/partials/user-reg-form.php' );
+		include_once( dirname( __DIR__ ) . '/templates/partials/user-reg-form.php' );
 
 	}
 
@@ -77,6 +78,38 @@ class View_Form {
 
 	}
 
+	public function business_unit_options() {
+
+		$units = $this->get_business_units();
+
+		ob_start();
+
+		$i = 0;
+
+		?>
+		<div class="business-unit">
+			<select id="cw_business_unit" name="business_unit">
+				<?php
+
+				foreach( $units as $unit ) {
+					?>
+					<option value="<?= $unit; ?>">
+						<?= $unit; ?>
+					</option>
+					<?php
+
+					$i++;
+
+				}
+				?>
+			</select>
+		</div>
+		<?php
+
+		return ob_get_clean();
+
+	}
+
 	/**
 	 * Make an array of data for allowed roles to be used in the registration form.
 	 *
@@ -104,6 +137,18 @@ class View_Form {
 		}
 
 		return $allowed_roles;
+
+	}
+
+	private function get_business_units() {
+
+		return [
+			'Ennis Community College',
+			'Ennistymon Vocational School',
+			'Scoil Mhuire Ennis',
+			'Castletroy Community College'
+		];
+
 
 	}
 

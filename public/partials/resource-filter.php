@@ -50,7 +50,7 @@ EOF;
   </div>
 </form>
 <div id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>filter-feedback" class="topspace alert alert-info">
-  Showing All <?php echo $this->section_title; ?><span id="filter-message"></span>
+  This table shows <?php echo $this->section_title; ?><span id="filter-message"></span>
 </div>
 <hr>
 <?php

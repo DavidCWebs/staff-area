@@ -26,6 +26,11 @@
       <label class="control-label" for="radios">Staff Role</label>
       <?= $roles_radio; ?>
     </div>
+    <div class="form-group">
+      <label class="control-label" for="radios">Business Unit</label>
+      <p><?php _e( 'Select a business unit for this staff-member:', 'staff-area' ); ?></p>
+      <?= $unit_options; ?>
+    </div>
     <?php wp_nonce_field( 'cw_new_user','cw_new_user_nonce', true, true ); ?>
     <input type="submit" name="cw_register" class="btn btn-primary btn-lg" id="btn-new-user" value="Register" />
   </form>

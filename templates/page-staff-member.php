@@ -17,8 +17,7 @@ include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/page-
 ?>
 <p><a href="<?php echo esc_url( home_url('/staff-management') ); ?>">&laquo;&nbsp;Back to Staff Management</a></p>
 <?php
-//$compulsory = Staff_Area\Includes\Loop::get_post_IDs( 'staff-resource', true );
-//echo "Compulsory: " . implode(', ', $compulsory );
+
 // The view for Staff Supervisors, Staff Managers, Site Admins, Site Editors
 // -----------------------------------------------------------------------------
 if ( 'full_access' == $access || 'supervisor_access' == $access || 'manager_access' == $access ) {

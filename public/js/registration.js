@@ -27,12 +27,13 @@
       $( "#result-message" ).hide();
 
       // Collect data from inputs, and slot into variables
-      var regNonce = $( "#cw_new_user_nonce" ).val();
-      var regUserRole = $( ".cw_user_role:checked" ).val();
-      var regEmail  = $( "#cw_email" ).val();
+      var regNonce      = $( "#cw_new_user_nonce" ).val();
+      var regUserRole   = $( ".cw_user_role:checked" ).val();
+      var regEmail      = $( "#cw_email" ).val();
       var regFirstname  = $( "#cw_firstname" ).val();
-      var regLastname  = $( "#cw_lastname" ).val();
-      var regAjax = true;
+      var regLastname   = $( "#cw_lastname" ).val();
+      var regUnit       = $( "#cw_business_unit" ).val();
+      var regAjax       = true;
 
       // AJAX URL: where to send data (set in the localize_script function)
       var ajaxURL = carawebsRegVars.carawebsAjaxURL;
@@ -47,6 +48,7 @@
         cwEmail: regEmail,
         cwFirstname: regFirstname,
         cwLastname: regLastname,
+        cwUnit : regUnit,
         cwAjax: true
       };
 

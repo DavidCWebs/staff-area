@@ -45,6 +45,8 @@ class Create_User {
    */
   public $lastname;
 
+  public $business_unit;
+
   /**
    * The new user's email address
    * @var string
@@ -90,6 +92,7 @@ class Create_User {
     $this->lastname       = $user_values['last_name'];
     $this->email          = $user_values['email'];
     $this->username       = $user_values['email'];
+    $this->business_unit  = $user_values['business_unit'];
 
   }
 
@@ -135,6 +138,9 @@ class Create_User {
 
       // Set the User's Manager - $this->manager_id comes from the originating page
       add_user_meta( $user_id, 'manager_id', $this->manager_ID);
+
+      // Add the business unit to the usermeta record
+      add_user_meta( $user_id, 'business_unit', $this->business_unit );
 
       // Add new user info to the **managers** user meta data
       $this->update_manager_meta( $user_id );

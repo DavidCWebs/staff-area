@@ -160,6 +160,11 @@ class Loop {
 
       echo"<h3>$this->section_title</h3>";
 
+      /**
+       * Use output buffering to capture the output of the loop.
+       * In this way, we can determine the terms attached to each post returned.
+       * This data will be used to build a filter BEFORE the loop is output.
+       */
       ob_start();
         echo "<div id='{$this->div_class}-table-container'>";
         //echo "<div id='{$this->div_class}'>";
@@ -195,7 +200,6 @@ class Loop {
           }
 
           // The HTML for each teaser
-          // -------------------------------------------------------------------
           //include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser.php' );
           include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser-row.php' );
 

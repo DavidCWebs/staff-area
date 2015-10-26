@@ -23,11 +23,12 @@ class Validator {
    * @param string $email     Un-sanitized form input
    *
    */
-  function __construct ( $firstname, $lastname, $email ) {
+  function __construct ( $firstname, $lastname, $email, $business_unit ) {
 
-    $this->firstname  = $firstname;
-    $this->lastname   = $lastname;
-    $this->email      = $email;
+    $this->firstname      = $firstname;
+    $this->lastname       = $lastname;
+    $this->email          = $email;
+    $this->business_unit  = $business_unit;
 
   }
 
@@ -66,7 +67,9 @@ class Validator {
     }
 
     if( preg_match( $preg_str_check, $this->lastname ) ) {
+
       array_push( $this->form_errors, 'The last name you entered doesn\'t look right - please try again with alphabetic characters only.');
+
     }
 
     if ( ( $this->email) && !is_email( $this->email ) ) {
@@ -81,7 +84,13 @@ class Validator {
 
     }
 
-    if ( empty($this->form_errors)) { // There are no errors, so return the string 'true'
+    if( preg_match( $preg_str_check, $this->business_unit ) ) {
+
+      array_push( $this->form_errors, 'The business unit you entered doesn\'t look right - please try again with alphabetic characters only.');
+
+    }
+
+    if ( empty($this->form_errors) ) { // There are no errors, so return the string 'true'
 
       return true;
 
@@ -133,14 +142,16 @@ class Validator {
    */
   public function get_sanitized_values() {
 
-    $this->firstname  = $this->sanitise_name( $this->firstname );
-    $this->lastname   = $this->sanitise_name( $this->lastname );
-    $this->email      = sanitize_email( $this->email ); // Strips out all characters that are not allowable in an email address.
+    $this->firstname      = $this->sanitise_name( $this->firstname );
+    $this->lastname       = $this->sanitise_name( $this->lastname );
+    $this->email          = sanitize_email( $this->email ); // Strips out all characters that are not allowable in an email address.
+    $this->business_unit  = sanitize_text_field( $this->business_unit );
 
     $this->user_values = array(
-      'first_name'  => $this->firstname,
-      'last_name'   => $this->lastname,
-      'email'       => $this->email
+      'first_name'    => $this->firstname,
+      'last_name'     => $this->lastname,
+      'email'         => $this->email,
+      'business_unit' => $this->business_unit
     );
 
     return $this->user_values;
