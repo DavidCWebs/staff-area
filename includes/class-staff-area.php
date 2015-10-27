@@ -198,6 +198,12 @@ class Staff_Area {
 		// Filter template loader for custom templates
 		$this->loader->add_filter( 'template_include', $plugin_admin, 'staff_area_page_template_routes' );
 
+		// Usermeta in admin
+		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'business_unit_form' );
+		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'business_unit_form' );
+		$this->loader->add_action( 'personal_options_update', $plugin_admin, 'save_custom_user_meta' );
+		$this->loader->add_action( 'edit_user_profile_update', $plugin_admin, 'save_custom_user_meta' );
+
 	}
 
 	/**

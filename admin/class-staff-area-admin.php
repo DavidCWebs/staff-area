@@ -182,4 +182,44 @@
 
 	}
 
+  public function save_custom_user_meta( $user_id ) {
+
+    //if ( !current_user_can( 'edit_user', $user_id ) ) { return false; }
+
+    update_user_meta( $user_id, 'business_unit', $_POST['business_unit'] );
+
+  }
+
+
+  public function business_unit_form( $user ) {
+
+    $current_value = get_the_author_meta( 'business_unit', $user->ID );
+    $units = ['Ennis Community College', 'Castletroy Community College', 'Scoil Mhuire Ennis'];
+
+    ?>
+    <h3>Custom User Data</h3>
+
+    <table class="form-table">
+      <tr>
+        <th>Business Unit</th>
+        <td>
+          <select id="business_unit" name="business_unit">
+            <?php
+
+            foreach( $units as $unit ) {
+              ?>
+              <option value="<?= $unit; ?>" <?php echo $unit == $current_value ? " selected='selected'" : ""; ?>>
+                <?= $unit; ?>
+              </option>
+              <?php
+
+            }
+            ?>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <?php
+  }
+
 }
