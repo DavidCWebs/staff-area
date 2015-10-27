@@ -8,7 +8,7 @@
 	$( document ).ready( function() {
 
 		// Get starting table height and fix table height to prevent distracting page jumps
-		var resourceHeight = $( "#resources-table" ).height();
+		var resourceHeight = $( "#compulsory-staff-resource-table" ).height();
 		var managementResourceHeight = $( "#management-resources-table" ).height();
 		$( "#resources-table-container" ).css( "height", resourceHeight );
 		$( "#management-resources-table-container" ).css( "height", managementResourceHeight );
@@ -19,6 +19,15 @@
 		 * The dropdown menu is populated with the custom taxonomy for the relevant resource type.
 		 *
 		 */
+
+		function fixTableHeight( tableContainer, targetHeight ) {
+
+			// Set height on the table's containing element
+			$( tableContainer ).css( "height", targetHeight );
+
+		}
+
+		var flag = false;
 		$( ".dropdown-menu > li > a" ).click( function( event ) {
 
 			event.preventDefault();
@@ -27,9 +36,25 @@
 			var valThis = $( this ).parent().attr( "class" );
 			var catName = $( this ).text();
 
-			// The target
-			var targetTable	= $( this ).attr( 'data-id' );
-			var targetRow		= "#" + targetTable + " tbody tr";
+			// The target table
+			var targetTable			= $( this ).attr( 'data-id' );
+			// Get height of the target table
+			var targetHeight		= $( "#" + targetTable ).height();
+			// The containing element
+			var tableContainer	= $( "#" + targetTable + "-container" )
+
+			if ( false == flag ) {
+
+				fixTableHeight( tableContainer, targetHeight );
+
+			}
+
+			flag = true;
+
+			// Set height on the table's containing element
+			//$( "#" + targetTable + "-container" ).css( "height", targetHeight );
+			// Set a variable to target the table row elements
+			var targetRow			= "#" + targetTable + " tbody tr";
 
 			$( targetRow ).each( function() {
 

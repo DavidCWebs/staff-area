@@ -34,7 +34,7 @@
         <a href="#" class="btn btn-primary btn-lg grey dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-chevron-right"></i>&nbsp;Filter by Topic<!-- <span class="caret"></span>--></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="select-product">
           $sectors
-          <li class="resource"><a href="#">Show All Resources</a></li>
+          <li class="resource"><a data-id="$this->data_ID" href="#">Show All Resources</a></li>
         </ul>
       </div>
 EOF;
