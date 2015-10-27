@@ -14,8 +14,8 @@ namespace Staff_Area\Members;
  * The facade function used for supervisor & student registration is carawebs_userform_process_facade()
  *
  * WordPress Version 4.1
- * @package StudentStudio
- * @subpackage Users
+ * @package Staff Area
+ * @subpackage Members
  * @author David Egan <david@carawebs.com>
  * @see CW_Reg_Validator()
  * @see CW_View_Form()

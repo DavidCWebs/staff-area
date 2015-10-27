@@ -28,11 +28,10 @@
 			var catName = $( this ).text();
 
 			// The target
-			var Target	= $( this ).attr('data-src');
+			var targetTable	= $( this ).attr( 'data-id' );
+			var targetRow		= "#" + targetTable + " tbody tr";
 
-			alert(Target);
-
-			$( "#resources-table tbody tr" ).each( function() {
+			$( targetRow ).each( function() {
 
 				var productContent = $( this ).attr( "class" );
 
@@ -54,11 +53,13 @@
 		} );
 
 		// Resource Type filter
-		$( "#resource-search" ).keyup( function() {
+		$( ".cw-staff-area-search" ).keyup( function() {
 
+			var targetTable	= $( this ).attr( 'data-id' );
+			var targetRow		= "#" + targetTable + " tbody tr";
 			var valThis = $( this ).val().toLowerCase();
 
-			$( "#resources-table tbody tr" ).each( function() {
+			$( targetRow ).each( function() {
 
 				var productContent = $( this ).attr( "class" );
 

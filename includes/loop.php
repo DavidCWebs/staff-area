@@ -39,6 +39,10 @@ class Loop {
 
   protected $current_user_ID;
 
+  protected $table_ID_base;
+
+  protected $data_src;
+
   /**
    * Section Title
    * @var string
@@ -112,7 +116,7 @@ class Loop {
       case 'compulsory':
 
         $this->section_title  = "Compulsory Staff Resources";
-        $this->table_ID_base  .= "-compulsory";
+        $this->table_ID_base  .= "compulsory";
 
         $meta = array(
           'meta_query' => array(
@@ -130,7 +134,7 @@ class Loop {
       case 'not-compulsory':
 
         $this->section_title  = "Not Compulsory Staff Resources";
-        $this->table_ID_base  .= "-not-compulsory";
+        $this->table_ID_base  .= "not-compulsory";
 
         $meta = array(
           'meta_query' => array(
@@ -149,9 +153,9 @@ class Loop {
 
     }
 
-    $this->data_src = $this->table_ID_base . '-' . $this->div_class . '-' . $this->args['post-type'];
-
     $this->args     = array_merge( $args, $meta );
+
+    $this->data_ID = $this->table_ID_base . '-' . $this->args['post_type'] . '-table';
 
   }
 
@@ -180,9 +184,9 @@ class Loop {
        * This data will be used to build a filter BEFORE the loop is output.
        */
       ob_start();
-        echo "<div id='{$this->table_ID_base}-{$this->div_class}-table-container'>";
+        echo "<div id='{$this->data_ID}-container'>";
         //echo "<div id='{$this->div_class}'>";
-        echo "<table id='{$this->table_ID_base}-{$this->div_class}-table' data-src='{$this->data_src}' style='width:100%; table-layout: fixed;' class='table'>";
+        echo "<table id='{$this->data_ID}' style='width:100%; table-layout: fixed;' class='table'>";
         echo "<thead><tr><th>Title</th><th>Description</th><th>Compulsory?</th><th>Status</th><th>Categories</th></thead><tbody>";
 
         $terms_array = [];
@@ -334,7 +338,7 @@ class Loop {
       $filter_tax = 'resource-category';
       $filter_ID  = 'select-resource-category';
       $search_ID  = $this->table_ID_base . '-' . $this->div_class . '-search';
-      $data_src   = $this->table_ID_base . '-' . $this->div_class . 'resource';
+      $data_ID    = $this->table_ID_base . '-' . $this->div_class . 'resource';
 
     }
 
@@ -343,7 +347,7 @@ class Loop {
       $filter_tax = 'management-resource-category';
       $filter_ID  = 'select-management-resource-category';
       $search_ID  = $this->table_ID_base . '-' . 'management-resource-search';
-      $data_src   = $this->table_ID_base . '-' . $this->div_class . 'management-resource';
+      $data_ID    = $this->table_ID_base . '-' . $this->div_class . 'management-resource';
 
     }
 

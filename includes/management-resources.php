@@ -37,6 +37,7 @@ class Management_Resources extends Loop {
   public function __construct( $override = [], $current_user_ID ) {
 
     $this->current_user_ID = $current_user_ID;
+    //$this->set_arguments();
 
     $this->args = array_merge( array (
       'post_type'              => 'management-resource',
@@ -50,6 +51,7 @@ class Management_Resources extends Loop {
 
     $this->div_class      = "management-resources";
     $this->section_title  = "Management Resources";
+    $this->table_ID_base  = "management-resources";
 
   }
 
