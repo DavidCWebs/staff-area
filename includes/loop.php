@@ -58,7 +58,15 @@ class Loop {
     $this->current_user_ID  = $current_user_ID;
     $this->div_class        = "resources";
     $this->section_title    = "Staff Resources";
+    $this->meta_query       = $meta_query;
     $this->set_query_arguments( $override, $meta_query );
+    $this->set_table_base();
+
+  }
+
+  public function set_table_base(){
+
+    $this->table_ID_base = $this->args['post_type'];
 
   }
 
@@ -103,7 +111,8 @@ class Loop {
       // Return only compulsory staff resources
       case 'compulsory':
 
-        $this->section_title = "Compulsory Staff Resources";
+        $this->section_title  = "Compulsory Staff Resources";
+        $this->table_ID_base  .= "-compulsory";
 
         $meta = array(
           'meta_query' => array(
@@ -120,7 +129,9 @@ class Loop {
       // Return only staff resources that are NOT marked compulsory
       case 'not-compulsory':
 
-        $this->section_title = "Not Compulsory Staff Resources";
+        $this->section_title  = "Not Compulsory Staff Resources";
+        $this->table_ID_base  .= "-not-compulsory";
+
         $meta = array(
           'meta_query' => array(
             array(
@@ -135,9 +146,12 @@ class Loop {
       default:
         $meta = [];
         break;
+
     }
 
-    $this->args = array_merge( $args, $meta );
+    $this->data_src = $this->table_ID_base . '-' . $this->div_class . '-' . $this->args['post-type'];
+
+    $this->args     = array_merge( $args, $meta );
 
   }
 
@@ -166,9 +180,9 @@ class Loop {
        * This data will be used to build a filter BEFORE the loop is output.
        */
       ob_start();
-        echo "<div id='{$this->div_class}-table-container'>";
+        echo "<div id='{$this->table_ID_base}-{$this->div_class}-table-container'>";
         //echo "<div id='{$this->div_class}'>";
-        echo "<table id='{$this->div_class}-table' style='width:100%; table-layout: fixed;' class='table'>";
+        echo "<table id='{$this->table_ID_base}-{$this->div_class}-table' data-src='{$this->data_src}' style='width:100%; table-layout: fixed;' class='table'>";
         echo "<thead><tr><th>Title</th><th>Description</th><th>Compulsory?</th><th>Status</th><th>Categories</th></thead><tbody>";
 
         $terms_array = [];
@@ -319,6 +333,8 @@ class Loop {
 
       $filter_tax = 'resource-category';
       $filter_ID  = 'select-resource-category';
+      $search_ID  = $this->table_ID_base . '-' . $this->div_class . '-search';
+      $data_src   = $this->table_ID_base . '-' . $this->div_class . 'resource';
 
     }
 
@@ -326,10 +342,10 @@ class Loop {
 
       $filter_tax = 'management-resource-category';
       $filter_ID  = 'select-management-resource-category';
+      $search_ID  = $this->table_ID_base . '-' . 'management-resource-search';
+      $data_src   = $this->table_ID_base . '-' . $this->div_class . 'management-resource';
 
     }
-
-    //$categories_list = '';
 
     include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-filter.php' );
 

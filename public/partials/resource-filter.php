@@ -6,18 +6,18 @@
  * Each div must have the resource category slugs as classes.
  * Each div must have the resource title slugified as the first class.
  *
+ * {$this->table_ID_base}-{$this->div_class}
+ *
  */
 
 ?>
 <form role="form" class="form-inline resource-search">
   <div class="form-group">
     <div class="custom-input-group" style="position: relative;display: inline-block;">
-      <input placeholder="Search Resources" id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>resource-search" type="text" class="input-lg form-control" />
+      <input placeholder="Search Resources" data-src="<?php echo $this->data_src; ?>" id="<?php echo $search_ID ;?>" type="text" class="input-lg form-control" />
     </div>
-    <a href="#" id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>showall" class="btn btn-primary btn-lg grey">All Resources</a>
+    <a href="#" data-src="<?php echo $this->data_src; ?>" id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>showall" class="btn btn-primary btn-lg grey">All Resources</a>
     <?php
-
-    //$terms = get_terms( $filter_tax );
 
     if ( ! empty( $terms_array ) ) {
 
@@ -25,7 +25,7 @@
 
       foreach ( $terms_array as $term ) {
 
-        $sectors .= '<li class="' . $term->slug . '"><a href="#">' . $term->name . '</a></li>';
+        $sectors .= '<li class="' . $term->slug . '"><a href="#" data-src=' . $this->data_src . '">' . $term->name . '</a></li>';
 
       }
 

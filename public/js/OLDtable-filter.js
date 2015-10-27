@@ -19,18 +19,13 @@
 		 * The dropdown menu is populated with the custom taxonomy for the relevant resource type.
 		 *
 		 */
-		$( ".dropdown-menu > li > a" ).click( function( event ) {
+		$( "#select-resource-category .dropdown-menu > li > a" ).click( function( event ) {
 
 			event.preventDefault();
 
 			// Get the value of the containing elements class
 			var valThis = $( this ).parent().attr( "class" );
 			var catName = $( this ).text();
-
-			// The target
-			var Target	= $( this ).attr('data-src');
-
-			alert(Target);
 
 			$( "#resources-table tbody tr" ).each( function() {
 
