@@ -7,27 +7,25 @@
 
 	$( document ).ready( function() {
 
-		// Get starting table height and fix table height to prevent distracting page jumps
-		var resourceHeight = $( "#compulsory-staff-resource-table" ).height();
-		var managementResourceHeight = $( "#management-resources-table" ).height();
-		$( "#resources-table-container" ).css( "height", resourceHeight );
-		$( "#management-resources-table-container" ).css( "height", managementResourceHeight );
+		/**
+		 * Fix table heights
+		 *
+		 * Get starting table height for each table and fix table heights to prevent
+		 * distracting page jumps when the filter is triggered.
+		 */
+		$( "table" ).each( function() {
+
+			var tableHeight = $( this ).height();
+			$( this ).parent().css( "height", tableHeight );
+
+		} );
 
 		/**
 		 * Filter by resource, triggered by clicking a drop down menu
 		 *
 		 * The dropdown menu is populated with the custom taxonomy for the relevant resource type.
-		 *
 		 */
 
-		function fixTableHeight( tableContainer, targetHeight ) {
-
-			// Set height on the table's containing element
-			$( tableContainer ).css( "height", targetHeight );
-
-		}
-
-		var flag = false;
 		$( ".dropdown-menu > li > a" ).click( function( event ) {
 
 			event.preventDefault();
@@ -38,21 +36,7 @@
 
 			// The target table
 			var targetTable			= $( this ).attr( 'data-id' );
-			// Get height of the target table
-			var targetHeight		= $( "#" + targetTable ).height();
-			// The containing element
-			var tableContainer	= $( "#" + targetTable + "-container" )
 
-			if ( false == flag ) {
-
-				fixTableHeight( tableContainer, targetHeight );
-
-			}
-
-			flag = true;
-
-			// Set height on the table's containing element
-			//$( "#" + targetTable + "-container" ).css( "height", targetHeight );
 			// Set a variable to target the table row elements
 			var targetRow			= "#" + targetTable + " tbody tr";
 
@@ -103,15 +87,26 @@
 		} );
 
 		// Show All Resources
-		$( "#showall" ).click( function( event ) {
+		$( ".showall" ).click( function( event ) {
 
 			event.preventDefault();
 
-			$( "#resource-search" ).val( "" );
+			// The current form
+			var currentForm		= $( this ).closest( "form" );
+			var formID				= $( currentForm ).attr( "id" );
 
-			if ( $( "#resources-table tbody tr" ).is( ":hidden" ) ) {
+			// The target table
+			var targetTable		= $( this ).attr( "data-id" );
+			// Set a variable to target the table row elements
+			var targetRow			= "#" + targetTable + " tbody tr";
 
-				$( "#resources-table tbody tr" ).show( 100 );
+			// Clear the search field for the current table
+			$( "#" + formID + " .cw-staff-area-search" ).val( "" );
+
+			// Show hidden rows
+			if ( $( targetRow ).is( ":hidden" ) ) {
+
+				$( targetRow ).show( 100 );
 
 			}
 
@@ -122,17 +117,29 @@
 		} );
 
 		// Show NOT COMPLETED Resources
-		$( "#not-completed" ).click( function( event ) {
+		$( ".not-completed" ).click( function( event ) {
 
 			event.preventDefault();
+
+			// The current form
+			var currentForm		= $( this ).closest( "form" );
+
+			// The form ID
+			var formID				= $( currentForm ).attr( "id" );
+
+			// The target table
+			var targetTable		= $( this ).attr( "data-id" );
+
+			// Set a variable to target the table row elements
+			var targetRow			= "#" + targetTable + " tbody tr";
 
 			// Search for this string in the row class
 			var notComplete = "not-read";
 
-			// Clear the search input
-			$( "#resource-search" ).val( "" );
+			// Clear the search field for the current table
+			$( "#" + formID + " .cw-staff-area-search" ).val( "" );
 
-			$( "#resources-table tbody tr" ).each( function() {
+			$( targetRow ).each( function() {
 
 				var readStatus = $( this ).attr( "class" );
 
@@ -152,65 +159,6 @@
 			$( '#filter-message' ).html( ": Not Completed" );
 
 		} );
-
-
-		// Management Resource Type filter
-		$( "#management-resource-search" ).keyup( function() {
-
-			var valThis = $( this ).val().toLowerCase();
-
-			$( "#management-resources-table tbody tr" ).each( function() {
-
-				var productContent = $( this ).attr( "class" );
-
-				if ( productContent.indexOf( valThis ) === 0 ) {
-
-					$( this ) .show( 100 );
-
-				} else {
-
-					$( this ).hide( 200 );
-
-				}
-
-			} );
-
-		} );
-
-		// Show All Management Resources
-		$( "#management-showall" ).click( function( event ) {
-
-			event.preventDefault();
-
-			$( "#management-resource-search" ).val( "" );
-
-			if ( $( "#management-resources-table tbody tr" ).is( ":hidden" ) ) {
-
-				$( "#management-resources-table tbody tr" ).show( 100 );
-
-			}
-
-			$( "#select-management-resource-category option:selected" ).prop( "selected", false );
-			$( "#select-management-resource-category option:first" ).prop( "selected", "selected" );
-
-		} );
-
-		// Filter by Management Resource
-		$( "#select-management-resource-category .dropdown-menu > li > a" ).click(
-			function( event ) {
-				event.preventDefault();
-				var valThis = $( this ).parent().attr( "class" );
-				$( "#management-resources-table tbody tr" ).each( function() {
-					var productContent = $( this ).attr( "class" );
-
-					// If search string isn't found, returns -1
-					if ( productContent.indexOf( valThis ) == -1 ) {
-						$( this ).hide( 200 );
-					} else {
-						$( this ).show( 100 );
-					}
-				} );
-			} );
 
 	} );
 

@@ -41,7 +41,7 @@ class Loop {
 
   protected $table_ID_base;
 
-  protected $data_src;
+  protected $data_ID;
 
   /**
    * Section Title
@@ -64,7 +64,7 @@ class Loop {
     $this->section_title    = "Staff Resources";
     $this->meta_query       = $meta_query;
     $this->set_query_arguments( $override, $meta_query );
-    $this->set_table_base();
+    //$this->set_table_base();
 
   }
 
@@ -94,7 +94,7 @@ class Loop {
    * @param array|null $override  An array of WP_Query arguments to override/extend defaults
    * @param string $meta_query    'compulsory', 'not-compulsory' null
    */
-  private function set_query_arguments ( $override, $meta_query ) {
+  protected function set_query_arguments ( $override, $meta_query = '' ) {
 
     // If no $override array has been passed in, set it to an empty array
     $override = empty( $override ) ? [] : $override;
@@ -116,7 +116,8 @@ class Loop {
       case 'compulsory':
 
         $this->section_title  = "Compulsory Staff Resources";
-        $this->table_ID_base  .= "compulsory";
+        $this->table_ID_base  = "compulsory";
+        $this->data_ID  = $this->table_ID_base . '-' . $args['post_type'] . '-table';
 
         $meta = array(
           'meta_query' => array(
@@ -134,7 +135,8 @@ class Loop {
       case 'not-compulsory':
 
         $this->section_title  = "Not Compulsory Staff Resources";
-        $this->table_ID_base  .= "not-compulsory";
+        $this->table_ID_base  = "not-compulsory";
+        $this->data_ID  = $this->table_ID_base . '-' . $args['post_type'] . '-table';
 
         $meta = array(
           'meta_query' => array(
@@ -149,13 +151,14 @@ class Loop {
 
       default:
         $meta = [];
+        $this->data_ID  = $args['post_type'] . '-table';
         break;
 
     }
 
     $this->args     = array_merge( $args, $meta );
 
-    $this->data_ID = $this->table_ID_base . '-' . $this->args['post_type'] . '-table';
+    //$this->data_ID  = $this->table_ID_base . '-' . $this->args['post_type'] . '-table';
 
   }
 

@@ -23,8 +23,9 @@ include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/heade
     <?php the_content(); ?>
     <hr>
     <?php Staff_Area\Display\Single_Resource::display_checkbox( $post_ID, $current_user_ID, $marked ); ?>
-    <hr>
-    <?php Staff_Area\Display\Single_Resource::display_marked_resources( $current_user_ID ); ?>
+    <?php //Staff_Area\Display\Single_Resource::display_marked_resources( $current_user_ID ); ?>
+    <?php Staff_Area\Display\Single_Resource::display_file_download(); ?>
+    ?>
   </div>
 </div>
 

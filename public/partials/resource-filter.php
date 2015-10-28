@@ -11,12 +11,12 @@
  */
 
 ?>
-<form role="form" class="form-inline resource-search">
+<form role="form" id="form-<?php echo $this->data_ID; ?>" class="form-inline resource-search">
   <div class="form-group">
     <div class="custom-input-group" style="position: relative;display: inline-block;">
       <input placeholder="Search Resources" data-id="<?php echo $this->data_ID; ?>" id="<?php echo $search_ID ;?>" type="text" class="input-lg form-control cw-staff-area-search" />
     </div>
-    <a href="#" data-id="<?php echo $this->data_ID; ?>" id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>showall" class="btn btn-primary btn-lg grey">All Resources</a>
+    <a href="#" data-id="<?php echo $this->data_ID; ?>" id="<?php echo $this->data_ID; ?>-showall" class="showall btn btn-primary btn-lg grey">All Resources</a>
     <?php
 
     if ( ! empty( $terms_array ) ) {
@@ -42,7 +42,7 @@ EOF;
     }
 
     ?>
-    <a href="#" id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>not-completed" class="btn btn-primary btn-lg grey">
+    <a href="#" data-id="<?php echo $this->data_ID; ?>" id="<?php echo $this->data_ID; ?>-not-completed" class="not-completed btn btn-primary btn-lg grey">
       <?php
         _e( "Resources I Haven't Completed", 'staff-area ');
       ?>

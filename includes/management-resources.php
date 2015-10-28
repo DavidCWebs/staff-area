@@ -34,24 +34,22 @@ class Management_Resources extends Loop {
    * @since    1.0.0
    * @param array $override Array of WP_Query arguments
    */
-  public function __construct( $override = [], $current_user_ID ) {
+  public function __construct( $override = [], $current_user_ID, $meta_query = '' ) {
 
     $this->current_user_ID = $current_user_ID;
-    //$this->set_arguments();
-
-    $this->args = array_merge( array (
-      'post_type'              => 'management-resource',
-      'post_status'            => array( 'publish' ),
-      'posts_per_page'         => '-1',
-      'order'                  => 'ASC',
-      'orderby'                => 'menu_order',
-      ),
-      $override
-    );
-
+    $this->set_arguments( $override, $current_user_ID, $meta_query );
     $this->div_class      = "management-resources";
     $this->section_title  = "Management Resources";
-    $this->table_ID_base  = "management-resources";
+
+  }
+
+  private function set_arguments( $override, $current_user_ID, $meta_query) {
+
+    $override = array_merge([
+      'post_type' => 'management-resource',
+    ], $override);
+
+    $this->set_query_arguments( $override );
 
   }
 
