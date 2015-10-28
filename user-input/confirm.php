@@ -197,7 +197,7 @@ class Confirm {
 
     if ( array_key_exists( $key, $marked_resources ) ) {
 
-      return $marked_resources;
+      return $marked_resources[$key];
 
     } else {
 

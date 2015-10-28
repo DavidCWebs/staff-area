@@ -79,11 +79,13 @@ class Single_Resource {
   public static function display_file_download () {
 
     $file = get_field( 'download' );
-    //caradump( $file, "File Object" );
+
+    if (!$file) { return; }
+
     $filesize = size_format( filesize( get_attached_file( $file['id'] ) ) );
     $filetype = wp_check_filetype( get_attached_file( $file['id'] ) );
     echo "<a href='{$file['url']}'>Download {$file['title']}</a> ({$filetype['ext']}, {$filesize})";
-    
+
   }
 
 }

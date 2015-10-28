@@ -103,14 +103,22 @@
    /**
 	 * Set custom templates for this plugin's content
 	 *
+	 * This is a callback function hooked to the 'template_include' filter.
+	 *
 	 * @param  [type] $page_template [description]
 	 * @return [type]                [description]
 	 */
 	public function staff_area_page_template_routes( $page_template ) {
 
-		if ( is_singular( [ 'staff-resource', 'management-resource' ] ) ) {
+		if ( is_singular( 'staff-resource' ) ) {
 
       $page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/single-staff-resource.php';
+
+    }
+
+    if ( is_singular( 'management-resource' ) ) {
+
+      $page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/single-management-resource.php';
 
     }
 

@@ -135,6 +135,18 @@ class Access {
 
   }
 
+  public function get_user_roles_string() {
+
+    return implode( ', ', $this->current_user_roles );
+
+  }
+
+  public function get_allowed_roles_string() {
+
+    return implode( ', ', $this->allowed_roles );
+
+  }
+
   public function get_readable_user_role() {
 
     $level = "No role";

@@ -67,6 +67,7 @@ class Toolbar {
     if( ! current_user_can( 'edit_pages' ) ) {
 
       $wp_toolbar->remove_node('new-content');
+      $wp_toolbar->remove_node('site-name');
 
       // Remove the right-hand account node
       //$wp_toolbar->remove_node('top-secondary');
@@ -102,14 +103,15 @@ class Toolbar {
 
     $current_user     = wp_get_current_user();
     $current_user_ID  = $current_user->ID;
-    $access_check     = new Access( $current_user_ID, ['staff_manager'] );
+    $access_check     = new Access( $current_user_ID, ['staff_manager', 'staff_supervisor', 'staff_member'] );
     $access           = $access_check->get_access_level();
+    $roles = $access_check->get_allowed_roles_string();
 
-  	global $wp_admin_bar;
+    global $wp_admin_bar;
 
   	$args = array(
   		'id'     => 'staff-link',
-  		'title'  => __( 'Staff Area', 'text_domain' ),
+  		'title'  => __( 'Staff Resources', 'text_domain' ),
   		'href'   => $this->staff_page,
   	);
 

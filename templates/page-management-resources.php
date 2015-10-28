@@ -8,7 +8,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$access_list = ['staff_manager', 'staff_member'];
+$access_list = ['staff_manager', 'staff_supervisor'];
 include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/access-check.php' );
 
 if ( 'no_access' == $access ) {

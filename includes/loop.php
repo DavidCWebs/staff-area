@@ -169,7 +169,7 @@ class Loop {
   * @uses    WP_Query()
   * @return  string HTML staff resource teasers
   */
-  public function resource_loop( $args = null, $filter = false ) {
+  public function resource_loop( $args = null, $filter = false, $name = '' ) {
 
     // Allow arguments to be added to this method directly. If none passed, use defaults
     // -------------------------------------------------------------------------
@@ -179,7 +179,17 @@ class Loop {
 
     if ( $staff_resource_query->have_posts() ) {
 
-      echo"<h3>$this->section_title</h3>";
+      $term = '';
+
+      if ( ! empty( $name ) ) {
+
+        $term = ': ' . $name;
+        // Slugify the term name to use it as a CSS class/ID
+        $name = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name ) ) ) . '-';
+
+      }
+
+      printf ("<h3>%s%s</h3>", $this->section_title, $term );
 
       /**
        * Use output buffering to capture the output of the loop.
@@ -187,9 +197,9 @@ class Loop {
        * This data will be used to build a filter BEFORE the loop is output.
        */
       ob_start();
-        echo "<div id='{$this->data_ID}-container'>";
+        echo "<div id='{$this->data_ID}-{$name}container'>";
         //echo "<div id='{$this->div_class}'>";
-        echo "<table id='{$this->data_ID}' style='width:100%; table-layout: fixed;' class='table'>";
+        echo "<table id='{$this->data_ID}{$name}' style='width:100%; table-layout: fixed;' class='table'>";
         echo "<thead><tr><th>Title</th><th>Description</th><th>Compulsory?</th><th>Status</th><th>Categories</th></thead><tbody>";
 
         $terms_array = [];
@@ -294,13 +304,14 @@ class Loop {
   * Display staff resource teasers grouped by resource category.
   * @uses    get_terms()
   * @since   1.0.0
+  * @param  boolean $filter true tells the resource_loop() mehtod to output a filter
   * @return  string HTML staff resource teasers
   */
-  public function staff_resources_by_term() {
+  public function staff_resources_by_term( $filter = false) {
 
     // Get all the term objects
-    // ------------------------------------------------------------------------
-    $terms = get_terms( 'resource_category' );
+    // -------------------------------------------------------------------------
+    $terms = get_terms( 'resource-category' );
 
     foreach( $terms as $term )  {
 
@@ -308,16 +319,19 @@ class Loop {
 
       $tax_query = array( 'tax_query' => array(
         array(
-          'taxonomy' => 'resource_category',
+          'taxonomy' => 'resource-category',
           'field'    => 'slug',
           'terms'    => $term->slug,
           ),
         )
       );
 
-      echo "<h3>Staff Resources: $name</h3>";
+      add_action( 'cw_staff_area_resources_after_section_title', function( $name ) {
 
-      $this->resource_loop( $tax_query, false );
+        return $name;
+      });
+
+      $this->resource_loop( $tax_query, $filter, $name );
 
     }
 

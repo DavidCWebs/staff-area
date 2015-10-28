@@ -6,7 +6,7 @@
 while (have_posts()) : the_post();
 
 $post_ID = get_the_ID();
-$access_list = ['staff_manager', 'staff_member', 'staff_supervisor'];
+$access_list = ['staff_manager', 'staff_supervisor'];
 include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/access-check.php' );
 
 if ( 'no_access' == $access ) {
