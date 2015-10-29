@@ -14,6 +14,21 @@ Registers custom user roles:
 
 Builds a filter for staff resources.
 
+##Dependencies
+
+* [.validate()](http://jqueryvalidation.org/): Form validation on the front end staff registration form
+* [Bootstrap Select](https://silviomoreto.github.io/bootstrap-select/): Bootstrap 3 `.dropdown-menu` styles on form select elements
+
+Dependencies are managed via [Bower](http://bower.io/)
+
+##Build Tools
+Concatenation & minification of javascript files is handled by [Grunt](http://gruntjs.com/getting-started)
+
+##Development Environment
+* Clone this repo
+* Move into the project directory and run `npm install`
+* Run `bower install`
+
 ##TODO
 
 ###Custom Sidebar
