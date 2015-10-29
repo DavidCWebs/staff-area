@@ -9,9 +9,9 @@
 
   $( function() {
 
-    $( "#btn-new-user" ).click( function( event ) {
+    $('.selectpicker').selectpicker();
 
-      //alert('clicked');
+    $( "#btn-new-user" ).click( function( event ) {
 
       // Prevent default action
       // -----------------------------------------------------------------------
@@ -20,7 +20,7 @@
       var $form = $( "#user-reg-form" );
 
       // check if the input is valid - if not, no submission
-      //if ( !$form.valid() ) { return false; }
+      if ( !$form.valid() ) { return false; }
 
       // Show "Please wait" loader to user
       $( ".indicator" ).animate( { opacity: 1 }, 200 );

@@ -61,6 +61,8 @@ class Staff_Area_Public {
 	 */
 	public function enqueue_styles() {
 
+		wp_enqueue_style( $this->staff_area . '-select', plugin_dir_url( __DIR__ ) . 'bower_components/bootstrap-select/dist/css/bootstrap-select.css', array(), $this->version, 'all' );
+
 		wp_enqueue_style( $this->staff_area, plugin_dir_url( __FILE__ ) . 'css/staff-area-public.css', array(), $this->version, 'all' );
 
 	}
@@ -98,11 +100,16 @@ class Staff_Area_Public {
 
 		}
 		/**
-		 * Staff Registration Sctipts
+		 * Staff Registration Scripts
 		 */
 		if ( is_page('staff-registration' ) ) {
 
       wp_register_script('carawebs_user_reg_script', plugin_dir_url( __FILE__ ) . 'js/registration.js', array('jquery'), null, false);
+
+			wp_enqueue_script( $this->staff_area, plugin_dir_url( __DIR__ ) . 'bower_components/bootstrap-select/js/bootstrap-select.js', array('jquery'), null, false);
+
+			// jQuery validate
+			wp_enqueue_script( $this->staff_area . 'validate', plugin_dir_url( __DIR__ ) . 'bower_components/jquery-validation/dist/jquery.validate.min.js', array('jquery'), null, false);
 
       wp_enqueue_script('carawebs_user_reg_script');
 
@@ -241,7 +248,7 @@ function block_dashboard() {
 
 	 // Add post/page slug
 	 // -------------------------------------------------------------------------
-	 if ( is_page( array( 'staff', 'staff-registration' ) ) || is_singular( array ( 'staff-resource', 'management-resource' ) ) ) {
+	 if ( is_page( array( 'staff', 'staff-registration', 'staff-directory', 'staff-management' ) ) || is_singular( array ( 'staff-resource', 'management-resource' ) ) ) {
 
 		 if ( !in_array( 'staff-area', $classes) ) {
 

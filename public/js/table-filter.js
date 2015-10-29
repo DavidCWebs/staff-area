@@ -26,7 +26,7 @@
 		 * The dropdown menu is populated with the custom taxonomy for the relevant resource type.
 		 */
 
-		$( ".dropdown-menu > li > a" ).click( function( event ) {
+		$( "form .dropdown-menu > li > a" ).click( function( event ) {
 
 			event.preventDefault();
 

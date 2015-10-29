@@ -10,7 +10,8 @@ module.exports = function(grunt) {
     //'bower_components/jquery.fitvids/jquery.fitvids.js',
     //'public/js/fitvids-control.js'
     'public/js/registration.js',
-    'public/js/resource-filter.js',
+    'public/js/table-filter.js',
+    'bower_components/bootstrap-select/js/bootstrap-select.js'
   ];
 
   // Project configuration.

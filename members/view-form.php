@@ -88,7 +88,7 @@ class View_Form {
 
 		?>
 		<div class="business-unit">
-			<select id="cw_business_unit" name="business_unit">
+			<select id="cw_business_unit" name="business_unit" class="selectpicker" required>
 				<?php
 
 				foreach( $units as $unit ) {

@@ -224,7 +224,7 @@ class Register {
 		// Build a success message
 		// -------------------------------------------------------------------------
 		$user_created =
-		"You've just created a new $user_role_name. Their details are:
+		"<h2>Success!</h2>You've just created a new $user_role_name. Their details are:
 		<ul class='user-list'>
 		<li>Name: {$new_user_details['first_name']} {$new_user_details['last_name']}</li>
 		<li>Email: {$new_user_details['email']}</li>

@@ -128,6 +128,12 @@
 
 		}
 
+    if ( is_page( 'staff-directory' ) ) {
+
+			$page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/page-staff-directory.php';
+
+		}
+
     if ( is_page( 'staff-management' ) ) {
 
 			$page_template = plugin_dir_path( dirname( __FILE__ ) ) . '/templates/page-staff-management.php';

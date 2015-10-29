@@ -9,11 +9,52 @@ class Staff_Dashboard {
    */
   public $staff_data_arrays;
 
-  public function __construct() {
+  /**
+   * The user role for this object
+   * @var string
+   */
+  private $role;
 
+  public function __construct( $role = 'staff_member' ) {
+
+    $this->role = $role;
+    $this->set_title();
+    $this->set_intro();
     $this->set_staff_member_objects();
     $this->set_staff_data_arrays();
     $this->set_naughty_users();
+
+  }
+
+  private function set_title() {
+
+    if ( 'staff_member' === $this->role ) {
+
+      $this->title = __( 'Staff Records', 'staff-area' );
+
+    }
+
+    if ( 'staff_supervisor' === $this->role ) {
+
+      $this->title = __( 'Supervisor Records', 'staff-area' );
+
+    }
+
+  }
+
+  private function set_intro() {
+
+    if ( 'staff_member' === $this->role ) {
+
+      $this->intro = __( 'This table shows all ordinary staff members.', 'staff-area' );
+
+    }
+
+    if ( 'staff_supervisor' === $this->role ) {
+
+      $this->intro = __( 'This table shows all Supervisor staff members.', 'staff-area' );
+
+    }
 
   }
 
@@ -24,7 +65,7 @@ class Staff_Dashboard {
   public function set_staff_data_arrays() {
 
     $args = [
-      'role' => 'staff_member',
+      'role' => $this->role,
       'fields' => [
         'ID',
         'user_email'
@@ -40,13 +81,16 @@ class Staff_Dashboard {
     // Loop through the array of stdClass objects, build useful array of data
     foreach ( $staff_members as $key => $staff_member ) {
 
-      $allmeta = get_user_meta( $staff_member->ID );
-      $completed = $this->completed_workbooks( $allmeta );
+      $allmeta        = get_user_meta( $staff_member->ID );
+      $completed      = $this->completed_workbooks( $allmeta );
+      $index          = 'staff_member_' . $staff_member->ID;
+      $business_unit  = !empty( $allmeta['business_unit'][0] ) ? $allmeta['business_unit'][0] : null;
 
-      $this->staff_data_arrays[] = [
+      $this->staff_data_arrays[$index] = [
         'user_ID'             => $staff_member->ID,
         'first_name'          => $allmeta['first_name'][0],
         'last_name'           => $allmeta['last_name'][0],
+        'business_unit'       => $business_unit,
         'email'               => $staff_member->user_email,
         'completed_resources' => $completed
       ];
@@ -71,20 +115,7 @@ class Staff_Dashboard {
     // Loop through all 'staff_member' users
     foreach( $this->staff_data_arrays as $key => $value ) {
 
-      // This will stay empty if the user has not marked any resources as complete
-      $completed_IDs = [];
-
-      // This user has completed some resources - check for completion of compulsory resources
-      if( !empty ( $value['completed_resources'] ) ) {
-
-        // Build an array of completed IDs of completed resources
-        foreach ( $value['completed_resources'] as $completed ) {
-
-          $completed_IDs[] = $completed['post_ID'];
-
-        }
-
-      }
+      $completed_IDs = $this->get_completed_resource_IDs( $value );
 
       // Check compulsory completion for this user
       $outstanding = array_diff( $compulsory_resources, $completed_IDs );
@@ -103,6 +134,27 @@ class Staff_Dashboard {
       }
 
     }
+
+  }
+
+  private function get_completed_resource_IDs( $value ) {
+
+    // This will stay empty if the user has not marked any resources as complete
+    $completed_IDs = [];
+
+    // This user has completed some resources - check for completion of compulsory resources
+    if( !empty ( $value['completed_resources'] ) ) {
+
+      // Build an array of completed IDs of completed resources
+      foreach ( $value['completed_resources'] as $completed ) {
+
+        $completed_IDs[] = $completed['post_ID'];
+
+      }
+
+    }
+
+    return $completed_IDs;
 
   }
 
@@ -281,34 +333,39 @@ class Staff_Dashboard {
    */
   public function render_table(){
 
-    $return_html = '<h3>All Staff</h3>';
+    $return_html  = "<h3>$this->title</h3><p>$this->intro</p>";
 
     $i = 1;
 
     ob_start();
 
       ?>
-      <table class="table">
+      <table class="table table-striped">
         <tr>
           <th>Name</th>
+          <th>Business Unit</th>
           <th>Email Address</th>
           <th>Phone Number</th>
-          <th>Resources Marked Complete</th>
+          <th>Outstanding Compulsory Resources</th>
         </tr>
         <?php
 
         // Add a new table row for each staff member
         foreach( $this->staff_data_arrays as $staff_member ) {
 
-          $completed_resources  = $this->completed_resources_string( $staff_member );
-          $name                 = $staff_member['first_name'] . ' ' . $staff_member['last_name'];
+          $completed    = $this->completed_resources_string( $staff_member );
+          $member_link  = esc_url( home_url('/staff-member') ) . '?staff_member=' . (int) $staff_member['user_ID'];
+          $status       = false === $this->has_outstanding( $staff_member ) ? "none-outstanding" : "outstanding";
+          $outstanding  = "none-outstanding" === $status ? 'No' : '<a href="' . $member_link . '" title="View ' . $staff_member['first_name'] . '\'s full record">Yes</a>';
+          $name         = $staff_member['first_name'] . ' ' . $staff_member['last_name'];
 
           ?>
-          <tr>
-          <td><a href="<?php echo esc_url( home_url('/staff-member') ) . '?staff_member=' . (int) $staff_member['user_ID']; ?>"><?php echo $name; ?></a></td>
-          <td><a href="mailto:<?php echo $staff_member['email'] ; ?>"><?php echo $staff_member['email'] ; ?></a></td>
-          <td> - </td>
-          <td><?php echo $completed_resources; ?></td>
+          <tr class="<?= $status; ?>">
+            <td><a href="<?= $member_link; ?>" title="View <?= $staff_member['first_name']; ?>'s full record"><?php echo $name; ?></a></td>
+            <td><?= $staff_member['business_unit']; ?></td>
+            <td><a href="mailto:<?php echo $staff_member['email'] ; ?>" title="Click here to email <?= $staff_member['first_name']; ?>"><?php echo $staff_member['email'] ; ?></a></td>
+            <td> - </td>
+            <td><?php echo $outstanding; ?></td>
           </tr>
           <?php
 
@@ -325,6 +382,19 @@ class Staff_Dashboard {
 
   }
 
+  private function has_outstanding( $staff_member ) {
+
+    $compulsory_resources = \Staff_Area\Resources\Data::get_compulsory_resources();
+
+    $completed_IDs = $this->get_completed_resource_IDs( $staff_member );
+
+    // Check compulsory completion for this user
+    $outstanding = empty( array_diff( $compulsory_resources, $completed_IDs ) ) ? false : true;
+
+    return $outstanding;
+
+  }
+
   /**
    * Output a table with staff information
    *
@@ -332,7 +402,9 @@ class Staff_Dashboard {
    */
   public function naughty_users_table(){
 
-    $return_html = '<h3>Staff with Outstanding Compulsory Resources</h3>';
+    $intro        = __( 'This table shows staff members who have not completed compulsory staff resources.', 'staff-area' );
+    $title        = __( 'Training Records: Outstanding Compulsory Resources', 'staff-area' );
+    $return_html  = "<h3>$title</h3><p>$intro</p>";
 
     $i = 1;
 

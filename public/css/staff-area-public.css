@@ -6,3 +6,16 @@
  .indicator {
    display: none;
  }
+
+.bootstrap-select .btn,
+.bootstrap-select .dropdown-menu > li > a {
+
+  font-size: 18px!important;
+  padding: 10px 25px 10px 16px;
+
+}
+
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+  width: auto;
+  padding-right: 10px;
+}

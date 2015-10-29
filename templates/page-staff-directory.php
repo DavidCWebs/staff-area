@@ -14,10 +14,12 @@
 
   the_content();
 
+  $staff        = new Staff_Area\Members\Staff_Dashboard( 'staff_member' );
+  $supervisors  = new Staff_Area\Members\Staff_Dashboard( 'staff_supervisor' );
+
+  echo $staff->render_table();
   echo "<hr>";
-
-  $staff = new Staff_Area\Members\Staff_Dashboard();
-
-  echo $staff->naughty_users_table();
+  echo $supervisors->render_table();
+  echo "<hr>";
 
 endwhile; ?>
