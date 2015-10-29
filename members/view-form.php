@@ -27,15 +27,14 @@ class View_Form {
 	*/
 	function __construct () {
 
-		//$this->user_role      = $user_role;
-		//$this->coordinator_ID = $coordinator_ID;
 
 	}
 
 	/**
 	* Build a front-end form for user creation
-	* @return string Form html
 	*
+	* @since      1.0.0
+	* @return string Form html	*
 	*/
 	public function render( $success_message = '' ) {
 
@@ -49,6 +48,7 @@ class View_Form {
 	/**
 	 * Dynamically build radio buttons for user-role selection in the registration form.
 	 *
+	 * @since      1.0.0
 	 * @return string HTML for radio buttons
 	 */
 	public function roles_radio() {
@@ -78,8 +78,19 @@ class View_Form {
 
 	}
 
+	/**
+	 * Build HTML select element for staff registration form to allow business unit to be selected
+	 *
+	 * Dynamically create a select element for the registration form. Options are
+	 * populated with business units, as defined in the plugin options page.
+	 *
+	 * @since      1.0.0
+	 * @TODO Business units are currently hardcoded into this class. FIX!!
+	 * @return string [description]
+	 */
 	public function business_unit_options() {
 
+		// Get an array of allowed business units
 		$units = $this->get_business_units();
 
 		ob_start();
@@ -116,6 +127,7 @@ class View_Form {
 	 * Returns an associative array of allowed roles and role (display) names. Roles are
 	 * selected by admin users in the plugin options page.
 	 *
+	 * @since      1.0.0
 	 * @see Options()
 	 * @uses get_option()
 	 * @return array  Associative array of roles and role names
@@ -140,6 +152,14 @@ class View_Form {
 
 	}
 
+	/**
+	 * Make an array of data of business units be used in the registration form.
+	 *
+	 * Returns an business unit names. Set by admin users in the plugin options page.
+	 *
+	 * @since      1.0.0
+	 * @return [type] [description]
+	 */
 	private function get_business_units() {
 
 		return [
@@ -148,7 +168,6 @@ class View_Form {
 			'Scoil Mhuire Ennis',
 			'Castletroy Community College'
 		];
-
 
 	}
 
