@@ -18,7 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "jquery.fitvids": "fitvids#~1.1.0",
-    "jquery-validation": "~1.14.0"
+    "bootstrap-select": "~1.7.5"
   }
 }
