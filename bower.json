@@ -1,14 +1,13 @@
 {
   "name": "staff-area",
-  "version": "1.0.0",
-  "homepage": "https://github.com/DavidCWebs/staff-area",
-  "authors": [
-    "David Egan <david@carawebs.com>"
-  ],
   "description": "WordPress Plugin for Staff Management",
-  "main": "",
-  "moduleType": [],
+  "main": "staff-area.php",
+  "authors": [
+    "David Egan"
+  ],
   "license": "MIT",
+  "homepage": "https://github.com/DavidCWebs/staff-area",
+  "moduleType": [],
   "private": true,
   "ignore": [
     "**/.*",
@@ -18,6 +17,8 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap-select": "~1.7.5"
+    "bootstrap-select": "~1.7.5",
+    "jquery-validation": "~1.14.0",
+    "jquery.fitvids": "fitvids#~1.1.0"
   }
 }
