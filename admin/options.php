@@ -277,6 +277,12 @@ class Options {
     $wp_roles = new \WP_Roles();
     $roles = $wp_roles->get_names();
 
+    // Don't allow Admin, Editor roles for security reasons
+    unset( $roles['administrator']);
+    unset( $roles['editor']);
+    $intro = __( 'Select the user types that can be created by Staff Managers on the Staff Registration page:', 'staff-area' );
+    echo "<p>$intro</p><br>";
+
     foreach ($roles as $role_value => $role_name) {
 
       $checked = false;
