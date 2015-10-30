@@ -31,6 +31,9 @@ class Staff_Area_Activator {
 	 */
 	public static function activate() {
 
+		// Set up a custom table for business units
+		Staff_Area\Admin\Database::setup_database_business_units_table();
+
 		// Staff member role
 		Staff_Area\Admin\Roles::staff_member_roles_and_caps();
 
@@ -43,21 +46,16 @@ class Staff_Area_Activator {
 		$custom_post_types = new Staff_Area\Admin\CPT();
 
 		// Register 'staff_resource' Custom Post Type
-		//$this->loader->add_action( 'init', $custom_post_types, 'staff_resource_init' );
 		$custom_post_types->staff_resource_init();
 
 		// Register a custom taxonomy for staff resource & management resource CPTs
-		//$this->loader->add_action( 'init', $custom_post_types, 'staff_resource_taxonomy' );
 		$custom_post_types->staff_resource_taxonomy();
 
 		// Register 'management_resource' Custom Post Type
-		//$this->loader->add_action( 'init', $custom_post_types, 'management_resource_init' );
 		$custom_post_types->management_resource_init();
 
 		// Register a custom taxonomy for management resource CPTs
-		//$this->loader->add_action( 'init', $custom_post_types, 'management_resource_taxonomy' );
 		$custom_post_types->management_resource_taxonomy();
-
 
 		flush_rewrite_rules();
 
