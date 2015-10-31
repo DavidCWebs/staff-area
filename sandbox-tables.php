@@ -1,5 +1,4 @@
 <?php
-<?php
 /*
 Plugin Name: Custom table example
 Description: example plugin to demonstrate wordpress capatabilities

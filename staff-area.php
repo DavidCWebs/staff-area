@@ -41,7 +41,7 @@ require_once 'autoloader.php';
 function activate_staff_area() {
 
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-staff-area-activator.php';
-	Staff_Area_Activator::activate();
+	Staff_Area_Activator::activate( '1.4.3' );
 
 }
 
@@ -76,7 +76,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-staff-area.php';
  */
 function run_staff_area() {
 
-	$plugin = new Staff_Area();
+	// Accepts the version
+	$plugin = new Staff_Area( '1.4.3' );
 	$plugin->run();
 
 }

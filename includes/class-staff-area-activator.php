@@ -29,10 +29,15 @@ class Staff_Area_Activator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function activate() {
+	public static function activate( $version ) {
+
+		//$db = new Staff_Area\Admin\Database( $version );
+		//$db->setup_business_units_table();
 
 		// Set up a custom table for business units
-		Staff_Area\Admin\Database::setup_database_business_units_table();
+		//Staff_Area\Admin\Database::setup_database_business_units_table();
+		Staff_Area\Admin\Database::setup_business_units_table( $version );
+		Staff_Area\Admin\Database::custom_table_dummy_data();
 
 		// Staff member role
 		Staff_Area\Admin\Roles::staff_member_roles_and_caps();
