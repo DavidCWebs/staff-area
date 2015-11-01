@@ -90,7 +90,7 @@ class Staff_Dashboard {
         'user_ID'             => $staff_member->ID,
         'first_name'          => $allmeta['first_name'][0],
         'last_name'           => $allmeta['last_name'][0],
-        'business_unit'       => $business_unit,
+        'business_unit'       => get_the_title( $business_unit ),
         'email'               => $staff_member->user_email,
         'completed_resources' => $completed
       ];

@@ -83,7 +83,7 @@ class Resources_Status {
           <tr>
             <th>Title</th>
             <th>Date Completed</th>
-            <th>Compulsory?</th>
+            <th>Is this Resource Compulsory?</th>
           </tr>
         </thead>
         <tbody>
@@ -132,7 +132,7 @@ class Resources_Status {
         <thead>
           <tr>
             <th>Title</th>
-            <th>Compulsory?</th>
+            <th>Is this Resource Compulsory?</th>
           </tr>
         </thead>
         <tbody>

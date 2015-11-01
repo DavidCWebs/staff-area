@@ -15,7 +15,7 @@ if ( 'no_access' == $access ) {
 
 include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/page-header.php' );
 ?>
-<p><a href="<?php echo esc_url( home_url('/staff-management') ); ?>">&laquo;&nbsp;Back to Staff Management</a></p>
+<p><a href="<?php echo esc_url( home_url('/staff-directory') ); ?>">&laquo;&nbsp;Go To to Staff Directory</a></p>
 <?php
 
 // The view for Staff Supervisors, Staff Managers, Site Admins, Site Editors

@@ -100,12 +100,13 @@ class View_Form {
 		?>
 		<div class="business-unit">
 			<select id="cw_business_unit" name="business_unit" class="selectpicker" required>
+				<option disabled selected></option>
 				<?php
 
 				foreach( $units as $unit ) {
 					?>
-					<option value="<?= $unit; ?>">
-						<?= $unit; ?>
+					<option value="<?= $unit['unit_ID']; ?>">
+						<?= $unit['title']; ?>
 					</option>
 					<?php
 
@@ -155,19 +156,28 @@ class View_Form {
 	/**
 	 * Make an array of data of business units be used in the registration form.
 	 *
-	 * Returns an business unit names. Set by admin users in the plugin options page.
+	 * Returns an associative array of business unit names and post IDs.
 	 *
 	 * @since      1.0.0
-	 * @return [type] [description]
+	 * @return array [description]
 	 */
 	private function get_business_units() {
 
-		return [
-			'Ennis Community College',
-			'Ennistymon Vocational School',
-			'Scoil Mhuire Ennis',
-			'Castletroy Community College'
-		];
+		$unit_IDs = \Staff_Area\Helpers\Post_Data::custom_post_type_IDs( 'business-unit' );
+
+		$unit_data	= array_map(
+
+			function( $ID ) {
+
+				$data = [ 'title' => get_the_title( $ID ), 'unit_ID' =>$ID ];
+
+				return $data;
+
+			}, $unit_IDs
+
+		);
+
+		return $unit_data;
 
 	}
 

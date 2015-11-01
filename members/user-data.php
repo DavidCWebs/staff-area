@@ -205,7 +205,7 @@ class User_Data {
       'full_name'     => $user_object->first_name . ' ' . $user_object->last_name,
       'email'         => $user_object->user_email,
       'registered'    => $user_object->user_registered,
-      'business_unit' => !empty( $user_object->business_unit ) ? $user_object->business_unit : null
+      'business_unit' => !empty( $user_object->business_unit ) ? get_the_title( $user_object->business_unit ) : null
       //'completed'     => $this->completed_resource_IDs,
       //'not_completed' => $this->not_completed_resource_IDs
     ];

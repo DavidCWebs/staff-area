@@ -84,11 +84,11 @@ class Validator {
 
     }
 
-    if( preg_match( $preg_str_check, $this->business_unit ) ) {
+    //if( preg_match( $preg_str_check, $this->business_unit ) ) {
 
-      array_push( $this->form_errors, 'The business unit you entered doesn\'t look right - please try again with alphabetic characters only.');
+    //  array_push( $this->form_errors, 'The business unit you entered doesn\'t look right - please try again with alphabetic characters only.');
 
-    }
+    //}
 
     if ( empty($this->form_errors) ) { // There are no errors, so return the string 'true'
 
@@ -145,7 +145,7 @@ class Validator {
     $this->firstname      = $this->sanitise_name( $this->firstname );
     $this->lastname       = $this->sanitise_name( $this->lastname );
     $this->email          = sanitize_email( $this->email ); // Strips out all characters that are not allowable in an email address.
-    $this->business_unit  = sanitize_text_field( $this->business_unit );
+    $this->business_unit  = (int)$this->business_unit;
 
     $this->user_values = array(
       'first_name'    => $this->firstname,

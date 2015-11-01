@@ -186,11 +186,17 @@ class Staff_Area {
 		// Register a custom taxonomy for management resource CPTs
 		$this->loader->add_action( 'init', $custom_post_types, 'management_resource_taxonomy' );
 
+		// Register 'business-unit' Custom Post Type
+		$this->loader->add_action( 'init', $custom_post_types, 'business_unit_init' );
+
 		// Messages for Staff Resource CPT
 		$this->loader->add_action( 'post_updated_messages', $custom_post_types, 'staff_resource_updated_messages' );
 
 		// Messages for 'management_resource' Custom Post Type
 		$this->loader->add_action( 'post_updated_messages', $custom_post_types, 'management_resource_updated_messages' );
+
+		// Messages for 'business-unit' CPT
+		$this->loader->add_action( 'post_updated_messages', $custom_post_types, 'business_unit_updated_messages' );
 
 		// Block dashboard for all users except admin & editor
 		$this->loader->add_action( 'init', $plugin_admin, 'dashboard_block' );

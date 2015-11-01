@@ -208,7 +208,8 @@
   public function business_unit_form( $user ) {
 
     $current_value = get_the_author_meta( 'business_unit', $user->ID );
-    $units = ['Ennis Community College', 'Castletroy Community College', 'Scoil Mhuire Ennis'];
+    //$units = ['Ennis Community College', 'Castletroy Community College', 'Scoil Mhuire Ennis'];
+    $units = \Staff_Area\Helpers\Post_Data::custom_post_type_IDs( 'business-unit' );
 
     ?>
     <h3>Custom User Data</h3>
@@ -223,7 +224,7 @@
             foreach( $units as $unit ) {
               ?>
               <option value="<?= $unit; ?>" <?php echo $unit == $current_value ? " selected='selected'" : ""; ?>>
-                <?= $unit; ?>
+                <?= get_the_title( $unit ); ?>
               </option>
               <?php
 
