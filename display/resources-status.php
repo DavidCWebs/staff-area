@@ -75,9 +75,7 @@ class Resources_Status {
     if ( is_array( $resource_array ) ){
 
       ?>
-      <p>
-        <?php echo $this->personal_data['first_name']; ?> has marked the following staff resources as complete:
-      </p>
+      <h3>Staff Resources: Completed by <?php echo $this->personal_data['first_name']; ?></h3>
       <table class="table">
         <thead>
           <tr>
@@ -118,6 +116,13 @@ class Resources_Status {
 
   }
 
+  /**
+   * Build not completed resources table
+   *
+   * Outputs a table of not-completed staff-resource CPTs, specific to the given staff member.
+   *
+   * @return string HTML table markup, showing not completed resources for the given staff member
+   */
   public function not_completed_resources_table () {
 
     $resource_array = $this->resource_data['not_completed_workbooks'];
@@ -125,6 +130,7 @@ class Resources_Status {
     if ( is_array( $resource_array ) ){
 
       ?>
+      <h3>Staff Resources: Not Complete</h3>
       <p>
         <?php echo $this->personal_data['first_name']; ?> has not completed the following staff resources:
       </p>
@@ -136,20 +142,20 @@ class Resources_Status {
           </tr>
         </thead>
         <tbody>
-          <?php
+        <?php
 
-          foreach ( $resource_array as $resource ) {
+        foreach ( $resource_array as $resource ) {
 
-            $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
+          $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
 
-            echo "<tr class='post-ID-{$resource['post_ID']}'>";
-            echo "<td><a href='{$resource['permalink']}'>{$resource['title']}</a></td>";
-            echo "<td>$compulsory</td>";
-            echo "</tr>";
+          echo "<tr class='post-ID-{$resource['post_ID']}'>";
+          echo "<td><a href='{$resource['permalink']}'>{$resource['title']}</a></td>";
+          echo "<td>$compulsory</td>";
+          echo "</tr>";
 
-          }
+        }
 
-          ?>
+        ?>
         </tbody>
       </table>
       <?php
