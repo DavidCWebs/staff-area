@@ -59,8 +59,8 @@ class Access {
    */
   public function __construct( $user_ID, $override_allowed_roles = [] ) {
 
-    $this->user_ID  = $user_ID;
-    $this->allowed_roles    = array_merge(
+    $this->user_ID        = $user_ID;
+    $this->allowed_roles  = array_merge(
       array (
         'administrator',
         'editor'

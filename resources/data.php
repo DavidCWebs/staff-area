@@ -26,4 +26,10 @@ class Data {
 
   }
 
+  public static function associated_business_units( $resource_ID ) {
+
+    return get_post_meta( $resource_ID, 'associated_business_units', true );
+
+  }
+
 }

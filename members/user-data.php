@@ -32,6 +32,12 @@ class User_Data {
    */
   private $completed_resource_data;
 
+  /**
+   * Array of staff-resource IDs that are associated with this user's business unit
+   * @var array
+   */
+  private $resources_by_unit;
+
   function __construct( $user_ID ) {
 
     $this->user_ID = $user_ID;
@@ -77,10 +83,11 @@ class User_Data {
    */
   private function set_not_completed_resource_IDs() {
 
-    $all_resources                    = \Staff_Area\Includes\Loop::get_post_IDs( 'staff-resource', false );
-    $completed_resources              = $this->completed_resource_IDs;
+    $all_resources        = \Staff_Area\Helpers\Post_Data::custom_post_type_IDs( 'staff-resource' );
+    //$all_resources                    = \Staff_Area\Includes\Loop::get_post_IDs( 'staff-resource', false );
+    $completed_resources = $this->completed_resource_IDs;
 
-    if ( !empty ( $completed ) ) {
+    if ( !empty ( $completed_resources ) ) {
 
       $this->not_completed_resource_IDs = array_diff( $all_resources, $completed_resources );
 
@@ -205,10 +212,30 @@ class User_Data {
       'full_name'     => $user_object->first_name . ' ' . $user_object->last_name,
       'email'         => $user_object->user_email,
       'registered'    => $user_object->user_registered,
-      'business_unit' => !empty( $user_object->business_unit ) ? get_the_title( $user_object->business_unit ) : null
+      'business_unit' => !empty( $user_object->business_unit ) ? get_the_title( $user_object->business_unit ) : null,
+      'unit_ID'       => $user_object->business_unit,
+      'display_phone' => $user_object->phone_number,
+      'dial_num'      => preg_replace('/\s+/', '', $user_object->phone_number)
       //'completed'     => $this->completed_resource_IDs,
       //'not_completed' => $this->not_completed_resource_IDs
     ];
+
+  }
+
+  /**
+   * Set an array of staff-resource IDs for resources associated with this user's business unit
+   *
+   */
+  private function set_users_resources_by_unit () {
+
+    $unit_ID = $this->userdata['unit_ID'];
+    $this->resources_by_unit = \Staff_Area\Helpers\Post_Data::resources_linked_to_business_unit( $unit_ID );
+
+  }
+
+  public function get_users_resources_by_unit () {
+
+    return $this->resources_by_unit;
 
   }
 

@@ -6,7 +6,11 @@ To Do
 * Custom header template for the plugin
 * Rationalise JS filters DONE
 * Collect phone number, display phone number
-* Set business units as a repeater field in options
+* Remove staff management page
+* Resources can be linked to business unit
+* Important resources - flagged in sidebar
+* Ordinary staff: no toolbar
+* Ordinary staff: unit specific contact numbers in header
 
 Get toolbar custom nodes @ mobile. See: https://premium.wpmudev.org/forums/topic/how-display-toolbar-menu-on-mobile
 

@@ -207,6 +207,8 @@ class Staff_Area {
 		// Usermeta in admin
 		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'business_unit_form' );
 		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'business_unit_form' );
+		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'phone_number_form' );
+		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'phone_number_form' );
 		$this->loader->add_action( 'personal_options_update', $plugin_admin, 'save_custom_user_meta' );
 		$this->loader->add_action( 'edit_user_profile_update', $plugin_admin, 'save_custom_user_meta' );
 

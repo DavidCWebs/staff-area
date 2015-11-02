@@ -192,75 +192,88 @@ class Loop {
       printf ("<h3>%s%s</h3>", $this->section_title, $term );
 
       /**
-       * Use output buffering to capture the output of the loop.
-       * In this way, we can determine the terms attached to each post returned.
-       * This data will be used to build a filter BEFORE the loop is output.
-       */
+      * Use output buffering to capture the output of the loop.
+      * In this way, we can determine the terms attached to each post returned.
+      * This data will be used to build a filter BEFORE the loop is output.
+      */
       ob_start();
-        echo "<div id='{$this->data_ID}-{$name}container'>";
-        //echo "<div id='{$this->div_class}'>";
-        echo "<table id='{$this->data_ID}{$name}' style='width:100%; table-layout: fixed;' class='table'>";
-        echo "<thead><tr><th>Title</th><th>Description</th><th>Compulsory?</th><th>Status</th><th>Categories</th></thead><tbody>";
 
-        $terms_array = [];
+      ?>
+      <div id="<?= $this->data_ID; ?>-<?= $name; ?>container">
+        <table id="<?= $this->data_ID . $name ; ?>" style="width:100%; table-layout: fixed;" class="table-responsive table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <?php echo empty( $this->meta_query ) ? "<th style='text-align:center'>Compulsory?</th>" : null ; ?>
+              <th style='text-align:center'>Status</th>
+              <th>Categories</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
 
-        while ( $staff_resource_query->have_posts() ) {
+            $terms_array = [];
 
-          $staff_resource_query->the_post();
+            while ( $staff_resource_query->have_posts() ) {
 
-          $resource_ID    = get_the_ID();
-          $taxonomy       = 'staff-resource' === $args['post_type'] ? 'resource-category' : 'management-resource-category' ;
-          $terms          = wp_get_post_terms( $resource_ID, $taxonomy );
-          $term_list      = implode( ' ', wp_get_post_terms( $resource_ID, $taxonomy, array( "fields" => "slugs" ) ) );
-          $slug_name      = get_post_field( 'post_name', $resource_ID );
-          $required       = ! empty( get_post_meta( $resource_ID, 'compulsory_status', true ) ) ? true: false ;
-          $marked_status  = \Staff_Area\User_Input\Confirm::is_marked_read( $this->current_user_ID, $resource_ID );
-          $marked         = false == $marked_status ? "Not Read" : "Read";
-          $marked_class   = false == $marked_status ? "not-read" : "read";
+              $staff_resource_query->the_post();
 
-          // Make an array of all terms in this loop - in order to build the dropdown menu in the filter
-          foreach( $terms as $term ) {
+              $resource_ID    = get_the_ID();
+              $taxonomy       = 'staff-resource' === $args['post_type'] ? 'resource-category' : 'management-resource-category' ;
+              $terms          = wp_get_post_terms( $resource_ID, $taxonomy );
+              $term_list      = implode( ' ', wp_get_post_terms( $resource_ID, $taxonomy, array( "fields" => "slugs" ) ) );
+              $slug_name      = get_post_field( 'post_name', $resource_ID );
+              $required       = ! empty( get_post_meta( $resource_ID, 'compulsory_status', true ) ) ? true: false ;
+              $marked_status  = \Staff_Area\User_Input\Confirm::is_marked_read( $this->current_user_ID, $resource_ID );
+              $marked         = false == $marked_status ? "Not Read" : "Read";
+              $marked_class   = false == $marked_status ? "not-read" : "read";
 
-            // If we don't already have it, add it!
-            if( ! in_array( $term, $terms_array ) ) {
+              // Make an array of all terms in this loop - in order to build the dropdown menu in the filter
+              foreach( $terms as $term ) {
 
-              $terms_array [] = $term;
+                // If we don't already have it, add it!
+                if( ! in_array( $term, $terms_array ) ) {
+
+                  $terms_array [] = $term;
+
+                }
+
+              }
+
+              include( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/resource-teaser-row.php' );
 
             }
 
+            echo "</tbody></table></div>";
+
+          } else {
+
+            //echo "There are no posts";
+
           }
 
-          // The HTML for each teaser
-          //include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser.php' );
-          include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-teaser-row.php' );
+        wp_reset_postdata();
+
+        $table = ob_get_clean();
+
+        // Include filter markup if filter is specified
+        if ( true === $filter ) {
+
+          $this->filter( $args['post_type'], $terms_array );
 
         }
 
-        //echo "</div>";
-        echo "</tbody></table></div>";
-
-      } else {
-
-        //echo "There are no posts";
-
-      }
-
-      wp_reset_postdata();
-
-    $table = ob_get_clean();
-
-    // Include filter markup if filter is specified
-    // -------------------------------------------------------------------------
-    if ( true === $filter ) {
-
-      $this->filter( $args['post_type'], $terms_array );
-
-    }
-
-    echo $table;
+        echo $table;
 
   }
 
+  /**
+   * Get post IDs for staff resources
+   * 
+   * @param  string $type         Custom Post Type for the query
+   * @param  boolean $compulsory  true denotes resources with "1" == 'compulsory_status' in the postmeta table
+   * @return array                Array of custom post type IDs
+   */
   public static function get_post_IDs( $type = 'staff-resource', $compulsory = false ) {
 
     if ( true == $compulsory ) {
@@ -368,7 +381,7 @@ class Loop {
 
     }
 
-    include( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/resource-filter.php' );
+    include( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/resource-filter-pills.php' );
 
   }
 

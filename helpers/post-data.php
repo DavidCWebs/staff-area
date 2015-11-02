@@ -8,8 +8,9 @@ class Post_Data {
   *
   * Builds an efficient query by only returning an array of post IDs.
   * By default, returns an array of IDs for all published posts of the custom
-  * post type specified by the first argument ($cpt). The second argument allows
-  * accepts an array that allows the default WP_Query() arguments to be overridden.
+  * post type specified by the first argument ($cpt). The second argument accepts
+  * an array that allows the default WP_Query() arguments used in this method
+  * to be overridden.
   *
   * @author David Egan
   * @see http://codex.wordpress.org/Class_Reference/WP_Query#Return_Fields_Parameter
@@ -35,6 +36,44 @@ class Post_Data {
     wp_reset_postdata();
 
     return $ID_array;
+
+  }
+
+  public static function resource_info ( $resource_ID ) {
+
+    $resource_info = [
+      'compulsory'                => \Staff_Area\Resources\Data::is_compulsory( $resource_ID ),
+      'associated_business_units' => get_post_meta( $resource_ID, 'associated_business_units', true )
+    ];
+
+  }
+
+  /**
+   * Build an array of resource IDs that are associated with a given business unit
+   *
+   * @param  int|string $unit_ID Business Unit CPT post ID
+   * @return array          Post IDs of associated staff-resource CPTs
+   */
+  public static function resources_linked_to_business_unit( $unit_ID ) {
+
+    $staff_resource_IDs   = self::custom_post_type_IDs( 'staff-resource' );
+    $associated_resources = [];
+
+    foreach( $staff_resource_IDs as $resource_ID ) {
+
+      // associated business units for THIS resource
+      $associated_units = get_post_meta( $resource_ID, 'associated_business_units', true );
+
+      // If the $unit_ID is in this array, push the resource ID to $associated_resources array
+      if ( is_array( $associated_units ) && in_array( $unit_ID, $associated_units ) ) {
+
+        $associated_resources [] = $resource_ID;
+
+      }
+
+    }
+
+    return $associated_resources;
 
   }
 

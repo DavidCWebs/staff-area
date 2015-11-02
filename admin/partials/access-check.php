@@ -1,6 +1,4 @@
 <?php
-$current_user     = wp_get_current_user();
-$current_user_ID  = $current_user->ID;
 
 if( !is_user_logged_in() ) {
 
@@ -10,6 +8,9 @@ if( !is_user_logged_in() ) {
 
 }
 
+$current_user     = wp_get_current_user();
+$current_user_ID  = $current_user->ID;
+$business_unit    = get_user_meta( $current_user_ID, 'business_unit', true );
 $access_check     = new Staff_Area\Members\Access( $current_user_ID, $access_list );
 $access           = $access_check->get_access_level();
 $readable_access  = $access_check->get_readable_user_role();

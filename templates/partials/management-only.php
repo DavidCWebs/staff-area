@@ -1,2 +1,2 @@
 <?php
-echo "<p>Management Only</p>";
+the_field('supervisors_&_managers');

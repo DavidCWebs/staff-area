@@ -200,7 +200,9 @@
 
     //if ( !current_user_can( 'edit_user', $user_id ) ) { return false; }
 
-    update_user_meta( $user_id, 'business_unit', $_POST['business_unit'] );
+    update_user_meta( $user_id, 'business_unit', (int)$_POST['business_unit'] );
+
+    update_user_meta( $user_id, 'phone_number', $_POST['phone_number'] );
 
   }
 
@@ -208,8 +210,7 @@
   public function business_unit_form( $user ) {
 
     $current_value = get_the_author_meta( 'business_unit', $user->ID );
-    //$units = ['Ennis Community College', 'Castletroy Community College', 'Scoil Mhuire Ennis'];
-    $units = \Staff_Area\Helpers\Post_Data::custom_post_type_IDs( 'business-unit' );
+    $units         = \Staff_Area\Helpers\Post_Data::custom_post_type_IDs( 'business-unit' );
 
     ?>
     <h3>Custom User Data</h3>
@@ -236,5 +237,23 @@
     </table>
     <?php
   }
+
+  public function phone_number_form( $user ) {
+
+    $current_value  = get_the_author_meta( 'phone_number', $user->ID );
+    $current_value  = !empty ( $current_value ) ? $current_value : '';
+
+    ?>
+    <table class="form-table">
+      <tr>
+        <th>Phone Number</th>
+        <td>
+          <input name='phone_number' value='<?php echo htmlspecialchars($current_value); ?>' type='tel' pattern='[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' title='Phone Number (Format: 087 123 4567'>
+        </td>
+      </tr>
+    </table>
+    <?php
+  }
+
 
 }

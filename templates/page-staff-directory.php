@@ -10,7 +10,7 @@
 
   }
 
-  include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/welcome.php' );
+  include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/welcome.php' );
 
   the_content();
 

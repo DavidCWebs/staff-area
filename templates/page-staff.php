@@ -10,13 +10,11 @@
 
   }
 
-  include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/welcome.php' );
+  include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/welcome.php' );
 
   // The view for Staff Supervisors, Staff Managers, Site Admins, Site Editors
   // ---------------------------------------------------------------------------
   if ( 'full_access' == $access || 'supervisor_access' == $access || 'manager_access' == $access ) {
-
-    the_field('supervisors_&_managers');
 
     include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/management-only.php' );
 
@@ -27,9 +25,11 @@
   if ( 'staff_access' == $access ) {
 
     the_field('staff_members_intro');
-    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/staff-only.php' );
+    include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/associated-resource-list.php' );
 
   }
+
+  echo "<hr>";
 
   $compulsory_resources = new Staff_Area\Includes\Loop( '', $current_user_ID, 'compulsory' );
   $compulsory_resources->resource_loop( null, true );
