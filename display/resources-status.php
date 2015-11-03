@@ -76,32 +76,34 @@ class Resources_Status {
 
       ?>
       <h3>Staff Resources: Completed by <?php echo $this->personal_data['first_name']; ?></h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Date Completed</th>
-            <th>Is this Resource Compulsory?</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
+      <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Date Completed</th>
+              <th>Is this Resource Compulsory?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
 
-          foreach ( $resource_array as $resource ) {
+            foreach ( $resource_array as $resource ) {
 
-            $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
+              $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
 
-            echo "<tr class='post-ID-{$resource['post_ID']}'>";
-            echo "<td><a href='{$resource['permalink']}'>{$resource['title']}</a></td>";
-            echo "<td>{$resource['completion_date']}</td>";
-            echo "<td>$compulsory</td>";
-            echo "</tr>";
+              echo "<tr class='post-ID-{$resource['post_ID']}'>";
+              echo "<td><a href='{$resource['permalink']}'>{$resource['title']}</a></td>";
+              echo "<td>{$resource['completion_date']}</td>";
+              echo "<td>$compulsory</td>";
+              echo "</tr>";
 
-          }
+            }
 
-          ?>
-        </tbody>
-      </table>
+            ?>
+          </tbody>
+        </table>
+      </div>
       <?php
 
     } else {
@@ -134,30 +136,32 @@ class Resources_Status {
       <p>
         <?php echo $this->personal_data['first_name']; ?> has not completed the following staff resources:
       </p>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Is this Resource Compulsory?</th>
-          </tr>
-        </thead>
-        <tbody>
-        <?php
+      <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Is this Resource Compulsory?</th>
+            </tr>
+          </thead>
+          <tbody>
+          <?php
 
-        foreach ( $resource_array as $resource ) {
+          foreach ( $resource_array as $resource ) {
 
-          $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
+            $compulsory = true === \Staff_Area\Resources\Data::is_compulsory( $resource['post_ID'] ) ? "Yes" : "No";
 
-          echo "<tr class='post-ID-{$resource['post_ID']}'>";
-          echo "<td><a href='{$resource['permalink']}'>{$resource['title']}</a></td>";
-          echo "<td>$compulsory</td>";
-          echo "</tr>";
+            echo "<tr class='post-ID-{$resource['post_ID']}'>";
+            echo "<td><a href='{$resource['permalink']}'>{$resource['title']}</a></td>";
+            echo "<td>$compulsory</td>";
+            echo "</tr>";
 
-        }
+          }
 
-        ?>
-        </tbody>
-      </table>
+          ?>
+          </tbody>
+        </table>
+      </div>
       <?php
 
     } else {
