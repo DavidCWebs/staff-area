@@ -59,11 +59,17 @@ class Staff_Area_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_development_styles() {
 
 		wp_enqueue_style( $this->staff_area . '-select', plugin_dir_url( __DIR__ ) . 'bower_components/bootstrap-select/dist/css/bootstrap-select.css', array(), $this->version, 'all' );
 
 		wp_enqueue_style( $this->staff_area, plugin_dir_url( __FILE__ ) . 'css/staff-area-public.css', array(), $this->version, 'all' );
+
+	}
+
+	public function enqueue_production_styles() {
+
+		wp_enqueue_style( $this->staff_area, plugin_dir_url( __FILE__ ) . 'css/cw-staff-area.min.css', array(), $this->version, 'all' );
 
 	}
 

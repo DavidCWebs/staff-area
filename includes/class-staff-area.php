@@ -230,8 +230,15 @@ class Staff_Area {
 		$toolbar				= new Staff_Area\Members\Toolbar();
 		//$menus					= new Staff_Area\Helpers\Menu();
 
-		// Enqueue styles
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		// Enqueue Development Styles
+		if ( 'development' === WP_ENV ) {
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_development_styles' );
+		}
+
+		// Enqueue Production Styles
+		if ( 'production' === WP_ENV ) {
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_production_styles' );
+		}
 
 		// Enqueue Development Scripts
 		if ( 'development' === WP_ENV ) {

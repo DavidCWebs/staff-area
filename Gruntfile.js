@@ -19,7 +19,12 @@ module.exports = function(grunt) {
     'public/js/table-filter.js',
     'bower_components/bootstrap-select/js/bootstrap-select.js',
     'bower_components/jquery-validation/dist/jquery.validate.js'
-  ]
+  ];
+
+  var cssProduction = [
+    'public/css/staff-area-public.css',
+    'bower_components/bootstrap-select/dist/css/bootstrap-select.css'
+  ];
 
   // Project configuration.
   // ---------------------------------------------------------------------------
@@ -40,6 +45,10 @@ module.exports = function(grunt) {
     registration: {
       src: [jsRegistration],
       dest: 'public/js/cw-staff-area-registration.js',
+    },
+    css: {
+      src: [cssProduction],
+      dest: 'public/css/cw-staff-area-css.js',
     }
   },
   // Uglify the JS
@@ -48,7 +57,8 @@ module.exports = function(grunt) {
     public: {
       files: {
         'public/js/cw-staff-area.min.js': 'public/js/cw-staff-area.js',
-        'public/js/cw-staff-area-registration.min.js': 'public/js/cw-staff-area-registration.js'
+        'public/js/cw-staff-area-registration.min.js': 'public/js/cw-staff-area-registration.js',
+        'public/js/cw-staff-area.min.css': 'public/js/cw-staff-area.css'
       }
     }
   },
