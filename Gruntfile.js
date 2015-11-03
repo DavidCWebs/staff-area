@@ -66,7 +66,7 @@ module.exports = function(grunt) {
   cssmin: {
     combine: {
       files: {
-        'public/css/cw-combined-staff-area.min.css': [cssProduction]
+        'public/css/cw-staff-area.min.css': [cssProduction]
       }
     }
   },
