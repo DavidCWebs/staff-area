@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 
   var cssProduction = [
     'public/css/staff-area-public.css',
-    'bower_components/bootstrap-select/dist/css/bootstrap-select.css'
+    'bower_components/bootstrap-select/dist/css/bootstrap-select.css',
   ];
 
   // Project configuration.
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
     },
     css: {
       src: [cssProduction],
-      dest: 'public/css/cw-staff-area-css.js',
+      dest: 'public/css/cw-combined-staff-area.css',
     }
   },
   // Uglify the JS
@@ -58,44 +58,31 @@ module.exports = function(grunt) {
       files: {
         'public/js/cw-staff-area.min.js': 'public/js/cw-staff-area.js',
         'public/js/cw-staff-area-registration.min.js': 'public/js/cw-staff-area-registration.js',
-        'public/css/cw-staff-area.min.css': 'public/css/cw-staff-area.css'
       }
     }
   },
-  // Sass task
-  // ---------------------------------------------------------------------------
-  sass: {
-    development: {
-      options: {
-        //sourcemap: true
-      },
-      files: {
-        'css/main.css': 'css/_main.scss'
-      }
-    },
-    production: {
-      options: {
-        //sourcemap: true
-      },
-      files: {
-        'css/main.css': 'css/_main.scss'
-      }
-    }
-  },
-
   // Minify CSS. Grunt task runs this after uncss
   // ---------------------------------------------------------------------------
+  cssmin: {
+    combine: {
+      files: {
+        'public/css/cw-combined-staff-area.min.css': [cssProduction]
+      }
+    }
+  },
+  /*
   cssmin: {
     options: {
       banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %>.' +
-      'By David Egan: http://carawebs.com */'
+      'By David Egan: http://carawebs.com *//*'
     },
-    my_target: {
-      src: 'css/main.un.css',
-      dest: 'css/main.min.css'
+    target: {
+      src: 'public/css/cw-combined-staff-area.css',
+      dest: 'public/css/cw-staff-area.min.css'
     }
   },
+  */
   // Copy Task
   // ---------------------------------------------------------------------------
   copy: {
@@ -130,6 +117,8 @@ grunt.registerTask('build', [
   //'cssmin',
   'concat:public',
   'concat:registration',
+  //'concat:css',
+  'cssmin',
   'uglify:public'
 ]);
 
