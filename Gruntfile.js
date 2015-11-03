@@ -58,7 +58,7 @@ module.exports = function(grunt) {
       files: {
         'public/js/cw-staff-area.min.js': 'public/js/cw-staff-area.js',
         'public/js/cw-staff-area-registration.min.js': 'public/js/cw-staff-area-registration.js',
-        'public/js/cw-staff-area.min.css': 'public/js/cw-staff-area.css'
+        'public/css/cw-staff-area.min.css': 'public/css/cw-staff-area.css'
       }
     }
   },
