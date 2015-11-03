@@ -84,6 +84,7 @@ class Single_Resource {
 
     $filesize = size_format( filesize( get_attached_file( $file['id'] ) ) );
     $filetype = wp_check_filetype( get_attached_file( $file['id'] ) );
+    echo "<h3>Download Resource Files</h3>";
     echo "<a href='{$file['url']}'>Download {$file['title']}</a> ({$filetype['ext']}, {$filesize})";
 
   }

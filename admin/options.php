@@ -156,6 +156,22 @@ class Options {
     );
 
     add_settings_field(
+      'staff_phone',
+      'Contact Number for Staff Members',
+      array( $this, 'staff_contact_callback' ),
+      $this->plugin_name,
+      $this->plugin_name . '_main'  // Section - must correspond to ID of `add_settings_section()` XX
+    );
+
+    add_settings_field(
+      'supervisor_phone',
+      'Contact Number for Supervisors',
+      array( $this, 'supervisor_contact_callback' ),
+      $this->plugin_name,
+      $this->plugin_name . '_main'  // Section - must correspond to ID of `add_settings_section()` XX
+    );
+
+    add_settings_field(
       'allowed_roles',
       'Allowed Roles',
       array( $this, 'allowed_roles_callback' ),
@@ -309,6 +325,32 @@ class Options {
       '<input type="text" id="email-address" name="%s" value="%s" />',
       $this->option_name . "[email_address]",
       !empty( $this->options['email_address'] ) ? esc_attr( $this->options['email_address']) : sanitize_email( get_bloginfo( 'admin_email' ) )
+    );
+
+  }
+
+  /**
+  * Get the settings option array and print one of its values
+  */
+  public function staff_contact_callback() {
+
+    printf(
+      '<input type="tel" id="staff-contact-number" name="%s" value="%s" />',
+      $this->option_name . "[staff_phone]",
+      !empty( $this->options['staff_phone'] ) ? esc_attr( $this->options['staff_phone']) : ''
+    );
+
+  }
+
+  /**
+  * Get the settings option array and print one of its values
+  */
+  public function supervisor_contact_callback() {
+
+    printf(
+      '<input type="tel" id="supervisor-contact-number" name="%s" value="%s" />',
+      $this->option_name . "[supervisor_phone]",
+      !empty( $this->options['supervisor_phone'] ) ? esc_attr( $this->options['supervisor_phone']) : ''
     );
 
   }
