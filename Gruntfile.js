@@ -26,11 +26,20 @@ module.exports = function(grunt) {
     'bower_components/bootstrap-select/dist/css/bootstrap-select.css',
   ];
 
+  var bannerFiles = [
+    'public/css/cw-staff-area.min.css',
+    'public/js/cw-staff-area.min.js',
+    'public/js/cw-staff-area-registration.min.js'
+  ];
+
   // Project configuration.
   // ---------------------------------------------------------------------------
   grunt.initConfig({
 
   pkg: grunt.file.readJSON('package.json'),
+  banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+  '<%= grunt.template.today("yyyy-mm-dd") %>.' +
+  'By David Egan: http://carawebs.com */',
 
   // Concat task
   // ---------------------------------------------------------------------------
@@ -65,9 +74,7 @@ module.exports = function(grunt) {
   // ---------------------------------------------------------------------------
   cssmin: {
     options: {
-      banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-      '<%= grunt.template.today("yyyy-mm-dd") %>.' +
-      'By David Egan: http://carawebs.com */'
+      banner: '<%= banner %>'
     },
     combine: {
       files: {
@@ -75,19 +82,18 @@ module.exports = function(grunt) {
       }
     }
   },
-  /*
-  cssmin: {
-    options: {
-      banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-      '<%= grunt.template.today("yyyy-mm-dd") %>.' +
-      'By David Egan: http://carawebs.com *//*'
-    },
-    target: {
-      src: 'public/css/cw-combined-staff-area.css',
-      dest: 'public/css/cw-staff-area.min.css'
+  usebanner: {
+    taskName: {
+      options: {
+        position: 'top',
+        banner: '<%= banner %>',
+        linebreak: true
+      },
+      files: {
+        src: [ bannerFiles ]
+      }
     }
   },
-  */
   // Copy Task
   // ---------------------------------------------------------------------------
   copy: {
@@ -124,7 +130,8 @@ grunt.registerTask('build', [
   'concat:registration',
   //'concat:css',
   'cssmin',
-  'uglify:public'
+  'uglify:public',
+  'usebanner'
 ]);
 
 // Default Grunt task
