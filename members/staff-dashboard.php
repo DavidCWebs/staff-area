@@ -342,53 +342,55 @@ class Staff_Dashboard {
     ob_start();
 
       ?>
-      <table class="table table-striped table-responsive">
-        <tr>
-          <th>Name</th>
-          <th>Business Unit</th>
-          <th class="hidden-xs">Email Address</th>
-          <th>Phone Number</th>
-          <th>Outstanding Compulsory Resources</th>
-        </tr>
-        <?php
-
-        // Add a new table row for each staff member
-        foreach( $this->staff_data_arrays as $staff_member ) {
-
-          $completed    = $this->completed_resources_string( $staff_member );
-          $member_link  = esc_url( home_url('/staff-member') ) . '?staff_member=' . (int) $staff_member['user_ID'];
-          $status       = false === $this->has_outstanding( $staff_member ) ? "none-outstanding" : "outstanding";
-          $outstanding  = "none-outstanding" === $status ? 'No' : '<a href="' . $member_link . '" title="View ' . $staff_member['first_name'] . '\'s full record">Yes</a>';
-          $name         = $staff_member['first_name'] . ' ' . $staff_member['last_name'];
-          $tel          = preg_replace( '/\s+/', '', $staff_member['display_phone'] );
-
-          ?>
-          <tr class="<?= $status; ?>">
-            <td>
-              <a href="<?= $member_link; ?>" title="View <?= $staff_member['first_name']; ?>'s full record"><?php echo $name; ?></a>
-            </td>
-            <td>
-              <?= $staff_member['business_unit']; ?>
-            </td>
-            <td class="hidden-xs">
-              <a href="mailto:<?php echo $staff_member['email'] ; ?>" title="Click here to email <?= $staff_member['first_name']; ?>"><?php echo $staff_member['email'] ; ?></a>
-            </td>
-            <td>
-              <span class="hidden-xs">
-                <?= $staff_member['display_phone']; ?>
-              </span>
-              <span class="visible-xs hidden-sm hidden-md hidden-lg">
-              <a href="tel:<?= $tel;?>" class="btn-primary btn">
-                <i class="glyphicon glyphicon-phone-alt"></i>&nbsp;&nbsp;Click to call <?php //echo $user_resources->get_personal_data()['first_name']; ?></a>
-              </span>
-            </td>
-            <td><?php echo $outstanding; ?></td>
+      <div>
+        <table class="table table-striped table-responsive">
+          <tr>
+            <th>Name</th>
+            <th>Business Unit</th>
+            <th class="hidden-xs">Email Address</th>
+            <th>Phone Number</th>
+            <th>Outstanding Compulsory Resources</th>
           </tr>
           <?php
 
-        }
-        ?>
-      </table>
+          // Add a new table row for each staff member
+          foreach( $this->staff_data_arrays as $staff_member ) {
+
+            $completed    = $this->completed_resources_string( $staff_member );
+            $member_link  = esc_url( home_url('/staff-member') ) . '?staff_member=' . (int) $staff_member['user_ID'];
+            $status       = false === $this->has_outstanding( $staff_member ) ? "none-outstanding" : "outstanding";
+            $outstanding  = "none-outstanding" === $status ? 'No' : '<a href="' . $member_link . '" title="View ' . $staff_member['first_name'] . '\'s full record">Yes</a>';
+            $name         = $staff_member['first_name'] . ' ' . $staff_member['last_name'];
+            $tel          = preg_replace( '/\s+/', '', $staff_member['display_phone'] );
+
+            ?>
+            <tr class="<?= $status; ?>">
+              <td>
+                <a href="<?= $member_link; ?>" title="View <?= $staff_member['first_name']; ?>'s full record"><?php echo $name; ?></a>
+              </td>
+              <td>
+                <?= $staff_member['business_unit']; ?>
+              </td>
+              <td class="hidden-xs">
+                <a href="mailto:<?php echo $staff_member['email'] ; ?>" title="Click here to email <?= $staff_member['first_name']; ?>"><?php echo $staff_member['email'] ; ?></a>
+              </td>
+              <td>
+                <span class="hidden-xs">
+                  <?= $staff_member['display_phone']; ?>
+                </span>
+                <span class="visible-xs hidden-sm hidden-md hidden-lg">
+                <a href="tel:<?= $tel;?>" class="btn-primary btn">
+                  <i class="glyphicon glyphicon-phone-alt"></i>&nbsp;&nbsp;Click to call <?php //echo $user_resources->get_personal_data()['first_name']; ?></a>
+                </span>
+              </td>
+              <td><?php echo $outstanding; ?></td>
+            </tr>
+            <?php
+
+          }
+          ?>
+        </table>
+      </div>
       <?php
 
       $return_html .= ob_get_clean();
