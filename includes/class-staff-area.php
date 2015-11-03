@@ -204,6 +204,9 @@ class Staff_Area {
 		// Filter template loader for custom templates
 		$this->loader->add_filter( 'template_include', $plugin_admin, 'staff_area_page_template_routes' );
 
+		// Staff Resources archive admin
+		//$this->loader->add_filter( 'manage_edit-staff-resource_columns', $plugin_admin, 'edit_staff_resource_columns' ) ;
+
 		// Usermeta in admin
 		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'business_unit_form' );
 		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'business_unit_form' );

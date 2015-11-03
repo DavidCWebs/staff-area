@@ -12,11 +12,14 @@ class Toolbar {
 
   private $hide_toolbar;
 
+  private $staff_directory_page;
+
   public function __construct() {
 
     $this->set_staff_page();
     $this->set_staff_reg_page();
     $this->set_staff_management_page();
+    $this->set_staff_directory_page();
     $this->set_display_toolbar();
     $this->set_management_resources_page();
 
@@ -39,6 +42,12 @@ class Toolbar {
   public function set_staff_page() {
 
     $this->staff_page = esc_url( home_url( '/staff' ) );
+
+  }
+
+  public function set_staff_directory_page() {
+
+    $this->staff_directory_page = esc_url( home_url( '/staff-directory' ) );
 
   }
 
@@ -128,9 +137,9 @@ class Toolbar {
     	$wp_admin_bar->add_menu( $args );
 
       $args = array(
-    		'id'     => 'staff-management-link',
-    		'title'  => __( 'Staff Management', 'staff-area' ),
-        'href'   => $this->staff_management_page
+    		'id'     => 'staff-directory-link',
+    		'title'  => __( 'Staff Directory', 'staff-area' ),
+        'href'   => $this->staff_directory_page
     	);
     	$wp_admin_bar->add_menu( $args );
 

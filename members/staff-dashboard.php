@@ -85,6 +85,7 @@ class Staff_Dashboard {
       $completed      = $this->completed_workbooks( $allmeta );
       $index          = 'staff_member_' . $staff_member->ID;
       $business_unit  = !empty( $allmeta['business_unit'][0] ) ? $allmeta['business_unit'][0] : null;
+      $phone_number   = !empty( $allmeta['phone_number'][0] ) ? $allmeta['phone_number'][0] : null;
 
       $this->staff_data_arrays[$index] = [
         'user_ID'             => $staff_member->ID,
@@ -92,7 +93,8 @@ class Staff_Dashboard {
         'last_name'           => $allmeta['last_name'][0],
         'business_unit'       => get_the_title( $business_unit ),
         'email'               => $staff_member->user_email,
-        'completed_resources' => $completed
+        'completed_resources' => $completed,
+        'display_phone'       => $phone_number,
       ];
 
     }
@@ -340,11 +342,11 @@ class Staff_Dashboard {
     ob_start();
 
       ?>
-      <table class="table table-striped">
+      <table class="table table-striped table-responsive">
         <tr>
           <th>Name</th>
           <th>Business Unit</th>
-          <th>Email Address</th>
+          <th class="hidden-xs">Email Address</th>
           <th>Phone Number</th>
           <th>Outstanding Compulsory Resources</th>
         </tr>
@@ -358,13 +360,28 @@ class Staff_Dashboard {
           $status       = false === $this->has_outstanding( $staff_member ) ? "none-outstanding" : "outstanding";
           $outstanding  = "none-outstanding" === $status ? 'No' : '<a href="' . $member_link . '" title="View ' . $staff_member['first_name'] . '\'s full record">Yes</a>';
           $name         = $staff_member['first_name'] . ' ' . $staff_member['last_name'];
+          $tel          = preg_replace( '/\s+/', '', $staff_member['display_phone'] );
 
           ?>
           <tr class="<?= $status; ?>">
-            <td><a href="<?= $member_link; ?>" title="View <?= $staff_member['first_name']; ?>'s full record"><?php echo $name; ?></a></td>
-            <td><?= $staff_member['business_unit']; ?></td>
-            <td><a href="mailto:<?php echo $staff_member['email'] ; ?>" title="Click here to email <?= $staff_member['first_name']; ?>"><?php echo $staff_member['email'] ; ?></a></td>
-            <td> - </td>
+            <td>
+              <a href="<?= $member_link; ?>" title="View <?= $staff_member['first_name']; ?>'s full record"><?php echo $name; ?></a>
+            </td>
+            <td>
+              <?= $staff_member['business_unit']; ?>
+            </td>
+            <td class="hidden-xs">
+              <a href="mailto:<?php echo $staff_member['email'] ; ?>" title="Click here to email <?= $staff_member['first_name']; ?>"><?php echo $staff_member['email'] ; ?></a>
+            </td>
+            <td>
+              <span class="hidden-xs">
+                <?= $staff_member['display_phone']; ?>
+              </span>
+              <span class="visible-xs hidden-sm hidden-md hidden-lg">
+              <a href="tel:<?= $tel;?>" class="btn-primary btn">
+                <i class="glyphicon glyphicon-phone-alt"></i>&nbsp;&nbsp;Click to call <?php //echo $user_resources->get_personal_data()['first_name']; ?></a>
+              </span>
+            </td>
             <td><?php echo $outstanding; ?></td>
           </tr>
           <?php

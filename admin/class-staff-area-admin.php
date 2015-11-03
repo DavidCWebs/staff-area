@@ -255,5 +255,16 @@
     <?php
   }
 
+  public function edit_staff_resource_columns( $columns ) {
+
+    $new_columns = array(
+  		'compulsory' => __( 'Compulsory?' ),
+  	);
+
+  	return array_merge( $columns, $new_columns );
+
+
+  }
+
 
 }

@@ -142,8 +142,8 @@ class Loop {
           'meta_query' => array(
             array(
               'key'        => 'compulsory_status',
-              //'value'      => '1',
-              'compare'    => 'NOT EXISTS',
+              'value'      => '0',
+              'compare'    => '='//'NOT EXISTS',
             ),
           ),
         );
@@ -269,7 +269,7 @@ class Loop {
 
   /**
    * Get post IDs for staff resources
-   * 
+   *
    * @param  string $type         Custom Post Type for the query
    * @param  boolean $compulsory  true denotes resources with "1" == 'compulsory_status' in the postmeta table
    * @return array                Array of custom post type IDs
