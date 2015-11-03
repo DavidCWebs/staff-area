@@ -57,7 +57,7 @@
 
 			} );
 
-			$( '#filter-message' ).html( " in the category: " + catName  );
+			$( "#" + targetTable + '-filter-feedback .filter-message' ).html( " in the category: " + catName  );
 
 		} );
 

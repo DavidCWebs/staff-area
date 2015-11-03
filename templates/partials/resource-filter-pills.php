@@ -27,7 +27,7 @@
           ?>
         </a>
       </li>
-      <li id="$filter_ID" class="form-group dropdown staff-area-grid-unit">
+      <li id="<?= $filter_ID; ?>" class="form-group dropdown staff-area-grid-unit">
         <?php
 
         if ( ! empty( $terms_array ) ) {
@@ -58,8 +58,8 @@ EOF;
 
     </div>
 </form>
-<div id="<?php echo 'management-resource-category' == $filter_tax ? 'management-' : ''; ?>filter-feedback" class="topspace alert alert-info">
-  This table shows <?php echo $this->section_title; ?><span id="filter-message"></span>
+<div id="<?= $this->data_ID; ?>-filter-feedback" class="topspace alert alert-info">
+  This table shows <?php echo $this->section_title; ?><span class="filter-message"></span>
 </div>
 <hr>
 <?php
