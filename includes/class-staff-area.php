@@ -233,9 +233,15 @@ class Staff_Area {
 		// Enqueue styles
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 
-		// Enqueue scripts
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		// Enqueue Development Scripts
+		if ( 'development' === WP_ENV ) {
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_development_scripts' );
+		}
 
+		// Enqueue Production Scripts
+		if ( 'production' === WP_ENV ) {
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_production_scripts' );
+		}
 		// Redirects
 		$this->loader->add_filter( 'login_redirect', $plugin_public, 'login_redirect', 10, 3 );
 

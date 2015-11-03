@@ -72,7 +72,7 @@ class Staff_Area_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_development_scripts() {
 		/**
 		 * Enqueue the jQuery filter script on the specified pages.
 		 * @TODO: Pass in an array of pages for the filter - set in an options page with sensible defaults.
@@ -123,6 +123,55 @@ class Staff_Area_Public {
       );
 
     }
+
+	}
+
+	public function enqueue_production_scripts() {
+
+		$management_pages = [
+			'staff-directory',
+			'staff-management',
+			'staff-member'
+		];
+
+		if ( is_singular( array( 'staff-resource', 'management-resource' ) ) || is_page( $management_pages ) ) {
+
+			/**
+			 * Minimised file should include:
+			 * table-filter.js
+			 * validate.js
+			 * bootstrap-select.js
+			 * confirm-as-read.js
+			 *
+			 * DO NOT include registration.js
+			 *
+			 */
+			wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/cw-staff-area.min.js', array( 'jquery' ), $this->version, false );
+
+		}
+
+		if ( is_page ( 'staff-registration' ) ) {
+
+			/**
+			 * minimised file should include:
+			 * registration.js
+			 * validate.js
+			 * bootstrap-select.js
+			 */
+			wp_register_script('carawebs_user_reg_script', plugin_dir_url( __FILE__ ) . 'js/cw-staff-area-registration.min.js', array('jquery'), null, false);
+
+			wp_enqueue_script('carawebs_user_reg_script');
+
+      $current_user = wp_get_current_user();
+      $user_id = $current_user->ID;
+
+      wp_localize_script( 'carawebs_user_reg_script', 'carawebsRegVars', array(
+        'carawebsAjaxURL' => admin_url( 'admin-ajax.php' ),
+        'carawebsCoordinatorID' => $user_id, // This passes the user ID of the originating user
+        )
+      );
+
+		}
 
 	}
 

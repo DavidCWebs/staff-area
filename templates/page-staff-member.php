@@ -7,8 +7,6 @@ $staff_member_ID = isset ( $_GET['staff_member'] ) ? $_GET['staff_member'] : nul
 $access_list = ['staff_manager'];
 include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/access-check.php' );
 
-echo "<h2>WP_ENV is: " . WP_ENV . "</h2>";
-
 if ( 'no_access' == $access ) {
 
   return;

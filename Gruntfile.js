@@ -9,10 +9,17 @@ module.exports = function(grunt) {
   var jsPublicFileList = [
     //'bower_components/jquery.fitvids/jquery.fitvids.js',
     //'public/js/fitvids-control.js'
+    'public/js/table-filter.js',
+    'bower_components/bootstrap-select/js/bootstrap-select.js',
+    'bower_components/jquery-validation/dist/jquery.validate.js'
+  ];
+
+  var jsRegistration = [
     'public/js/registration.js',
     'public/js/table-filter.js',
-    'bower_components/bootstrap-select/js/bootstrap-select.js'
-  ];
+    'bower_components/bootstrap-select/js/bootstrap-select.js',
+    'bower_components/jquery-validation/dist/jquery.validate.js'
+  ]
 
   // Project configuration.
   // ---------------------------------------------------------------------------
@@ -28,15 +35,20 @@ module.exports = function(grunt) {
     },
     public: {
       src: [jsPublicFileList],
-      dest: 'public/js/staff-area.js',
+      dest: 'public/js/cw-staff-area.js',
     },
+    registration: {
+      src: [jsRegistration],
+      dest: 'public/js/cw-staff-area-registration.js',
+    }
   },
   // Uglify the JS
   // ---------------------------------------------------------------------------
   uglify: {
     public: {
       files: {
-        'public/js/staff-area.min.js': 'public/js/staff-area.js'
+        'public/js/cw-staff-area.min.js': 'public/js/cw-staff-area.js',
+        'public/js/cw-staff-area-registration.min.js': 'public/js/cw-staff-area-registration.js'
       }
     }
   },
@@ -106,7 +118,8 @@ grunt.registerTask('sassCopy', ['sass:development', 'copy:css']);
 grunt.registerTask('build', [
   //'sass:production',
   //'cssmin',
-  'concat',
+  'concat:public',
+  'concat:registration',
   'uglify:public'
 ]);
 
