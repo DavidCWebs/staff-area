@@ -64,6 +64,11 @@ module.exports = function(grunt) {
   // Minify CSS. Grunt task runs this after uncss
   // ---------------------------------------------------------------------------
   cssmin: {
+    options: {
+      banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+      '<%= grunt.template.today("yyyy-mm-dd") %>.' +
+      'By David Egan: http://carawebs.com */'
+    },
     combine: {
       files: {
         'public/css/cw-staff-area.min.css': [cssProduction]

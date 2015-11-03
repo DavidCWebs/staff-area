@@ -1,8 +1,4 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
- #result-message,
+#result-message,
  .indicator {
    display: none;
  }
@@ -123,7 +119,7 @@ ul.staff-area-grid {
   .staff-area-grid .gridbreak {
   	width: 48%;
   }
-  
+
 }
 
 .staff-area-grid .dropdown-menu {
