@@ -248,7 +248,7 @@ function block_dashboard() {
 
 	 // Add post/page slug
 	 // -------------------------------------------------------------------------
-	 if ( is_page( array( 'staff', 'staff-registration', 'staff-directory', 'staff-management' ) ) || is_singular( array ( 'staff-resource', 'management-resource' ) ) ) {
+	 if ( is_page( array( 'staff', 'staff-registration', 'staff-directory', 'staff-management', 'staff-member' ) ) || is_singular( array ( 'staff-resource', 'management-resource' ) ) ) {
 
 		 if ( !in_array( 'staff-area', $classes) ) {
 
