@@ -359,7 +359,7 @@ class Staff_Dashboard {
             $completed    = $this->completed_resources_string( $staff_member );
             $member_link  = esc_url( home_url('/staff-member') ) . '?staff_member=' . (int) $staff_member['user_ID'];
             $status       = false === $this->has_outstanding( $staff_member ) ? "none-outstanding" : "outstanding";
-            $outstanding  = "none-outstanding" === $status ? 'No' : '<a href="' . $member_link . '" title="View ' . $staff_member['first_name'] . '\'s full record">Yes</a>';
+            $outstanding  = "none-outstanding" === $status ? 'No' : '<a class="cw-outstanding" href="' . $member_link . '" title="View ' . $staff_member['first_name'] . '\'s full record">Yes&nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span></a>';
             $name         = $staff_member['first_name'] . ' ' . $staff_member['last_name'];
             $tel          = preg_replace( '/\s+/', '', $staff_member['display_phone'] );
 

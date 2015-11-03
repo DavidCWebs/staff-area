@@ -152,3 +152,7 @@ ul.staff-area-grid {
     transform: rotate(90deg);
 
 }
+
+a.cw-outstanding .glyphicon{
+  color: rgb(247, 27, 93);
+}

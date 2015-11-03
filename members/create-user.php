@@ -145,9 +145,6 @@ class Create_User {
       // Add new user info to the **managers** user meta data
       $this->update_manager_meta( $user_id );
 
-      //$manager_info = get_userdata( $this->manager_ID );
-      //$manager_name = $manager_info->user_firstname . ' ' . $manager_info->user_lastname;
-
       // Build an array that can be returned, for a success message
       // -----------------------------------------------------------------------
       $this->new_user_info = array(
@@ -156,6 +153,7 @@ class Create_User {
         'email'         => $user->user_email,
         'login'         => $user->user_login,
         'display_name'  => $user->user_nicename,
+        'business_unit' => get_the_title( $this->business_unit )
       );
 
       // Email new user

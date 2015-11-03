@@ -230,8 +230,9 @@ class Register {
 		<li>Email: {$new_user_details['email']}</li>
 		<li>Login Username: {$new_user_details['login']}</li>
 		<li>Display name: {$new_user_details['display_name']}</li>
+		<li>Business Unit: {$new_user_details['business_unit']}</li>
 		</ul>
-		You can create more staff members using the above form if you like.";
+		You can create more staff members using this form if you like.";
 
 		//$next_steps = $this->next_steps_message ( $user_role, $coord_ID );
 

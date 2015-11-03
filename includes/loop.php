@@ -225,7 +225,16 @@ class Loop {
               $slug_name      = get_post_field( 'post_name', $resource_ID );
               $required       = ! empty( get_post_meta( $resource_ID, 'compulsory_status', true ) ) ? true: false ;
               $marked_status  = \Staff_Area\User_Input\Confirm::is_marked_read( $this->current_user_ID, $resource_ID );
-              $marked         = false == $marked_status ? "Not Read" : "Read";
+              if ( false == $marked_status ) {
+
+                $marked = "Not Completed&nbsp;&nbsp;<span class='glyphicon glyphicon-exclamation-sign'></span>";
+
+              } else {
+
+                $marked = "Completed";
+
+
+              }
               $marked_class   = false == $marked_status ? "not-read" : "read";
 
               // Make an array of all terms in this loop - in order to build the dropdown menu in the filter
