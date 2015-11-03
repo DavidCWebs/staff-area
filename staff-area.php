@@ -34,6 +34,13 @@ if ( ! defined( 'WPINC' ) ) {
  * Autoload all the NEW classes
  */
 require_once 'autoloader.php';
+
+if (!defined('WP_ENV')) {
+  // Fallback if WP_ENV isn't defined in your WordPress config
+  // Used in lib/assets.php to check for 'development' or 'production'
+  define('WP_ENV', 'production');
+}
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-staff-area-activator.php

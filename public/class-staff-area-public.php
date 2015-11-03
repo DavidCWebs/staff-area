@@ -149,7 +149,7 @@ class Staff_Area_Public {
 
 	    } elseif ( in_array( 'editor', $user->roles ) ) {
 
-				$redirect_to = home_url('/staff-management/');
+				$redirect_to = home_url('/staff-directory/');
 				return $redirect_to; // the default url
 
 	    } elseif( in_array( 'staff_supervisor', $user->roles ) ) {
@@ -164,7 +164,7 @@ class Staff_Area_Public {
 
 	    } elseif( in_array( 'staff_manager', $user->roles ) ) {
 
-	      $redirect_to = home_url('/staff-management/');
+	      $redirect_to = home_url('/staff-directory/');
 	      return $redirect_to;
 
 	    }
