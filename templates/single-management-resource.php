@@ -19,7 +19,7 @@ include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/heade
 
 ?>
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-9">
     <?php the_content(); ?>
     <hr>
     <?php Staff_Area\Display\Single_Resource::display_checkbox( $post_ID, $current_user_ID, $marked ); ?>
