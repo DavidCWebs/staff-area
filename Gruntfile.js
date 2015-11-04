@@ -11,7 +11,8 @@ module.exports = function(grunt) {
     //'public/js/fitvids-control.js'
     'public/js/table-filter.js',
     'bower_components/bootstrap-select/js/bootstrap-select.js',
-    'bower_components/jquery-validation/dist/jquery.validate.js'
+    'bower_components/jquery-validation/dist/jquery.validate.js',
+    'public/js/confirm-as-read.js'
   ];
 
   var jsRegistration = [
