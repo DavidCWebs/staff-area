@@ -1,6 +1,12 @@
 To Do
 ======
 
+## 4 Nov 2015
+
+Fix table height issue - results from filter JS on ALL staff-area pages, setting height on the parent elements of tables.
+
+Just give all tables a parent div. Means they can be filtered in the future if necessary. Or add ".cw-filter" class to relevant tables and use this for targeting.
+
 ## 23 October 2015
 
 * Custom header template for the plugin

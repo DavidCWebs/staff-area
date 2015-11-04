@@ -137,7 +137,9 @@ class Staff_Area_Public {
 		$management_pages = [
 			'staff-directory',
 			'staff-management',
-			'staff-member'
+			'staff-member',
+			'staff-resources',
+			'management-resources'
 		];
 
 		if ( is_singular( array( 'staff-resource', 'management-resource' ) ) || is_page( $management_pages ) ) {
