@@ -155,7 +155,16 @@ class Staff_Area_Public {
 			 * DO NOT include registration.js
 			 *
 			 */
-			wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/cw-staff-area.min.js', array( 'jquery' ), $this->version, false );
+			wp_register_script( 'carawebs_resource_script', plugin_dir_url( __FILE__ ) . 'js/cw-staff-area.min.js', array( 'jquery' ), $this->version, false );
+
+			wp_enqueue_script( 'carawebs_resource_script' );
+
+		  wp_localize_script( 'carawebs_resource_script', 'carawebsRegVars', array(
+        'carawebsAjaxURL' => admin_url( 'admin-ajax.php' ),
+        )
+      );
+
+			//wp_enqueue_script( $this->staff_area, plugin_dir_url( __FILE__ ) . 'js/cw-staff-area.min.js', array( 'jquery' ), $this->version, false );
 
 		}
 
