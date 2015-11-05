@@ -290,7 +290,7 @@
    */
   public function email_from_name( $original_name ) {
 
-    return "School Food Company Administration";
+    return "School Food Co Management";
 
   }
 
