@@ -1,6 +1,14 @@
 <?php
+/**
+ * The file that holds the class responsible for displaying plugin options
+ *
+ */
 namespace Staff_Area\Admin;
+if( !defined('WPINC') ) exit( 'No direct access permitted' );
 
+/**
+ * Create plugin options
+ */
 class Options {
 
   /**

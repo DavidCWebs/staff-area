@@ -1,5 +1,6 @@
 <?php
 namespace Staff_Area\Members;
+if( !defined('WPINC') ) exit( 'No direct access permitted' );
 
 /**
  *

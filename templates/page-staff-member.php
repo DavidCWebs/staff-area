@@ -3,6 +3,7 @@
  * Display staff member data
  *
  */
+echo $_SERVER['REMOTE_ADDR'];
 $staff_member_ID = isset ( $_GET['staff_member'] ) ? $_GET['staff_member'] : null;
 $access_list = ['staff_manager'];
 include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/access-check.php' );

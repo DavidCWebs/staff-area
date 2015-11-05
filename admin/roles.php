@@ -1,5 +1,6 @@
 <?php
 namespace Staff_Area\Admin;
+if( !defined('WPINC') ) exit( 'No direct access permitted' );
 /**
  * The file that defines the Roles class
  *

@@ -1,4 +1,5 @@
 <?php
+if( !defined('WPINC') ) exit( 'No direct access permitted' );
 
 if( !is_user_logged_in() ) {
 

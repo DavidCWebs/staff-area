@@ -1,5 +1,5 @@
 <?php
-
+if( !defined('WPINC') ) exit( 'No direct access permitted' );
 /**
  * Provide a admin area view for the plugin
  *

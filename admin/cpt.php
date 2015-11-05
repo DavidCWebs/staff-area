@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the custom post types and custom taxonomies for this plugin
  *
@@ -11,13 +10,19 @@
  */
 namespace Staff_Area\Admin;
 
+if( !defined('WPINC') ) exit( 'No direct access permitted' );
+
+/**
+ * Register Custom Post Types
+ *
+ */
 class CPT {
 
   /**
   * Register 'staff_resource' custom post type
   *
   *
-  * @return [type] [description]
+  * @return void
   */
   public function staff_resource_init() {
 

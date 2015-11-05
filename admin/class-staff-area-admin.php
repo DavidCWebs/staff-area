@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -9,6 +8,7 @@
  * @package    Staff_Area
  * @subpackage Staff_Area/admin
  */
+if( !defined('WPINC') ) exit( 'No direct access permitted' );
 
 /**
  * The admin-specific functionality of the plugin.
