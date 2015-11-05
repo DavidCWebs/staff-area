@@ -3,10 +3,13 @@
  * Display staff member data
  *
  */
+
+/**IP check
 echo $_SERVER['REMOTE_ADDR'];
 if( '88.87.172.77' !== $_SERVER['REMOTE_ADDR'] && '127.0.0.1' !== $_SERVER['REMOTE_ADDR'] ) {
   return;
 }
+*/
 $staff_member_ID = isset ( $_GET['staff_member'] ) ? $_GET['staff_member'] : null;
 $access_list = ['staff_manager'];
 include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/access-check.php' );
