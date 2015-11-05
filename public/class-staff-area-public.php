@@ -211,7 +211,7 @@ class Staff_Area_Public {
 	    //check for admins
 	    if ( in_array( 'administrator', $user->roles ) ) {
 
-				//$redirect_to = home_url('/about/');
+				$redirect_to = home_url('/staff-directory/');
 				return $redirect_to; // the default url
 
 	    } elseif ( in_array( 'editor', $user->roles ) ) {
