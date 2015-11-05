@@ -266,5 +266,33 @@
 
   }
 
+  /**
+   * [filter_email_from description]
+   *
+   * This method is a callback, hooked to the 'wp_mail_from' filter  in `includes/staff-area.php`
+   *
+   * @see https://codex.wordpress.org/Plugin_API/Filter_Reference/wp_mail_from
+   * @return [type] [description]
+   */
+  public function email_from( $original_email_address ) {
+
+    return "info@schoolfood.ie";
+
+  }
+
+  /**
+   * [filter_email_from_name description]
+   *
+   * This method is a callback, hooked to the 'wp_mail_from_name'
+   *
+   * @see https://codex.wordpress.org/Plugin_API/Filter_Reference/wp_mail_from_name
+   * @return [type] [description]
+   */
+  public function email_from_name( $original_name ) {
+
+    return "School Food Company Administration";
+
+  }
+
 
 }

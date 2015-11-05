@@ -215,6 +215,10 @@ class Staff_Area {
 		$this->loader->add_action( 'personal_options_update', $plugin_admin, 'save_custom_user_meta' );
 		$this->loader->add_action( 'edit_user_profile_update', $plugin_admin, 'save_custom_user_meta' );
 
+		// Email from site admin
+		$this->loader->add_filter( 'wp_mail_from', $plugin_admin, 'email_from' );
+		$this->loader->add_filter( 'wp_mail_from_name', $plugin_admin, 'email_from_name' );
+
 	}
 
 	/**
