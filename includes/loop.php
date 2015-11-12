@@ -158,17 +158,17 @@ class Loop {
 
     $this->args     = array_merge( $args, $meta );
 
-    //$this->data_ID  = $this->table_ID_base . '-' . $this->args['post_type'] . '-table';
-
   }
 
   /**
-  * Build a custom staff resource loop
-  *
-  * @since   1.0.0
-  * @uses    WP_Query()
-  * @return  string HTML staff resource teasers
-  */
+   * Build a custom staff resource loop
+   * @since   1.0.0
+   * @uses    WP_Query()
+   * @param  [type] $args   [description]
+   * @param  [type] $filter [description]
+   * @param  string $name   [description]
+   * @return [type]         [description]
+   */
   public function resource_loop( $args = null, $filter = false, $name = '' ) {
 
     // Allow arguments to be added to this method directly. If none passed, use defaults
