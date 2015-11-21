@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Staff-area by DavidCWebs</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Staff-area</h1>
+          <h2></h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/DavidCWebs/staff-area/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/DavidCWebs/staff-area/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/DavidCWebs/staff-area" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="staff-area" class="anchor" href="#staff-area" aria-hidden="true"><span class="octicon octicon-link"></span></a>Staff Area</h1>
+
+<p>Creates a staff area on a page called 'staff'.</p>
+
+<p>Registers 'staff-resource' custom post type, with a custom taxonomy 'resource_category'. Accessed by 'staff_members' and 'staff_supervisor'.</p>
+
+<p>Registers 'management-resource' custom post type, with a custom taxonomy 'resource_category'.</p>
+
+<p>Registers custom user roles:</p>
+
+<ul>
+<li>'staff_member' an ordinary staff member</li>
+<li>'staff_manager' staff member with management privileges</li>
+</ul>
+
+<p>Builds a filter for staff resources.</p>
+
+<h2>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<ul>
+<li>
+<a href="http://jqueryvalidation.org/">.validate()</a>: Form validation on the front end staff registration form</li>
+<li>
+<a href="https://silviomoreto.github.io/bootstrap-select/">Bootstrap Select</a>: Bootstrap 3 <code>.dropdown-menu</code> styles on form select elements</li>
+</ul>
+
+<p>Dependencies are managed via <a href="http://bower.io/">Bower</a></p>
+
+<h2>
+<a id="build-tools" class="anchor" href="#build-tools" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build Tools</h2>
+
+<p>Concatenation &amp; minification of javascript files is handled by <a href="http://gruntjs.com/getting-started">Grunt</a></p>
+
+<h2>
+<a id="development-environment" class="anchor" href="#development-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development Environment</h2>
+
+<ul>
+<li>Clone this repo</li>
+<li>Move into the project directory and run <code>npm install</code>
+</li>
+<li>Run <code>bower install</code>
+</li>
+</ul>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h2>
+
+<h3>
+<a id="custom-sidebar" class="anchor" href="#custom-sidebar" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom Sidebar</h3>
+
+<p>Register custom sidebar for this plugin:</p>
+
+<pre><code>function staff_area_sidebar_registration(){
+  register_sidebar( /* arguments */ );
+}
+
+add_action( 'wp_loaded', 'staff_area_sidebar_registration' );
+
+</code></pre>
+
+<p><code>wp_loaded</code> should guarantee that sidebar is registered after theme sidebars. <a href="http://wordpress.stackexchange.com/questions/2553/how-to-register-sidebar-without-messing-up-the-order">Latest hook you can reliably use to register sidebar</a>.</p>
+
+<h3>
+<a id="body-class" class="anchor" href="#body-class" aria-hidden="true"><span class="octicon octicon-link"></span></a>Body Class</h3>
+
+<p>The class "staff-area" is added to the body class - by hooking into the WP <code>body_class</code> filter.</p>
+
+<p>TODO: Add a CSS class determined by user role.</p>
+
+<h3>
+<a id="postmeta" class="anchor" href="#postmeta" aria-hidden="true"><span class="octicon octicon-link"></span></a>Postmeta</h3>
+
+<p>On the test site, postmeta are added to CPTs by means of the ACF plugin. Custom meta boxes should be defined within the plugin, so that it isn't dependent on ACF.</p>
+
+<p>Maybe add the CMB2 class - this should do most of the heavy lifting.</p>
+
+<h3>
+<a id="key-pages" class="anchor" href="#key-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Key Pages</h3>
+
+<p>These should be user-defined in the plugin options (like in EDD), with defaults as a fallback.</p>
+
+<p>Should the plugin create pages on activation if they do not exist?</p>
+
+<p>If they do exist, they should not be the defaults - give site admin opportunity to specify/confirm key pages.</p>
+        </section>
+
+        <footer>
+          Staff-area is maintained by <a href="https://github.com/DavidCWebs">DavidCWebs</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
