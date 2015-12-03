@@ -76,52 +76,86 @@ class Single_Resource {
 
   }
 
-  public static function display_file_download () {
+  /**
+   * Build file data for downloadable files
+   *
+   * Iterates through database entries in the postmeta table that have been saved
+   * in the Advanced Custom Fields repeater field format:
+   * `fieldname_' . $i . '_subfieldname`.
+   *
+   * @param  string|int $post_ID The current post ID
+   * @return array               Array of file data
+   */
+  public static function get_repeater_file_download ( $post_ID ) {
 
-    $file = get_field( 'download' );
+    // The number of entries for this repeater field
+    $files = get_post_meta( $post_ID, 'downloads', true );
 
-    if ( !$file ) { return; }
+    if ( !$files ) {
 
-    $filesize = size_format( filesize( get_attached_file( $file['id'] ) ) );
-    $filetype = wp_check_filetype( get_attached_file( $file['id'] ) );
-    ob_start();
-    ?>
-    <h3>Download Resource Files</h3>
-      <a href="<?= $file['url']; ?>" target="_blank">Download <?= $file['title']; ?></a> (<?= $filetype['ext']. ", " . $filesize ;?> )
-    <?php
-    echo ob_get_clean();
+      return;
+
+    }
+
+    $file_data = [];
+
+    for( $i = 0; $i < $files; $i++ ) {
+
+      $file_ID  = get_post_meta( get_the_ID(), 'downloads_' . $i . '_file', true );
+      $file     = get_attached_file( $file_ID );
+
+      $file_data[]  = [
+        'filesize'  => size_format( filesize( $file ) ),
+        'filetype'  => wp_check_filetype( $file )['ext'],
+        'url'       => wp_get_attachment_url( $file_ID ),
+        'title'     => get_the_title( $file_ID )
+      ];
+
+    }
+
+    return $file_data;
 
   }
 
-  public static function get_repeater_file_download ( $post_ID ) {
+  /**
+   * Build a ul with attached file titles and links
+   *
+   * @return string HTML list of downloadable files
+   */
+  public static function the_attached_downloads() {
 
-    $files = get_post_meta( $post_ID, 'downloads', true );
+    $downloads = self::get_repeater_file_download( get_the_ID() );
 
-    if ( $files ) {
-
-      $file_data = [];
-
-      for( $i = 0; $i < $files; $i++ ) {
-
-        $file = get_post_meta( get_the_ID(), 'downloads_' . $i . '_file', true );
-        //caradump( $file );
-
-        $file_data[]  = [
-          'filesize'  => size_format( filesize( get_attached_file( $file ) ) ),
-          'filetype'  => wp_check_filetype( get_attached_file( $file ) ),
-          'url'       => get_the_permalink( $file ),
-          'title'     => get_the_title( $file )
-        ];
-
-      }
-
-      return $file_data;
-
-    } else {
+    if( !$downloads ) {
 
       return;
-      
+
     }
+
+    ob_start();
+    ?>
+    <h2>Downloads</h2>
+    <p>Click the link to download.</p>
+    <ul>
+    <?php
+
+    foreach( $downloads as $download ) {
+
+      ?>
+      <li>
+        <a href="<?= $download['url']; ?>">
+          <?= $download['title']; ?>
+        </a> (<?= $download['filetype']; ?>, <?=$download['filesize']; ?>)
+      </li>
+      <?php
+
+    }
+
+    ?>
+    </ul>
+    <?php
+
+    echo ob_get_clean();
 
   }
 

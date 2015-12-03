@@ -23,11 +23,7 @@ include_once( plugin_dir_path( dirname( __FILE__ ) ) . 'templates/partials/heade
     <?php the_content(); ?>
     <hr>
     <?php Staff_Area\Display\Single_Resource::display_checkbox( $post_ID, $current_user_ID, $marked ); ?>
-    <?php //Staff_Area\Display\Single_Resource::display_marked_resources( $current_user_ID ); ?>
-    <?php //Staff_Area\Display\Single_Resource::display_file_download(); ?>
-    <?php $downloads = Staff_Area\Display\Single_Resource::get_repeater_file_download( get_the_ID());
-    caradump( $downloads );
-    ?>
+    <?php Staff_Area\Display\Single_Resource::the_attached_downloads(); ?>
   </div>
 </div>
 
