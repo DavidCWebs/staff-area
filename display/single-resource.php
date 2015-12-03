@@ -125,6 +125,7 @@ class Single_Resource {
   public static function the_attached_downloads() {
 
     $downloads = self::get_repeater_file_download( get_the_ID() );
+    $title = "Click to open this file in a new window - you can then download %s";
 
     if( !$downloads ) {
 
@@ -143,7 +144,7 @@ class Single_Resource {
 
       ?>
       <li>
-        <a href="<?= $download['url']; ?>">
+        <a href="<?= $download['url']; ?>" title="<?= sprintf( $title, $download['title']) ?>" target="_blank">
           <?= $download['title']; ?>
         </a> (<?= $download['filetype']; ?>, <?=$download['filesize']; ?>)
       </li>
