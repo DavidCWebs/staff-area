@@ -110,16 +110,16 @@ class Staff_Area_Public {
 		 */
 		if ( is_page('staff-registration' ) ) {
 
-      wp_register_script('carawebs_user_reg_script', plugin_dir_url( __FILE__ ) . 'js/registration.js', array('jquery'), null, false);
+      //wp_register_script('carawebs_user_reg_script', plugin_dir_url( __FILE__ ) . 'js/registration.js', array('jquery'), null, false);
 
 			wp_enqueue_script( $this->staff_area, plugin_dir_url( __DIR__ ) . 'bower_components/bootstrap-select/js/bootstrap-select.js', array('jquery'), null, false);
 
 			// jQuery validate
 			wp_enqueue_script( $this->staff_area . 'validate', plugin_dir_url( __DIR__ ) . 'bower_components/jquery-validation/dist/jquery.validate.min.js', array('jquery'), null, false);
 
-      wp_enqueue_script('carawebs_user_reg_script');
+      //wp_enqueue_script('carawebs_user_reg_script');
 
-      $current_user = wp_get_current_user();            // gets the current user object
+      $current_user = wp_get_current_user();
       $user_id = $current_user->ID;
 
       wp_localize_script( 'carawebs_user_reg_script', 'carawebsRegVars', array(

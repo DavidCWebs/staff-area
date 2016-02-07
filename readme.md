@@ -14,6 +14,14 @@ Registers custom user roles:
 
 Builds a filter for staff resources.
 
+##Environment
+The development environment constant defaults to 'production' if it is not defined in your WordPress installation.
+
+For development, add `define('WP_ENV', 'development');` in `wp-config.php`. This enqueues scripts without minification and concatenation.
+
+##Autoloading
+Classes are named according to WordPress standards, so a custom autoloader is needed: `/autoloader.php`.
+
 ##Dependencies
 
 * [.validate()](http://jqueryvalidation.org/): Form validation on the front end staff registration form
