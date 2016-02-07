@@ -13,13 +13,6 @@ if ( !function_exists( 'carawebs_class_autoloader' ) ) {
 	    // create the actual filepath
 	    $filePath = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $class . '.php';
 
-			//print $filePath;
-
-			// Build a filename that matches the correct protocol
-		  //$filePath = sprintf( '%s%s.php',
-		  //WP_PLUGIN_DIR . DIRECTORY_SEPARATOR,
-		  //$class );
-
 	    // check if the file exists
 	    if( file_exists( $filePath ) )  {
 

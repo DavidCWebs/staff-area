@@ -18,11 +18,15 @@
     <p>Set up new staff members using this form.</p>
     <p>When you create a new staff member, their login details and instructions will be automatically emailed to them.</p>
     <div id="result-message" class="well"></div>
+    <?php echo ! empty($_SESSION['form_report']) ? "<div id='result-message-show' class='well'>{$_SESSION['form_report']}</div>" : null; ?>
   </div>
   <div class="col-md-6 col-md-offset-1">
     <?php
-    $register = new Staff_Area\Members\Register( $current_user_ID );
-    $register->userform_process_facade ();
+    // Change the way data is processed, so that PHP form facade can be in document head
+    // $register = new Staff_Area\Members\Register( $current_user_ID );
+    // $register->userform_process_facade ();
+    $register = new Staff_Area\Members\Registration_Form( $current_user_ID );
+    $register->render();
     ?>
   </div>
 </div>

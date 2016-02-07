@@ -18,7 +18,7 @@ namespace Staff_Area\Members;
 * @subpackage Carawebs_User_Management/includes
 * @author     David Egan <david@carawebs.com>
 */
-class View_Form {
+class Registration_Form {
 
 	/**
 	* Set up properties
@@ -38,8 +38,8 @@ class View_Form {
 	*/
 	public function render( $success_message = '' ) {
 
-		$roles_radio	= $this->roles_radio();
-		$unit_options	= $this->business_unit_options();
+		$roles_radio		= $this->roles_radio();
+		$unit_options		= $this->business_unit_options();
 
 		include_once( dirname( __DIR__ ) . '/templates/partials/user-reg-form.php' );
 

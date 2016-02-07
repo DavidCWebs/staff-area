@@ -37,4 +37,5 @@
   <script>
     $("#user-reg-form").validate();
   </script>
+  <div class="indicator">Please wait...</div>
 </div>
